@@ -59,7 +59,8 @@ $.getJSON(
 
         var map = new ol.Map({
             layers: [
-                wmtsMap
+                wmtsMap,
+                
             ],
             target: document.getElementById('map'),
             view: new ol.View({
@@ -70,7 +71,7 @@ $.getJSON(
             controls: [
                 // 'degrees', 'imperial', 'nautical', 'metric', 'us'
                 new ol.control.ScaleLine({
-                  units: 'metric'
+                    units: 'metric'
                 }),
                 new ol.control.ZoomSlider(),
                 new ol.control.Zoom()
@@ -83,11 +84,12 @@ $.getJSON(
         
         
         
-        addCluster = function () {
-            map.addLayer(clusters);
-        },
-        removeCluster = function () {
-            map.removeLayer(clusters);
-        }
-    })
+        // addCluster = function () {
+        //     map.addLayer(clusters);
+        // },
+        // removeCluster = function () {
+        //     map.removeLayer(clusters);
+        // }
+});
+
 
