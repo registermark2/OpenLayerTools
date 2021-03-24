@@ -67,6 +67,14 @@ $.getJSON(
                 center: ol.proj.fromLonLat([120.846642, 23.488793]),
                 zoom: 8.3
             }),
+            controls: [
+                // 'degrees', 'imperial', 'nautical', 'metric', 'us'
+                new ol.control.ScaleLine({
+                  units: 'metric'
+                }),
+                new ol.control.ZoomSlider(),
+                new ol.control.Zoom()
+            ]
         });
         distance.addEventListener('input', function () {
             clusterSource.setDistance(parseInt(distance.value, 10));
