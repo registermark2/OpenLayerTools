@@ -19,10 +19,7 @@ readRainfallAPI = function(){
                 features[i] = new ol.Feature({
                                             geometry: new ol.geom.Point(coordinates),
                                             id: res.records.location[i].stationId,
-                                            
-                                            // name: "123",
-                                            // population: 4000,
-                                            // rainfall: 500
+                                            value: res.records.location[i].weatherElement[1],
                                         });
             }
 
@@ -106,7 +103,6 @@ map = new ol.Map({
         zoom: 8.3
     }),
     controls: [
-        // 'degrees', 'imperial', 'nautical', 'metric', 'us'
         new ol.control.ScaleLine({
             units: 'metric'
         }),
@@ -122,26 +118,19 @@ var popup = new ol.Overlay({
     element: element,
     positioning: 'bottom-center',
     stopEvent: false,
-    offset: [0, -20]
+    offset: [0, -10]
 });
 map.addOverlay(popup);
 
 
 
-map.on('click', function(evt){
-    // console.log("123123");
+map.on('pointermove', function(evt){
     var feature = map.forEachFeatureAtPixel(evt.pixel,
         function(feature){
             var features = feature.get('features');
-            // if (features) {
-                console.log(features[0]);
-                return features[0];
-            // }
-        // return feature;   
+                // console.log(features[0]);
+                return features[0];  
     });
-    // if(feature){
-    //     console.log(feature.get("id"));
-    // }
     if(feature){
         var coordinates = feature.getGeometry().getCoordinates();
         popup.setPosition(coordinates);
@@ -150,7 +139,8 @@ map.on('click', function(evt){
         $(element).popover({
             'placement': 'top',
             'html': true,
-            'content': feature.get('id')
+            'content': feature.get('id'),
+            // 'content': feature.get('value')
         });
         $(element).popover('show');
     } else {
