@@ -14,9 +14,16 @@ readRainfallAPI = function(){
             var count = Object.keys(res.records.location).length;
             var features = new Array(count);
             for (var i = 0; i < count; ++i) {
-                // console.log(res.records.location[i].lon);
+                // console.log(res.records.location[i].stationId);
                 var coordinates = ol.proj.fromLonLat([res.records.location[i].lon, res.records.location[i].lat]);
-                features[i] = new ol.Feature(new ol.geom.Point(coordinates));
+                features[i] = new ol.Feature({
+                                            geometry: new ol.geom.Point(coordinates),
+                                            id: res.records.location[i].stationId,
+                                            
+                                            // name: "123",
+                                            // population: 4000,
+                                            // rainfall: 500
+                                        });
             }
 
             var source = new ol.source.Vector({
@@ -57,56 +64,18 @@ readRainfallAPI = function(){
                     return style;
                 }
             });
-            // var wmtsMap = new ol.layer.Tile({
-            //     source: new ol.source.XYZ({
-            //         url:
-            //             'https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}.png'
-            //     })
-            // });
-
-            // map = new ol.Map({
-            //     layers: [
-            //         wmtsMap,
-
-            //     ],
-            //     target: document.getElementById('map'),
-            //     view: new ol.View({
-            //         projection: 'EPSG:3857',
-            //         center: ol.proj.fromLonLat([120.846642, 23.488793]),
-            //         zoom: 8.3
-            //     }),
-            //     // controls: [
-            //     //     // 'degrees', 'imperial', 'nautical', 'metric', 'us'
-            //     //     new ol.control.ScaleLine({
-            //     //         units: 'metric'
-            //     //     }),
-            //     //     new ol.control.ZoomSlider(),
-            //     //     new ol.control.Zoom()
-            //     // ]
-            // });
+            
             distance.addEventListener('input', function () {
                 clusterSource.setDistance(parseInt(distance.value, 10));
             });
             map.addLayer(clusters);
-            
-            // addCluster = function () {
-            //     map.addLayer(clusters);
-            // };
-            // removeCluster = function() {
-            //     map.removeLayer(clusters);
-            // };
+            console.log("addCluster");
         }
     )
 };
 
-// test = function(){
-//     $.getJSON(
-//         "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=NOW&parameterName=CITY,TOWN,ATTRIBUTE",
-//         function (res) {
-//             console.log(res);
-//         }
-//     )
-// }
+
+
 
 
 addCluster = function () {
@@ -114,63 +83,8 @@ addCluster = function () {
 };
 removeCluster = function() {
     map.removeLayer(clusters);
+    console.log("delete cluster layers");
 };
-
-
-$.getJSON(
-    "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=NOW&parameterName=CITY,TOWN,ATTRIBUTE",
-    function (res) {
-        
-    }
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -199,4 +113,59 @@ map = new ol.Map({
         new ol.control.ZoomSlider(),
         new ol.control.Zoom()
     ]
+});
+
+
+var element = document.getElementById('popup');
+
+var popup = new ol.Overlay({
+    element: element,
+    positioning: 'bottom-center',
+    stopEvent: false,
+    offset: [0, -20]
+});
+map.addOverlay(popup);
+
+
+
+map.on('click', function(evt){
+    // console.log("123123");
+    var feature = map.forEachFeatureAtPixel(evt.pixel,
+        function(feature){
+            var features = feature.get('features');
+            // if (features) {
+                console.log(features[0]);
+                return features[0];
+            // }
+        // return feature;   
+    });
+    // if(feature){
+    //     console.log(feature.get("id"));
+    // }
+    if(feature){
+        var coordinates = feature.getGeometry().getCoordinates();
+        popup.setPosition(coordinates);
+        console.log("isFeature");
+        console.log(feature.get('id'));
+        $(element).popover({
+            'placement': 'top',
+            'html': true,
+            'content': feature.get('id')
+        });
+        $(element).popover('show');
+    } else {
+        console.log("noFeature");
+        $(element).popover('destroy');
+    }
+    
+});
+// change mouse cursor when over marker
+map.on('pointermove', function(e) {
+    if (e.dragging) {
+        $("#popup").popover('destroy');
+        return;
+    }
+    var pixel = map.getEventPixel(e.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
 });
