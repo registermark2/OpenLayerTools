@@ -14,12 +14,13 @@ readRainfallAPI = function(){
             var count = Object.keys(res.records.location).length;
             var features = new Array(count);
             for (var i = 0; i < count; ++i) {
-                // console.log(res.records.location[i].stationId);
+                // console.log(res.records.location[i]);
+                // console.log(res.records.location[i].weatherElement[0].elementValue);
                 var coordinates = ol.proj.fromLonLat([res.records.location[i].lon, res.records.location[i].lat]);
                 features[i] = new ol.Feature({
                                             geometry: new ol.geom.Point(coordinates),
                                             id: res.records.location[i].stationId,
-                                            value: res.records.location[i].weatherElement[1],
+                                            value: res.records.location[i].weatherElement[0].elementValue,
                                         });
             }
 
@@ -66,7 +67,7 @@ readRainfallAPI = function(){
                 clusterSource.setDistance(parseInt(distance.value, 10));
             });
             map.addLayer(clusters);
-            console.log("addCluster");
+            // console.log("addCluster");
         }
     )
 };
@@ -80,9 +81,8 @@ addCluster = function () {
 };
 removeCluster = function() {
     map.removeLayer(clusters);
-    console.log("delete cluster layers");
+    // console.log("delete cluster layers");
 };
-
 
 
 
@@ -128,23 +128,26 @@ map.on('pointermove', function(evt){
     var feature = map.forEachFeatureAtPixel(evt.pixel,
         function(feature){
             var features = feature.get('features');
-                // console.log(features[0]);
+                console.log(features[0]);
                 return features[0];  
     });
     if(feature){
         var coordinates = feature.getGeometry().getCoordinates();
         popup.setPosition(coordinates);
-        console.log("isFeature");
-        console.log(feature.get('id'));
+        // console.log("isFeature");
+        // console.log(feature.get('id'));
         $(element).popover({
             'placement': 'top',
             'html': true,
-            'content': feature.get('id'),
+            'content': 
+            "<div>"+"ID:"+feature.get('id') +"</div>"
+            +"<div>"+"<p>"+"value: "+feature.get('value')+ "</div>",
+            // feature.get('id'),
             // 'content': feature.get('value')
         });
         $(element).popover('show');
     } else {
-        console.log("noFeature");
+        // console.log("noFeature");
         $(element).popover('destroy');
     }
     

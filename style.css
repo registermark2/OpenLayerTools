@@ -32,3 +32,6 @@ label{
 form{
   display: block;
 }
+#popup{
+  width: 30px;
+}
