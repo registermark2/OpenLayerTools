@@ -1,9 +1,10 @@
 var rainfallStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=NOW&parameterName=CITY,TOWN,ATTRIBUTE";
-
+var weatherStationAPI_URL = "";
 
 
 var map;
 var clusters;
+var clusterSource;
 
 readRainfallAPI = function(){
     $.getJSON(
@@ -21,14 +22,15 @@ readRainfallAPI = function(){
                                             geometry: new ol.geom.Point(coordinates),
                                             id: res.records.location[i].stationId,
                                             value: res.records.location[i].weatherElement[0].elementValue,
+                                            time: res.records.location[i].time.obsTime,
                                         });
             }
 
             var source = new ol.source.Vector({
                 features: features
             });
-
-            var clusterSource = new ol.source.Cluster({
+            console.log
+            clusterSource = new ol.source.Cluster({
                 distance: parseInt(distance.value, 10),
                 source: source
             });
@@ -53,7 +55,7 @@ readRainfallAPI = function(){
                             text: new ol.style.Text({
                                 text: size.toString(),
                                 fill: new ol.style.Fill({
-                                    color: '#fff'
+                                    color: '#666666'
                                 })
                             })
                         });
@@ -65,25 +67,45 @@ readRainfallAPI = function(){
             
             distance.addEventListener('input', function () {
                 clusterSource.setDistance(parseInt(distance.value, 10));
+                
             });
             map.addLayer(clusters);
-            // console.log("addCluster");
+            
         }
     )
 };
+// readWeatherStationAPI = function(){
+//     $.getJSON(
+//         weatherStationAPI_URL,
+//         function (res) {
+
+//         }
+//     )
+// };
+
+$("#checkBox").change(function() {
+    if(this.checked) {
+        readRainfallAPI();
+    }else{
+        map.removeLayer(clusters);
+    }
+});
+
+
+var element = document.getElementById('popup');
+var container = document.getElementById('popup');
+var content = document.getElementById('popup-content');
+var closer = document.getElementById('popup-closer');
 
 
 
-
-
-addCluster = function () {
-    readRainfallAPI();
-};
-removeCluster = function() {
-    map.removeLayer(clusters);
-    // console.log("delete cluster layers");
-};
-
+var overlay = new ol.Overlay({
+    element: container,
+    autoPan: true,
+    autoPanAnimation: {
+    duration: 250
+    }
+});
 
 
 var wmtsMap = new ol.layer.Tile({
@@ -102,17 +124,12 @@ map = new ol.Map({
         center: ol.proj.fromLonLat([120.846642, 23.488793]),
         zoom: 8.3
     }),
+    overlay:[overlay],
     controls: [
-        new ol.control.ScaleLine({
-            units: 'metric'
-        }),
-        new ol.control.ZoomSlider(),
-        new ol.control.Zoom()
+        new ol.control.ZoomSlider()
     ]
 });
 
-
-var element = document.getElementById('popup');
 
 var popup = new ol.Overlay({
     element: element,
@@ -123,41 +140,38 @@ var popup = new ol.Overlay({
 map.addOverlay(popup);
 
 
-
 map.on('pointermove', function(evt){
+    var featureClusterNumber;
     var feature = map.forEachFeatureAtPixel(evt.pixel,
         function(feature){
             var features = feature.get('features');
-                console.log(features[0]);
-                return features[0];  
+            featureClusterNumber = feature.get('features').length;
+            return features[0]; //get cluster value level
     });
     if(feature){
+        // console.log(feature);
         var coordinates = feature.getGeometry().getCoordinates();
         popup.setPosition(coordinates);
-        // console.log("isFeature");
-        // console.log(feature.get('id'));
-        $(element).popover({
-            'placement': 'top',
-            'html': true,
-            'content': 
-            "<div>"+"ID:"+feature.get('id') +"</div>"
-            +"<div>"+"<p>"+"value: "+feature.get('value')+ "</div>",
-            // feature.get('id'),
-            // 'content': feature.get('value')
-        });
-        $(element).popover('show');
+        document.getElementById("popup").classList.add("ol-popup");
+
+        if(featureClusterNumber<2){
+            content.innerHTML = '<div>'+"站點: "+feature.get('id')+'</div>'+
+                                '<div>'+"雨量: "+feature.get('value')+" mm"+'</div>'+ 
+                                '<div>'+"時間: "+feature.get('time')+'</div>';
+            overlay.setPosition(coordinates);
+        }else{
+            content.innerHTML = '<div>'+featureClusterNumber+'個測站'+'</div>';
+            overlay.setPosition(coordinates);
+        }
     } else {
-        // console.log("noFeature");
-        $(element).popover('destroy');
+        content.innerHTML ="";
+        document.getElementById("popup").classList.remove("ol-popup");
+        overlay.setPosition(undefined);
     }
     
 });
 // change mouse cursor when over marker
 map.on('pointermove', function(e) {
-    if (e.dragging) {
-        $("#popup").popover('destroy');
-        return;
-    }
     var pixel = map.getEventPixel(e.originalEvent);
     var hit = map.hasFeatureAtPixel(pixel);
     map.getTarget().style.cursor = hit ? 'pointer' : '';
