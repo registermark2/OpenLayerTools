@@ -22,9 +22,12 @@
   /* padding: 10px; */
   top: 50px;
 }
-label{
+/* label{
   padding: 10px;
 }
+input{
+  padding-left: 20px;
+} */
 
 
 .Station{
@@ -48,11 +51,17 @@ label{
   display: inline-block;
   border: 1px solid black;
 }
-#checkBox{
-  width: 20px;
-  height: 20px;
-  margin: 20px;
+.checkBox{
+  padding: 20px
 }
+input{
+  padding-left: 20px;
+}
+.rangeBar{
+  padding: 20px;
+}
+
+
 
 .ol-popup {
   position: absolute;
