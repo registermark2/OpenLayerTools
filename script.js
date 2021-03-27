@@ -83,6 +83,10 @@ readRainfallAPI = function(){
 //     )
 // };
 
+
+
+
+// select checkbox show data
 $("#checkBox").change(function() {
     if(this.checked) {
         readRainfallAPI();
@@ -92,12 +96,12 @@ $("#checkBox").change(function() {
 });
 
 
+
+//popup data on map 
 var element = document.getElementById('popup');
 var container = document.getElementById('popup');
 var content = document.getElementById('popup-content');
 var closer = document.getElementById('popup-closer');
-
-
 
 var overlay = new ol.Overlay({
     element: container,
@@ -108,11 +112,13 @@ var overlay = new ol.Overlay({
 });
 
 
+//wmts map 
 var wmtsMap = new ol.layer.Tile({
     source: new ol.source.XYZ({
         url:'https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}.png'
     })
 });
+
 
 map = new ol.Map({
     layers: [
@@ -140,6 +146,8 @@ var popup = new ol.Overlay({
 map.addOverlay(popup);
 
 
+
+// decide popup show data and disappear
 map.on('pointermove', function(evt){
     var featureClusterNumber;
     var feature = map.forEachFeatureAtPixel(evt.pixel,
@@ -170,6 +178,7 @@ map.on('pointermove', function(evt){
     }
     
 });
+
 // change mouse cursor when over marker
 map.on('pointermove', function(e) {
     var pixel = map.getEventPixel(e.originalEvent);
