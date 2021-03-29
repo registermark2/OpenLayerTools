@@ -11,8 +11,8 @@
 }
 
 .map {
-  height: 600px;
-  width: 80%;
+  height: 1000px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -36,6 +36,8 @@
   border: 1px solid black;
 }
 .checkBoxGroup{
+  position: absolute;
+  top: 20px;
   /* display: inline-block; */
   padding:50px;
   font-size: 30px;
