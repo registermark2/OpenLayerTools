@@ -18,21 +18,21 @@
     <body>
     <!-- <button id="one" class="Station" onclick="addCluster();">雨量站</button>
     <button id="two" class="Station" onclick="removeCluster();">刪除</button> -->
-    <div class="checkBox">
-        <input id="checkBoxRainfallStation"  type="checkbox" >
-        <label >雨量站</label>
-        <input id="checkBoxWeatherStation"  type="checkbox" >
-        <label >氣象站</label>
-        <!-- <input id="checkBox"  type="checkbox" >
-        <label >局屬氣象站</label> -->
+    <div class="checkBoxGroup">
+        <input id="checkBoxRainfallStation" class="checkBox"  type="checkbox" >
+        <label >自動雨量站</label>
+        <input id="checkBox_O_A0001_001_WeatherStation" class="checkBox"  type="checkbox" >
+        <label >自動氣象站</label>
+        <input id="checkBox_O_A0003_001_WeatherStation" class="checkBox"  type="checkbox" >
+        <label >局屬氣象站</label>
         <div>
             <label>密集度</label>
-            <input id="distance" type="range" min="60" max="200" step="1" value="40" />
+            <input id="distance" type="range" min="80" max="200" step="10" value="40" />
         </div>
     </div>
-    <div class="mapPosition">
-        <div id="map" class="map"></div>
-    </div>
+    
+    <div id="map" class="map"></div>
+    
     
     <div id="popup" class="ol-popup">
         <a href="#" id="popup-closer" class="ol-popup-closer"></a>
