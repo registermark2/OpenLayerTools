@@ -7,37 +7,21 @@
 }  */
 *{
   /* border: 1px solid black; */
+  position: relative;
 }
 
 .map {
-  height: 800px;
+  height: 600px;
   width: 80%;
-  padding: 40px;
+  margin: 0 auto;
 }
-
 
 #distance{
   display: inline-block;
   width: 100px;
   /* padding: 10px; */
-  top: 50px;
+  /* top: 50p */
 }
-/* label{
-  padding: 10px;
-}
-input{
-  padding-left: 20px;
-} */
-
-
-.Station{
-  padding: 20px;
-  margin: 10px;
-  font-size: 20px;
-  border-radius: 10px;
-  outline:none;
-  /* border-style: none; */
-} 
 
 .stationPopup{
   /* padding-left: 50px;
@@ -51,20 +35,20 @@ input{
   display: inline-block;
   border: 1px solid black;
 }
-.checkBox{
-  display: inline-block;
+.checkBoxGroup{
+  /* display: inline-block; */
   padding:50px;
   font-size: 30px;
+  margin: 0 auto;
 }
+.checkBox{
+  width: 20px;
+  height: 20px;
+}
+
 input{
   padding-left: 20px;
 }
-.rangeBar{
-  padding: 20px;
-  font-size: 30px;
-}
-
-
 
 .ol-popup {
   position: absolute;
@@ -77,3 +61,4 @@ input{
   left: 20px;
   min-width: 200px;
 }
+

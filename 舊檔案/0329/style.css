@@ -7,7 +7,6 @@
 }  */
 *{
   /* border: 1px solid black; */
-  position: relative;
 }
 
 .map {
@@ -21,7 +20,7 @@
   display: inline-block;
   width: 100px;
   /* padding: 10px; */
-  /* top: 50p */
+  top: 50px;
 }
 /* label{
   padding: 10px;
@@ -52,20 +51,20 @@ input{
   display: inline-block;
   border: 1px solid black;
 }
-.checkBoxGroup{
-  /* display: inline-block; */
+.checkBox{
+  display: inline-block;
   padding:50px;
   font-size: 30px;
-  margin: 0 auto;
 }
-.checkBox{
-  width: 20px;
-  height: 20px;
-}
-
 input{
   padding-left: 20px;
 }
+.rangeBar{
+  padding: 20px;
+  font-size: 30px;
+}
+
+
 
 .ol-popup {
   position: absolute;
@@ -77,10 +76,4 @@ input{
   /* bottom: 15px; */
   left: 20px;
   min-width: 200px;
-}
-
-
-
-.map{
-  margin: 0 auto;
 }
