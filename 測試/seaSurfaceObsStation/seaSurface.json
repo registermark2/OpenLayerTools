@@ -1,0 +1,506 @@
+[
+ {
+   "id": "46694A",
+   "stationName": "龍洞資料浮標",
+   "stationNameEnglish": " Longdong Buoy",
+   "lat": " 25°05'48\"N",
+   "lon": " 121°55'19\"E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "46699A",
+   "stationName": "花蓮資料浮標",
+   "stationNameEnglish": " Hualien Buoy",
+   "lat": " 24°01'57\"N",
+   "lon": "121°37'49\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "46757B",
+   "stationName": "新竹資料浮標",
+   "stationNameEnglish": " Hsinchu Buoy",
+   "lat": " 24°45'19\"N",
+   "lon": "120°50'12\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "46714D",
+   "stationName": "小琉球資料浮標",
+   "stationNameEnglish": " Xiao Liuqiu Buoy",
+   "lat": "22°18'58\"N",
+   "lon": " 120°21'41\"E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "46761F",
+   "stationName": "成功浮球",
+   "stationNameEnglish": "Cheng-Kung Wave Station",
+   "lat": " 23°7'57\"N",
+   "lon": "121°25'12\"E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "C6AH2 ",
+   "stationName": "富貴角資料浮標",
+   "stationNameEnglish": " Fugui Cape Buoy",
+   "lat": " 25.306 N",
+   "lon": " 121.538E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "C6S62",
+   "stationName": "台東外洋資料浮標",
+   "stationNameEnglish": " Taitung Open Ocean",
+   "lat": " 21°45'17\"N",
+   "lon": "123°59'51\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "C6S94",
+   "stationName": "蘭嶼浮標",
+   "stationNameEnglish": " Lanyu Buoy",
+   "lat": " 22.07N",
+   "lon": "121.57E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "C6V27",
+   "stationName": "東沙島資料浮標",
+   "stationNameEnglish": " Pratas Buoy",
+   "lat": " 21°1'16.7\"N",
+   "lon": " 118°50'39.96\"E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "C6W08",
+   "stationName": "馬祖資料浮標",
+   "stationNameEnglish": " Matsu Buoy",
+   "lat": " 26°22'30\"N",
+   "lon": " 120°32'04\"E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "C6W10",
+   "stationName": "七美浮標",
+   "stationNameEnglish": "Chimei Buoy",
+   "lat": " 22°75'33\"N",
+   "lon": "119°41'83\"E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "C5W09",
+   "stationName": "東吉島波浪站 ",
+   "stationNameEnglish": "Dongjidao Wave Station ",
+   "lat": "23°15'23\"N",
+   "lon": "119°41'2\"E ",
+   "dep": "水利署"
+ },
+ {
+   "id": "46708A",
+   "stationName": "龜山島資料浮標",
+   "stationNameEnglish": " Guishandao Buoy",
+   "lat": "24°50'51\"N",
+   "lon": "121°55'35\"E",
+   "dep": "觀光局"
+ },
+ {
+   "id": "46706A",
+   "stationName": "蘇澳資料浮標",
+   "stationNameEnglish": " Su-ao Buoy",
+   "lat": "24°37'29\"N",
+   "lon": " 121°52'33\"E",
+   "dep": "水利署"
+ },
+ {
+   "id": "46787A",
+   "stationName": "金門資料浮標",
+   "stationNameEnglish": " Kinmen Buoy",
+   "lat": "24°22'48\"N",
+   "lon": " 118°24'48\"E",
+   "dep": "水利署"
+ },
+ {
+   "id": "46735A",
+   "stationName": "澎湖資料浮標",
+   "stationNameEnglish": " Penghu Buoy",
+   "lat": "23°43'37\"N",
+   "lon": " 119°33'7\"E",
+   "dep": "水利署"
+ },
+ {
+   "id": "46778A",
+   "stationName": "七股資料浮標",
+   "stationNameEnglish": " Qigu Buoy",
+   "lat": " 23°05'42\"N",
+   "lon": " 120°00'27\"E",
+   "dep": "水利署"
+ },
+ {
+   "id": "46759A",
+   "stationName": "鵝鑾鼻資料浮標",
+   "stationNameEnglish": " Eluanbi Buoy",
+   "lat": " 21°54'08\"N",
+   "lon": "120°49'22\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "WRA007",
+   "stationName": "台東資料浮標",
+   "stationNameEnglish": " Taitung Buoy",
+   "lat": " 22°43'20\"N",
+   "lon": " 121°08'24\"E",
+   "dep": "水利署"
+ },
+ {
+   "id": "COMC08",
+   "stationName": " 彌陀資料浮標",
+   "stationNameEnglish": " Keelung Buoy",
+   "lat": "25°09'15\"N",
+   "lon": " 121°47'06”E",
+   "dep": "水利署"
+ },
+ {
+   "id": "1102",
+   "stationName": " 淡水",
+   "stationNameEnglish": " Danshui",
+   "lat": " 25°10'33\"N",
+   "lon": " 121°25'00\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "11006",
+   "stationName": " 淡海",
+   "stationNameEnglish": " Danhai",
+   "lat": " 25°11'2.8\"N",
+   "lon": " 121°24'24.7\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1116",
+   "stationName": " 竹圍",
+   "stationNameEnglish": " Zhuwei",
+   "lat": " 25°07'12\"N",
+   "lon": " 121°14'07\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "112",
+   "stationName": " 新竹",
+   "stationNameEnglish": " Hsinchu",
+   "lat": " 24°51'01\"N",
+   "lon": " 120°54'44\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "113",
+   "stationName": " 外埔",
+   "stationNameEnglish": " Waipu",
+   "lat": " 24°39'05\"N",
+   "lon": " 120°46'18\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1146",
+   "stationName": "鹿港",
+   "stationNameEnglish": "Lukang",
+   "lat": "24.0849N",
+   "lon": "120.4204E",
+   "dep": "中央氣象局"
+ },
+ {
+   "id": "1156",
+   "stationName": " 萡子寮",
+   "stationNameEnglish": " Boziliao",
+   "lat": " 23°37'07\"N",
+   "lon": " 120°08'15\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1166",
+   "stationName": " 東石",
+   "stationNameEnglish": " Dongshi",
+   "lat": " 23°26'59\"N",
+   "lon": " 120°08'21.5\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1176",
+   "stationName": " 將軍",
+   "stationNameEnglish": " Jiangjun",
+   "lat": " 23°13'05\"N",
+   "lon": " 120°06'00\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1186",
+   "stationName": " 東港",
+   "stationNameEnglish": " Donggang",
+   "lat": " 22°27'50\"N",
+   "lon": " 120°26'15\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1196",
+   "stationName": " 後壁湖",
+   "stationNameEnglish": " Houbihu",
+   "lat": " 21°56'45\"N",
+   "lon": " 120°44'43.2",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1206",
+   "stationName": " 麟山鼻",
+   "stationNameEnglish": " Linshanbi",
+   "lat": " 25°17'04\"N",
+   "lon": " 121°30'38\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "12191",
+   "stationName": " 長潭里",
+   "stationNameEnglish": " ZhangTanLi",
+   "lat": " 25°08'25.7\"N",
+   "lon": " 121°47'59.3\"E",
+   "dep": " 內政部"
+ },
+ {
+   "id": "1226",
+   "stationName": " 龍洞",
+   "stationNameEnglish": " Longdong",
+   "lat": " 25°05'51\"N",
+   "lon": " 121°55'05\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1236",
+   "stationName": " 烏石",
+   "stationNameEnglish": " Wushi",
+   "lat": " 24°52'07\"N",
+   "lon": " 121°50'17\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1246",
+   "stationName": " 蘇澳",
+   "stationNameEnglish": " Su-ao",
+   "lat": " 24°35'32.76\"N",
+   "lon": " 121°52'0.92\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1256",
+   "stationName": " 花蓮",
+   "stationNameEnglish": " Hualien",
+   "lat": " 23°58'49\"N",
+   "lon": " 121°37'23\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1276",
+   "stationName": " 成功",
+   "stationNameEnglish": " Chenggong",
+   "lat": " 23°05'20\"N",
+   "lon": " 121°22'36\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1306",
+   "stationName": " 台北港",
+   "stationNameEnglish": " Taipei Port",
+   "lat": " 25°09'18\"N",
+   "lon": " 121°23'32.8",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1315",
+   "stationName": " 彭佳嶼",
+   "stationNameEnglish": " Pengjiayu",
+   "lat": " 25°37'31\"N",
+   "lon": " 122°04'32\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1356",
+   "stationName": " 澎湖",
+   "stationNameEnglish": " Penghu",
+   "lat": " 23°33'42\"N",
+   "lon": " 119°34'41.3",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "13606",
+   "stationName": " 七美",
+   "stationNameEnglish": " Cimei",
+   "lat": " 23°11'24\"N",
+   "lon": " 119°25'12\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "13406",
+   "stationName": "吉貝",
+   "stationNameEnglish": " Jibei",
+   "lat": "23.7386N",
+   "lon": "119.6132E",
+   "dep": "119.6132E"
+ },
+ {
+   "id": "1366",
+   "stationName": " 塭港",
+   "stationNameEnglish": " Wengang",
+   "lat": " 23°28'00\"N",
+   "lon": " 120°07'21\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1386",
+   "stationName": " 小琉球",
+   "stationNameEnglish": " Xiao Liuqiu",
+   "lat": " 22°21'13\"N",
+   "lon": " 120°22'52\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1396",
+   "stationName": " 蘭嶼",
+   "stationNameEnglish": " Lanyu",
+   "lat": " 22°03'29.13\"N",
+   "lon": " 121°30'25.32\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1436",
+   "stationName": " 台中港",
+   "stationNameEnglish": " Taichung Port",
+   "lat": " 24°17'16\"N",
+   "lon": " 120°31'59\"E",
+   "dep": " 內政部"
+ },
+ {
+   "id": "1456",
+   "stationName": " 麥寮",
+   "stationNameEnglish": " Mailiao",
+   "lat": " 23°47'10\"N",
+   "lon": " 120°09'38\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1486",
+   "stationName": " 高雄",
+   "stationNameEnglish": " Kaohsiung",
+   "lat": " 22°36'52\"N",
+   "lon": " 120°17'18\"E",
+   "dep": " 內政部"
+ },
+ {
+   "id": "1496",
+   "stationName": " 蟳廣嘴",
+   "stationNameEnglish": " Xunguangzui",
+   "lat": " 21°59'08\"N",
+   "lon": " 120°42'43\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1516",
+   "stationName": " 基隆",
+   "stationNameEnglish": " Keelung",
+   "lat": " 25°09'18\"N",
+   "lon": " 121°45'04.7E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1566",
+   "stationName": " 石梯",
+   "stationNameEnglish": " Shiti",
+   "lat": " 23°29' \"N",
+   "lon": " 121°30' \"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1586",
+   "stationName": " 富岡",
+   "stationNameEnglish": " Fugang",
+   "lat": " 22°47'05\"N",
+   "lon": " 121°11'E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1596",
+   "stationName": " 大武",
+   "stationNameEnglish": " Dawu",
+   "lat": " 22°20'15\"N",
+   "lon": " 120°53'50\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1676",
+   "stationName": " 綠島",
+   "stationNameEnglish": " Ludao",
+   "lat": " 22°39' N",
+   "lon": " 121°27'E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1786",
+   "stationName": " 永安",
+   "stationNameEnglish": " Yong-an",
+   "lat": " 22°48'55\"N",
+   "lon": " 120°11'26\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1795",
+   "stationName": " 嘉和",
+   "stationNameEnglish": " Jiahe",
+   "lat": " 22°19'26\"N",
+   "lon": " 120°37'35\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1826",
+   "stationName": " 福隆",
+   "stationNameEnglish": " Fulong",
+   "lat": " 25°1'18\"N",
+   "lon": " 121°57'00\"E",
+   "dep": " 中央氣象局"
+ },
+ {
+   "id": "1926",
+   "stationName": " 馬祖",
+   "stationNameEnglish": " Matsu",
+   "lat": " 26°09'42\"N",
+   "lon": " 119°56'34\"E",
+   "dep": " 內政部"
+ },
+ {
+   "id": "1956",
+   "stationName": " 料羅灣",
+   "stationNameEnglish": " Kinmen",
+   "lat": " 24°24'31\"N",
+   "lon": " 118°25'48\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "1966",
+   "stationName": " 水頭",
+   "stationNameEnglish": " Shuitou",
+   "lat": " 24°25'17\"N",
+   "lon": " 118°17'22\"E",
+   "dep": " 水利署"
+ },
+ {
+   "id": "198",
+   "stationName": " 東沙島",
+   "stationNameEnglish": " Pratas",
+   "lat": " 20°42'6.80\"N",
+   "lon": " 116°43'43.6\"E",
+   "dep": " 內政部"
+ },
+ {
+   "id": "19901",
+   "stationName": " 南沙",
+   "stationNameEnglish": " Nansha ",
+   "lat": " 10.3736N",
+   "lon": "114.3603E",
+   "dep": "114.3603E"
+ }
+]
