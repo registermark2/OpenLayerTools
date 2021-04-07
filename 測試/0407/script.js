@@ -286,13 +286,13 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
     $.getJSON(
         apiPath,
         function (res) {
-            console.log(res);
+            // console.log(res);
             O_B0075_001_tideHight = res.records.seaSurfaceObs.location;
         }
     )
     console.log(O_B0075_001_tideHight);
-    
-    
+
+
     $.getJSON(
         seaSurfaceLoc,
         function (res) {
@@ -302,7 +302,7 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
             var features = new Array(count);
             for (var i = 0; i < count; ++i) {
                 // 查詢是否有相同測站
-                // for(var stationNumber=0; stationNumber<O_B0075_001_tideHight.length; stationNumber++){
+                // for (var stationNumber = 0; stationNumber < O_B0075_001_tideHight.length; stationNumber++) {
 
                 // }
 
@@ -313,6 +313,7 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
                     geometry: new ol.geom.Point(coordinates),
                     district: res[i].stationName,
                     cataId: "O_B0075_001",
+                    id: res[i].id,
                     // value: 
                 });
             }
@@ -379,11 +380,12 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
 
 // select checkbox show data
 var seaSurfaceFlag = 0
-$("#seaSurface").click(function () {
+$(".seaTide").click(function () {
     if (seaSurfaceFlag == 0) {
         console.log("123");
         O_B0075_001_API("/測試/0406/seaSurfaceLoc.json", O_B0075_001_URL, O_B0075_001_Style);
         seaSurfaceFlag = 1;
+        lineChart()
     } else {
         map.removeLayer(O_B0075_001_stationCluster);
         seaSurfaceFlag = 0;
@@ -393,7 +395,7 @@ $("#seaSurface").click(function () {
 
 
 var rainfallFlag = 0;
-$("#rainfall").click(function () {
+$("#rainfallButton").click(function () {
     if (rainfallFlag == 0) {
         console.log("123");
 
@@ -480,7 +482,7 @@ map.on('pointermove', function (evt) {
     var feature = map.forEachFeatureAtPixel(evt.pixel,
         function (feature) {
             var features = feature.get('features');
-            console.log(feature);
+            // console.log(feature);
             featureClusterNumber = feature.get('features').length;
             return features;
         });
@@ -515,7 +517,7 @@ map.on('pointermove', function (evt) {
                 overlay.setPosition(coordinates);
             }
             if (feature[0].get('cataId') == "O_B0075_001") {
-                content.innerHTML = '<div>' + "測試" + '</div>';
+                content.innerHTML = '<div>' + "站點: " + feature[0].get('id') + '</div>';
 
                 overlay.setPosition(coordinates);
             }
@@ -558,3 +560,60 @@ map.on('pointermove', function (e) {
     map.getTarget().style.cursor = hit ? 'pointer' : '';
 });
 // }
+
+
+
+// id:[]
+
+
+// control chartJS
+// var ctx = document.getElementById("myChart").getContext('2d');
+
+lineChart = function () {
+    var ctx = document.getElementById("myChart").getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["102年", "103年", "104年", "105年", "106年"],
+            datasets: [{
+                    label: '測試',
+                    data: [183.7, 199.2, 201.5, 196.8, 183.4],
+                    fill: false,
+                    backgroundColor: 'rgba(212, 106, 106, 1)',
+                    borderColor: 'rgba(212, 106, 106, 1)'
+                },
+                {
+                    label: '測試',
+                    data: [325.1, 321.4, 323.4, 321.4, 322.4],
+                    fill: false,
+                    backgroundColor: 'rgba(128, 21, 21, 1)',
+                    borderColor: 'rgba(128, 21, 21, 1)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+
+
+var showFlag = 0;
+$(".seaTide").click(function () {
+    if (showFlag == 0) {
+        console.log("123");
+        document.getElementById("chartJs").style.display = "block";
+        showFlag = 1;
+    } else {
+        console.log("456");
+        document.getElementById("chartJs").style.display = "none";
+        showFlag = 0;
+    }
+});
