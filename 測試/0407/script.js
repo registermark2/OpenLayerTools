@@ -89,7 +89,7 @@ O_A0002_001_readRainfallAPI = function (apiPath, featureStyle) {
                     time: res.records.location[i].time.obsTime,
                     // district: res.records.location[i].parameter[1].parameterValue,
                     district: res.records.location[i].locationName,
-                    cataId: "O_A0002_001_readRainfallAPI",
+                    cataId: "O_A0002_001",
                 });
             }
 
@@ -349,8 +349,8 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
         }
     )
     $.getJSON(
-        apiPath, 
-        function(res){
+        apiPath,
+        function (res) {
             console.log(res);
         }
     )
@@ -362,53 +362,35 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
 
 
 // select checkbox show data
-$("#checkBoxRainfallStation").change(function () {
-    if (this.checked) {
-        readRainfallAPI(rainfallStationAPI_URL, rainfallStyle);
-        // test();
+var seaSurfaceFlag = 0
+$("#seaSurface").click(function () {
+    if (seaSurfaceFlag == 0) {
+        console.log("123");
+        O_B0075_001_API("/測試/0406/seaSurfaceLoc.json", O_B0075_001_URL, O_B0075_001_Style);
+        seaSurfaceFlag = 1;
     } else {
-        map.removeLayer(rainfallStationClusters);
-
+        map.removeLayer(O_B0075_001_stationCluster);
+        seaSurfaceFlag=0;
     }
 });
 
-$("#checkBox_O_A0001_001_WeatherStation").change(function () {
-    if (this.checked) {
-        O_A0001_001_weatherStationAPI(O_A0001_001_weatherStationAPI_URL, O_A0001_001_Style);
-    } else {
-        map.removeLayer(O_A0001_001_weatherStationCluster);
-    }
-});
-
-$("#checkBox_O_A0003_001_WeatherStation").change(function () {
-    if (this.checked) {
-        O_A0003_001_weatherStationAPI(O_A0003_001_weatherStationAPI_URL, O_A0003_001_Style);
-    } else {
-        map.removeLayer(O_A0003_001_weatherStationCluster);
-    }
-});
-$("#O_B0075_001_station").change(function () {
-    O_B0075_001_API("./seaSurfaceLoc.json", O_B0075_001_URL, O_B0075_001_Style);
-});
 
 
-
-
-// 氣象資料
-$("#station").change(function () {
-    if (this.checked) {
+var rainfallFlag = 0;
+$("#rainfall").click(function () {
+    if (rainfallFlag == 0) {
+        console.log("123");
         O_A0002_001_readRainfallAPI(rainfallStationAPI_URL, rainfallStyle);
         O_A0001_001_weatherStationAPI(O_A0001_001_weatherStationAPI_URL, O_A0001_001_Style);
         O_A0003_001_weatherStationAPI(O_A0003_001_weatherStationAPI_URL, O_A0003_001_Style);
-
+        rainfallFlag = 1;
     } else {
         map.removeLayer(rainfallStationClusters);
         map.removeLayer(O_A0001_001_weatherStationCluster);
         map.removeLayer(O_A0003_001_weatherStationCluster);
+        rainfallFlag = 0;
     }
 });
-
-
 
 
 
@@ -448,7 +430,7 @@ map = new ol.Map({
     view: new ol.View({
         projection: 'EPSG:3857',
         center: ol.proj.fromLonLat([120.846642, 23.488793]),
-        zoom: 8.3
+        zoom: 7.5
     }),
     overlay: [overlay],
     controls: [

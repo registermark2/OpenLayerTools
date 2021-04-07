@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+    <script
+        src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL">
+    </script>
+    <script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <div class="leftNav">
+        <div id="rainfall" class="buttom rainfall">
+            <img src="/測試/svg/cloud-computing.svg" alt="">
+            <!-- <div class="rainfallContent">
+                <div class="test"></div>
+                <div class="test"></div>
+                <div class="test"></div>
+            </div> -->
+            <div class="adjustDistance">
+                <label>密集度</label>
+                <input id="distance" type="range" min="80" max="200" step="10" value="40" />
+            </div>
+        </div>
+        <div id="seaSurface" class="buttom seaSurface">
+            <img src="/測試/svg/sea-waves.svg">
+            <div class="seaSurfaceContent">
+                <div class="stationOption test">潮位</div>
+                <div class="stationOption test">浪高</div>
+                <div class="stationOption test">海溫</div>
+                <div class="stationOption test">氣溫</div>
+                <div class="stationOption test">氣壓</div>
+                <!-- <div class="test">123</div> -->
+            </div>
+        </div>
+        <div class="buttom "></div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
