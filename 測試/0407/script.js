@@ -64,7 +64,7 @@ var O_B0075_001_Style = {
     },
     text: '#fff',
 }
-
+var O_B0075_001_tideHight;
 
 
 // read API
@@ -79,7 +79,7 @@ O_A0002_001_readRainfallAPI = function (apiPath, featureStyle) {
             var count = Object.keys(res.records.location).length;
             var features = new Array(count);
             for (var i = 0; i < count; ++i) {
-                console.log(res);
+                // console.log(res);
                 // console.log(res.records.location[i].weatherElement[0].elementValue);
                 var coordinates = ol.proj.fromLonLat([res.records.location[i].lon, res.records.location[i].lat]);
                 features[i] = new ol.Feature({
@@ -96,7 +96,7 @@ O_A0002_001_readRainfallAPI = function (apiPath, featureStyle) {
             var source = new ol.source.Vector({
                 features: features
             });
-            console.log
+            // console.log
             rainfallStationClusterSource = new ol.source.Cluster({
                 distance: parseInt(distance.value, 10),
                 source: source
@@ -284,6 +284,16 @@ O_A0003_001_weatherStationAPI = function (apiPath, featureStyle) {
 
 O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
     $.getJSON(
+        apiPath,
+        function (res) {
+            console.log(res);
+            O_B0075_001_tideHight = res.records.seaSurfaceObs.location;
+        }
+    )
+    console.log(O_B0075_001_tideHight);
+    
+    
+    $.getJSON(
         seaSurfaceLoc,
         function (res) {
             var distance = document.getElementById('distance');
@@ -291,14 +301,19 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
             var count = Object.keys(res).length;
             var features = new Array(count);
             for (var i = 0; i < count; ++i) {
-                // console.log(res[i].lon);
-                // console.log(res[i].lat);
-                // console.log(res);
+                // 查詢是否有相同測站
+                // for(var stationNumber=0; stationNumber<O_B0075_001_tideHight.length; stationNumber++){
+
+                // }
+
+
+
                 var coordinates = ol.proj.fromLonLat([res[i].lon, res[i].lat]);
                 features[i] = new ol.Feature({
                     geometry: new ol.geom.Point(coordinates),
                     district: res[i].stationName,
                     cataId: "O_B0075_001",
+                    // value: 
                 });
             }
 
@@ -348,12 +363,13 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
             map.addLayer(O_B0075_001_stationCluster);
         }
     )
-    $.getJSON(
-        apiPath,
-        function (res) {
-            console.log(res);
-        }
-    )
+    // $.getJSON(
+    //     apiPath,
+    //     function (res) {
+    //         console.log(res);
+    //         O_B0075_001_tideHight = res
+    //     }
+    // )
 }
 
 
@@ -370,7 +386,7 @@ $("#seaSurface").click(function () {
         seaSurfaceFlag = 1;
     } else {
         map.removeLayer(O_B0075_001_stationCluster);
-        seaSurfaceFlag=0;
+        seaSurfaceFlag = 0;
     }
 });
 
@@ -380,6 +396,7 @@ var rainfallFlag = 0;
 $("#rainfall").click(function () {
     if (rainfallFlag == 0) {
         console.log("123");
+
         O_A0002_001_readRainfallAPI(rainfallStationAPI_URL, rainfallStyle);
         O_A0001_001_weatherStationAPI(O_A0001_001_weatherStationAPI_URL, O_A0001_001_Style);
         O_A0003_001_weatherStationAPI(O_A0003_001_weatherStationAPI_URL, O_A0003_001_Style);
