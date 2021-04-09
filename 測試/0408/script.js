@@ -5,9 +5,14 @@ var O_A0001_001_weatherStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest
 //氣象站
 var O_A0003_001_weatherStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=24R&parameterName=CITY,TOWN";
 //海象監測資料
-var O_B0075_001_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel,waveHeight,waveDirection,seaTemperature,temperature&sort=dataTime";
+var O_B0075_001_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel,waveHeight,waveDirection,wavePeriod,seaTemperature,temperature";
 var O_B0075_001_seaTide_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel"
 // var O_B0075_001_
+
+
+
+
+var flag;
 
 
 var map;
@@ -48,6 +53,7 @@ var O_A0003_001_Style = {
 }
 
 
+
 var O_B0075_001_stationCluster;
 var O_B0075_001_stationClusterSource;
 var O_B0075_001_Style = {
@@ -58,14 +64,10 @@ var O_B0075_001_Style = {
     },
     text: '#fff',
 }
-var O_B0075_001_tideHight = {};
-var level_1_seaTide;
-var level_2_seaTide;
-var level_3_seaTide;
-var seaTideFeatures = [];
-var level_seaTide;
+var O_B0075_001_tideHight={};
 
 
+// read API
 O_A0002_001_readRainfallAPI = function (apiPath, featureStyle) {
     $.getJSON(
         apiPath,
@@ -283,128 +285,110 @@ O_A0003_001_weatherStationAPI = function (apiPath, featureStyle) {
 
 
 
-
-
-// read API
 O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
     $.getJSON(
         apiPath,
         function (res) {
             console.log(res);
             O_B0075_001_tideStationCount = res.records.seaSurfaceObs.location;
-            for (let i = 0; i < O_B0075_001_tideStationCount.length; i++) {
-                stationID = res.records.seaSurfaceObs.location[i].station.stationID;
-                // console.log(stationID);
+            for(let i =0;i<O_B0075_001_tideStationCount.length; i++){
+                
                 // init every array
-                let tempSeaTideData = [];
-                let tempSeaTideTime = [];
-                for (let temp = 0; temp < O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime.length; temp++) {
+                let tempSeaTideData=[];
+                for (let temp=0;temp<O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime.length;temp++){
                     //push seaTide 
-                    tempSeaTideData.push(O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime[temp].weatherElements.waveHeight);
-                    tempSeaTideTime.push(O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime[temp].dataTime);
-                    // console.log(O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime[temp].weatherElements.tideHeight);
+                    tempSeaTideData.push(O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime[temp].weatherElements.tideHeight);
+                    console.log(O_B0075_001_tideStationCount[i].stationObsTimes.stationObsTime[temp].weatherElements.tideHeight);
                 }
-                O_B0075_001_tideHight[stationID] = {
-                    data: tempSeaTideData,
-                    time: tempSeaTideTime
-                };
-
             }
-            $.getJSON(
-                seaSurfaceLoc,
-                function (res) {
-                    // console.log(res);
-                    var count = Object.keys(res).length;
-                    // console.log(count);
-                    for (var i = 0; i < count; i++) {
-                        var coordinates = ol.proj.fromLonLat([res[i].lon, res[i].lat]);
-                        // console.log(coordinates);
+        }
+    )
+    // console.log(O_B0075_001_tideHight);
+    //抓本機 整理後的json浮標站座標
+    $.getJSON(
+        seaSurfaceLoc,
+        function (res) {
+            var distance = document.getElementById('distance');
+            // console.log(res);
+            var count = Object.keys(res).length;
+            var features = new Array(count);
+            for (var i = 0; i < count; ++i) {
 
-                        if (res[i].id in O_B0075_001_tideHight) {
-                            console.log(res[i].id);
+                var coordinates = ol.proj.fromLonLat([res[i].lon, res[i].lat]);
+                features[i] = new ol.Feature({
+                    geometry: new ol.geom.Point(coordinates),
+                    district: res[i].stationName,
+                    cataId: "O_B0075_001",
+                    id: res[i].id,
+                    // value: 
+                });
+            }
 
+            var source = new ol.source.Vector({
+                features: features
+            });
+            // console.log
+            O_B0075_001_stationClusterSource = new ol.source.Cluster({
+                distance: parseInt(distance.value, 10),
+                source: source
+            });
 
-                            //get seaTide 
-                            if (O_B0075_001_tideHight[res[i].id].data[0] == 'undefined' ||
-                                O_B0075_001_tideHight[res[i].id].data[0] == "None") {
-                                continue;
-                            }
-
-
-                            var tempTimeTransfer = []
-                            // console.log(res[i].stationName);
-                            for (var x = 0; x < O_B0075_001_tideHight[res[i].id].time.length; x++) {
-                                console.log(O_B0075_001_tideHight[res[i].id].time[x].slice(0, 13));
-                                tempTimeTransfer.push(O_B0075_001_tideHight[res[i].id].time[x].slice(0, 19));
-                                console.log(tempTimeTransfer);
-                            }
-
-
-                            seaTideFeatures.push(new ol.Feature({
-                                geometry: new ol.geom.Point(coordinates),
-                                id: res[i].id,
-                                data: O_B0075_001_tideHight[res[i].id].data,
-                                // time: O_B0075_001_tideHight[res[i].id].time,
-                                time: tempTimeTransfer,
-                                level: O_B0075_001_tideHight[res[i].id].data[0],
-                                stationName: res[i].stationName,
-                                cataId: 'O_B0075_001',
-                            }))
-                        }
-                    }
-                    var level_source = new ol.source.Vector({
-                        features: seaTideFeatures
-                    });
-
-                    level_seaTide = new ol.layer.Vector({
-                        source: level_source,
-                        style: function (feature) {
-                            // console.log(feature.get('data')[0]);
-                            var radiusSize;
-                            var imageFillColor;
-                            if (feature.get('data')[0] < 0.5) {
-                                radiusSize = 8;
-                                imageFillColor = '#0090ff';
-                            }
-                            if (feature.get('data')[0] > 0.5 & feature.get('data')[0] < 1) {
-                                radiusSize = 10;
-                                imageFillColor = '#b5ba28';
-                            }
-                            if (feature.get('data')[0] > 1) {
-                                radiusSize = 15;
-                                imageFillColor = '#E85459';
-                            }
-                            var style = new ol.style.Style({
-                                image: new ol.style.Circle({
-                                    radius: radiusSize,
-                                    stroke: new ol.style.Stroke({
-                                        color: '#fff'
-                                    }),
-                                    fill: new ol.style.Fill({
-                                        color: imageFillColor
-                                    })
+            var styleCache = {};
+            O_B0075_001_stationCluster = new ol.layer.Vector({
+                source: O_B0075_001_stationClusterSource,
+                style: function (feature) {
+                    var size = feature.get('features').length;
+                    var style = styleCache[size];
+                    if (!style) {
+                        style = new ol.style.Style({
+                            image: new ol.style.Circle({
+                                radius: 15,
+                                stroke: new ol.style.Stroke({
+                                    color: featureStyle.image.strokeColor
                                 }),
-                                text: new ol.style.Text({
-                                    text: feature.get('data')[0],
-                                    fill: new ol.style.Fill({
-                                        color: '#fff'
-                                    })
+                                fill: new ol.style.Fill({
+                                    color: featureStyle.image.fillColor
                                 })
-                            });
-                            return style;
-                        }
-                    });
-                    // lineChart();
-                    map.addLayer(level_seaTide);
+                            }),
+                            text: new ol.style.Text({
+                                text: size.toString(),
+                                fill: new ol.style.Fill({
+                                    color: featureStyle.text
+                                })
+                            })
+                        });
+                        styleCache[size] = style;
+                    }
+                    return style;
                 }
-            )
-        },
-        // console.log(O_B0075_001_tideHight),
+            });
+
+            distance.addEventListener('input', function () {
+                O_B0075_001_stationClusterSource.setDistance(parseInt(distance.value, 10));
+
+            });
+            map.addLayer(O_B0075_001_stationCluster);
+        }
     )
 }
 
 
 // select checkbox show data
+var seaSurfaceFlag = 0
+$(".seaTide").click(function () {
+    if (seaSurfaceFlag == 0) {
+        console.log("123");
+        O_B0075_001_API("./seaTide.json", O_B0075_001_seaTide_URL, O_B0075_001_Style);
+        seaSurfaceFlag = 1;
+        lineChart()
+    } else {
+        map.removeLayer(O_B0075_001_stationCluster);
+        seaSurfaceFlag = 0;
+    }
+});
+
+
+
 var rainfallFlag = 0;
 $("#rainfallButton").click(function () {
     if (rainfallFlag == 0) {
@@ -423,20 +407,6 @@ $("#rainfallButton").click(function () {
 });
 
 
-
-var seaSurfaceFlag = 0
-$(".seaTide").click(function () {
-    if (seaSurfaceFlag == 0) {
-        // console.log("123");
-        O_B0075_001_API("SeaTide.json", O_B0075_001_URL, O_B0075_001_Style);
-        seaSurfaceFlag = 1;
-        // lineChart()
-    } else {
-        map.removeLayer(level_seaTide);
-        document.getElementById("chartJs").style.display = "none";
-        seaSurfaceFlag = 0;
-    }
-});
 
 
 
@@ -461,6 +431,8 @@ var wmtsMap = new ol.layer.Tile({
         url: 'https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}.png'
     })
 });
+
+
 
 
 
@@ -504,19 +476,10 @@ map.on('pointermove', function (evt) {
     var featureCLusterDistrict;
     var feature = map.forEachFeatureAtPixel(evt.pixel,
         function (feature) {
-            if (feature.get('cataId') == 'O_B0075_001') {
-                // var coordinates = feature.getGeometry().getCoordinates();
-                // popup.setPosition(coordinates);
-                // document.getElementById("popup").classList.add("ol-popup");
-                // content.innerHTML = '<div>' + "站點: " + feature.get('stationName') + '</div>';
-                // overlay.setPosition(coordinates);
-
-            } else {
-                var features = feature.get('features');
-                // console.log(feature);
-                featureClusterNumber = feature.get('features').length;
-                return features;
-            }
+            var features = feature.get('features');
+            // console.log(feature);
+            featureClusterNumber = feature.get('features').length;
+            return features;
         });
     if (feature) {
         var coordinates = feature[0].getGeometry().getCoordinates();
@@ -585,58 +548,42 @@ map.on('pointermove', function (evt) {
 
 });
 
-
-// }
-
-
-map.on('click', function (evt) {
-    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
-        return feature;
-    });
-    if (feature) {
-        if (feature.get('cataId') == 'O_B0075_001') {
-            // document.getElementById("chartJs").style.display = "none";
-            var pieChartContent = document.getElementById('chartJs');
-            pieChartContent.innerHTML = '&nbsp;';
-            $('#chartJs').append('<canvas id="myChart"></canvas>');
-
-            // console.log(feature);
-            // console.log(feature.get('data'));
-            lineChart(feature.get('stationName'), feature.get('data'), feature.get('time'));
-            document.getElementById("chartJs").style.display = "block";
-        }
-    } else {
-        document.getElementById("chartJs").style.display = "none";
-    }
-});
-
 // change mouse cursor when over marker
 map.on('pointermove', function (e) {
     var pixel = map.getEventPixel(e.originalEvent);
     var hit = map.hasFeatureAtPixel(pixel);
     map.getTarget().style.cursor = hit ? 'pointer' : '';
 });
+// }
+
+
+
 
 
 
 // chart JS 
 
-lineChart = function (stationName, data, time) {
-    var chart;
+lineChart = function () {
     var ctx = document.getElementById("myChart").getContext('2d');
-    chart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'line',
         data: {
-            // labels: ["102年", "103年", "104年", "105年", "106年"],
-            labels: time,
+            labels: ["102年", "103年", "104年", "105年", "106年"],
             datasets: [{
-                label: stationName,
-                // data: [183.7, 199.2, 201.5, 196.8, 183.4],
-                data: data,
-                fill: false,
-                backgroundColor: 'rgba(212, 106, 106, 1)',
-                borderColor: 'rgba(212, 106, 106, 1)'
-            }, ]
+                    label: '測試',
+                    data: [183.7, 199.2, 201.5, 196.8, 183.4],
+                    fill: false,
+                    backgroundColor: 'rgba(212, 106, 106, 1)',
+                    borderColor: 'rgba(212, 106, 106, 1)'
+                },
+                {
+                    label: '測試',
+                    data: [325.1, 321.4, 323.4, 321.4, 322.4],
+                    fill: false,
+                    backgroundColor: 'rgba(128, 21, 21, 1)',
+                    borderColor: 'rgba(128, 21, 21, 1)'
+                }
+            ]
         },
         options: {
             scales: {
@@ -649,3 +596,18 @@ lineChart = function (stationName, data, time) {
         }
     });
 }
+
+
+
+var showFlag = 0;
+$(".seaTide").click(function () {
+    if (showFlag == 0) {
+        console.log("123");
+        document.getElementById("chartJs").style.display = "block";
+        showFlag = 1;
+    } else {
+        console.log("456");
+        document.getElementById("chartJs").style.display = "none";
+        showFlag = 0;
+    }
+});

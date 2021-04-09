@@ -135,8 +135,8 @@ img {
 #chartJs{
     display: none;
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 10px;
+    right: 10px;
     width: 500px;
     height: 250px;
     background-color: rgba(255, 254, 254, 0.787);

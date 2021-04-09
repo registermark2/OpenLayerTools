@@ -64,7 +64,7 @@ var O_B0075_001_Style = {
     },
     text: '#fff',
 }
-var O_B0075_001_tideHight;
+var O_B0075_001_tideHight={};
 
 
 // read API
@@ -288,10 +288,35 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
         function (res) {
             // console.log(res);
             O_B0075_001_tideHight = res.records.seaSurfaceObs.location;
+            // for(let i =0;i<res.records.seaSurfaceObs.location.length; i++){
+            //     let tempSeaTideData=[];
+            //     for (let temp=0;temp<O_B0075_001_tideHight[i].stationObsTimes.stationObsTime.length;temp++){
+            //         tempSeaTideData.push(res.records.seaSurfaceObs.location.stationObsTimes.stationObsTime[i].weatherElements.tideHeight);
+            //         console.log(res.records.seaSurfaceObs.location.stationObsTimes.stationObsTime[i].weatherElements.tideHeight);
+            //     }
+                
+            //     // O_B0075_001_tideHight[
+            //     //     res.records.seaSurfaceObs.location[i].station.stationID
+            //     // ]= 
+            // }
+            console.log(O_B0075_001_tideHight);
+            for(var i =0;i<O_B0075_001_tideHight.length;i++){
+                console.log("ID");
+                console.log(O_B0075_001_tideHight[i].station.stationID)
+                let tempSeaTideData=[];
+                // console.log(O_B0075_001_tideHight[i].stationObsTimes.stationObsTime)
+                for(var y=0;y<O_B0075_001_tideHight[i].stationObsTimes.stationObsTime.length;y++){
+                    console.log("Data");
+                    console.log(O_B0075_001_tideHight[i].stationObsTimes.stationObsTime[y].weatherElements.tideHeight);
+                    // tempSeaTideData.push(O_B0075_001_tideHight[i].stationObsTimes.stationObsTime[y].weatherElements.tideHeight);
+                }
+                // dataID= O_B0075_001_tideHight[i].station.stationID;
+                // O_B0075_001_tideHight[dataID]=tempSeaTideData;
+            }
+            // console.log(O_B0075_001_tideHight)
         }
     )
-    console.log(O_B0075_001_tideHight);
-
+    
 
     $.getJSON(
         seaSurfaceLoc,
@@ -364,18 +389,7 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
             map.addLayer(O_B0075_001_stationCluster);
         }
     )
-    // $.getJSON(
-    //     apiPath,
-    //     function (res) {
-    //         console.log(res);
-    //         O_B0075_001_tideHight = res
-    //     }
-    // )
 }
-
-
-
-
 
 
 // select checkbox show data
@@ -563,11 +577,10 @@ map.on('pointermove', function (e) {
 
 
 
-// id:[]
 
 
-// control chartJS
-// var ctx = document.getElementById("myChart").getContext('2d');
+
+// chart JS 
 
 lineChart = function () {
     var ctx = document.getElementById("myChart").getContext('2d');
