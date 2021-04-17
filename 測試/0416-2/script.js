@@ -1,12 +1,12 @@
 //雨量
-var rainfallStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=NOW&parameterName=CITY,TOWN,ATTRIBUTE";
+const rainfallStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=NOW&parameterName=CITY,TOWN,ATTRIBUTE";
 //氣象站
-var O_A0001_001_weatherStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=H_24R&parameterName%EF%BC%8C=CITY,TOWN";
+const O_A0001_001_weatherStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=H_24R&parameterName%EF%BC%8C=CITY,TOWN";
 //氣象站
-var O_A0003_001_weatherStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=24R&parameterName=CITY,TOWN";
+const O_A0003_001_weatherStationAPI_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&elementName=24R&parameterName=CITY,TOWN";
 //海象監測資料
-var O_B0075_001_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel,waveHeight,waveDirection,seaTemperature,temperature&sort=dataTime";
-var O_B0075_001_seaTide_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel"
+const O_B0075_001_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel,waveHeight,waveDirection,seaTemperature,temperature&sort=dataTime";
+const O_B0075_001_seaTide_URL = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-B0075-001?Authorization=CWB-326DAE79-B70E-4DD3-BC36-07B077E82CAB&weatherElement=tideHeight,tideLevel"
 // var O_B0075_001_
 
 
@@ -59,6 +59,9 @@ var O_B0075_001_Style = {
     text: '#fff',
 }
 var O_B0075_001_tideHight = {};
+var level_1_seaTide;
+var level_2_seaTide;
+var level_3_seaTide;
 var seaTideFeatures = [];
 var level_seaTide;
 
@@ -331,9 +334,9 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
                             var tempTimeTransfer = []
                             // console.log(res[i].stationName);
                             for (var x = 0; x < O_B0075_001_tideHight[res[i].id].time.length; x++) {
-                                // console.log(O_B0075_001_tideHight[res[i].id].time[x].slice(4, 13));
-                                tempTimeTransfer.push(O_B0075_001_tideHight[res[i].id].time[x].slice(5, 19));
-                                // console.log(tempTimeTransfer);
+                                console.log(O_B0075_001_tideHight[res[i].id].time[x].slice(0, 13));
+                                tempTimeTransfer.push(O_B0075_001_tideHight[res[i].id].time[x].slice(0, 19));
+                                console.log(tempTimeTransfer);
                             }
 
 
@@ -359,17 +362,16 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
                             // console.log(feature.get('data')[0]);
                             var radiusSize;
                             var imageFillColor;
-                            var lastOne = feature.get('data').length-1;
-                            if (feature.get('data')[lastOne] < 1) {
+                            if (feature.get('data')[0] < 0.5) {
+                                radiusSize = 8;
+                                imageFillColor = '#0090ff';
+                            }
+                            if (feature.get('data')[0] > 0.5 & feature.get('data')[0] < 1) {
                                 radiusSize = 10;
-                                imageFillColor = '#187AC8';
+                                imageFillColor = '#b5ba28';
                             }
-                            if (feature.get('data')[lastOne] > 1 & feature.get('data')[lastOne] < 1.5) {
-                                radiusSize = 13;
-                                imageFillColor = '#d6d604';
-                            }
-                            if (feature.get('data')[lastOne] > 1.5) {
-                                radiusSize = 16;
+                            if (feature.get('data')[0] > 1) {
+                                radiusSize = 15;
                                 imageFillColor = '#E85459';
                             }
                             var style = new ol.style.Style({
@@ -383,7 +385,7 @@ O_B0075_001_API = function (seaSurfaceLoc, apiPath, featureStyle) {
                                     })
                                 }),
                                 text: new ol.style.Text({
-                                    text: feature.get('data')[lastOne],
+                                    text: feature.get('data')[0],
                                     fill: new ol.style.Fill({
                                         color: '#fff'
                                     })
@@ -457,14 +459,46 @@ var overlay = new ol.Overlay({
 var wmtsMap = new ol.layer.Tile({
     source: new ol.source.XYZ({
         url: 'https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}.png'
-    })
+    }),
+    visible: true
 });
+
+
+var moiMap = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+        url: 'https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png'
+    }),
+    visible: false
+});
+
+var moiMapFlag =0;
+$("#moiMap").click(function () {
+    if (moiMapFlag == 0) {
+        moiMap.setVisible(true);
+        moiMapFlag=1;
+    } else {
+        moiMap.setVisible(false);
+        moiMapFlag=0;
+    }
+});
+
+// var wmtsMapFlag=0;
+// $("#wmtsMap").click(function () {
+//     if (wmtsMapFlag == 0) {
+//         wmtsMap.setVisible(true);
+//         wmtsMapFlag=1;
+//     } else {
+//         wmtsMap.setVisible(false);
+//         wmtsMapFlag=0;
+//     }
+// });
 
 
 
 map = new ol.Map({
     layers: [
-        wmtsMap
+        wmtsMap, moiMap
+        // moiMap
     ],
     target: document.getElementById('map'),
     view: new ol.View({

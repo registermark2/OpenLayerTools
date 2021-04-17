@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+    <script
+        src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL">
+    </script>
+    <script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+   
+
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'><link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css">
+
+
+
+    <title>氣象資料展示</title>
+</head>
+
+<body>
+    <div class="adjustDistance">
+        <label>密集度</label>
+        <input id="distance" type="range" min="80" max="200" step="10" value="40" />
+    </div>
+    <div id="map" class="map"></div>
+    <input type="checkbox" name="" id="sideMenu--active">
+    <!-- 使用 checkbox 來做開關 -->
+    <div class="sideMenu">
+        <!--         <form>
+            <input type="search" placeholder="請輸入搜尋名稱">
+            <button><i class="fas fa-search"></i></button>
+        </form> -->
+        <nav>
+            <a id="rainfallButton" href="#">氣象資料</a>
+            <a id="seaSurface" href="#">海象資料</a>
+            <!-- <a href="#">落雷資料</a>
+            <a href="#">預報資料</a> -->
+            
+        </nav>
+        <label for="sideMenu--active">
+            <i class="fas fa-angle-right"></i>
+        </label>
+        <!-- label 寫在 nav 下方是為了比較好看到 -->
+    </div>
+    
+    <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+    </div>
+
+    <div id="chartJs">
+        <canvas id="myChart"></canvas>
+    </div>  
+
+    <script src="./script.js"></script>
+</body>
+
+
+</html>

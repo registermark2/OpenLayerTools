@@ -1,0 +1,3971 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NRCC</title>
+    <meta charset=utf-8>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--meta name="viewport" content="initial-scale=1.0, width=device-width"-->
+    <!--meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"-->
+    <meta name="description" content="NRCC GIS All-in-One">
+    <meta property="og:title" content="NRCC CoDraw">
+    <meta property="og:type" content="website">
+    <!--meta property="og:image" content="https://odbpo.oc.ntu.edu.tw/static/figs/odb/hidy.png"-->
+    <meta property="og:description" content="NRCC GIS All-in-One">
+    <meta property="og:url" content="https://gis.mds.com.tw/rescue/nrcc/">
+    <link rel="Shortcut Icon" type=image/x-icon href=https://gis.mds.com.tw/Public/faviconnrcc.ico>
+    <link rel="stylesheet" href="/odbargo/static/css/ol6.5.0.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/odbargo/static/css/MDS_datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="/odbargo/static/css/vis-timeline-graph2d.min.css">
+    <link rel="stylesheet" type="text/css" href="/odbargo/static/css/ol-ext3.1.16a.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            width: 99.9vw;
+            height: 99.9vh;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            background-color: #000;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: hidden
+        }
+
+        br {
+            font-size: 10px
+        }
+
+        table {
+            table-layout: fixed
+        }
+
+        button:focus {
+            outline: 0
+        }
+
+        input[type=number].idate,
+        input[type=number].iyear,
+        input[type=number].imon {
+            padding: 0 3px 0 3px;
+            border: 1px solid gray;
+            transition: .4s;
+            outline: 0;
+            font-size: 2vw
+        }
+
+        input[type=number].idate:focus,
+        input[type=number].iyear:focus,
+        input[type=number].imon:focus {
+            border: 1px solid #555;
+            background-color: #fc9
+        }
+
+        input[type=text] {
+            transition: .4s;
+            outline: 0
+        }
+
+        select {
+            -webkit-appearance: menulist-button
+        }
+
+        select:focus {
+            outline: 0
+        }
+
+        input[type=number] {
+            outline: 0
+        }
+
+        a,
+        a:link,
+        a:visited {
+            color: #fff
+        }
+
+        ::-webkit-scrollbar {
+            width: 1vw;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: .5vw;
+            border: 1px solid #ccc;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: .5vw;
+        }
+
+        .txt0 {
+            display: none
+        }
+
+        .txt1 {
+            display: inline-block;
+            font-family: "微軟正黑體", "Microsoft JhengHei";
+        }
+
+        /*jquery-datatable*/
+        .dt-button[data-cv-idx="0"],
+        .dt-button[data-cv-idx="1"] {
+            display: none
+        }
+
+        .dt-button,
+        .dt-button span {
+            color: #000;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-top: 3px
+        }
+
+        .dataTables_scroll {
+            border-top: 1px solid #aaa
+        }
+
+        .dt-button.buttons-columnVisibility:not(.active) {
+            text-decoration: line-through;
+            color: #000
+        }
+
+        .dtKUObg-w {
+            background-color: #fff
+        }
+
+        /*area*/
+        .KUO-m0-p0 {
+            margin: 0;
+            padding: 0
+        }
+
+        .KUO-p0 {
+            padding: 0
+        }
+
+        .KUO-p1px {
+            padding: 1px
+        }
+
+        .KUO-m0 {
+            margin: 0
+        }
+
+        .KUOmt-1vh {
+            margin-top: 1vh
+        }
+
+        .KUOmt-1vw {
+            margin-top: 1vw
+        }
+
+        .KUOmt-dot5 {
+            margin-top: 0.5vw
+        }
+
+        .KUOmt-1dot5 {
+            margin-top: 1.5vw
+        }
+
+        .KUOmt-3px {
+            margin-top: 3px
+        }
+
+        .KUOmt-5px {
+            margin-top: 5px
+        }
+
+        .KUOmt-0 {
+            margin-top: 0
+        }
+
+        .KUOmt-n2vw {
+            margin-top: -2vw
+        }
+
+        .KUOml-1vw {
+            margin-left: 1vw
+        }
+
+        .KUOml-2vw {
+            margin-left: 2vw
+        }
+
+        .KUOml-1dot5vw {
+            margin-left: 1.5vw
+        }
+
+        .KUOml-dot5vw {
+            margin-left: 0.5vw
+        }
+
+        .KUOml-3px {
+            margin-left: 3px
+        }
+
+        .KUOml-2dot5vw {
+            margin-left: 2.5vw
+        }
+
+        .KUOml-dot25 {
+            margin-left: 0.25vw
+        }
+
+        .KUOml-5px {
+            margin-left: 5px
+        }
+
+        .KUOml-0 {
+            margin-left: 0
+        }
+
+        .KUOmb-3px {
+            margin-bottom: 3px
+        }
+
+        .KUOmb-2px {
+            margin-bottom: 2px
+        }
+
+        .KUOmb-dot5vw {
+            margin-bottom: 0.5vw
+        }
+
+        .KUOmb-2dot5 {
+            margin-bottom: 2.5vw
+        }
+
+        .KUOmr-3px {
+            margin-right: 3px
+        }
+
+        .KUOmr-5px {
+            margin-right: 5px
+        }
+
+        .KUOmr-dot2 {
+            margin-right: 0.2vw
+        }
+
+        .KUOmr-1px {
+            margin-right: 1px
+        }
+
+        .KUOmr-1vw {
+            margin-right: 1vw
+        }
+
+        .KUOmr-dot8 {
+            margin-right: 0.8vw
+        }
+
+        .KUOmr-dot5 {
+            margin-right: 0.5vw
+        }
+
+        .KUOmr-dot3 {
+            margin-right: 0.3vw
+        }
+
+        .KUOpt-dot5 {
+            padding-top: .5vw
+        }
+
+        .KUOpl-4px {
+            padding-left: 4px
+        }
+
+        .KUOpr-4px {
+            padding-right: 4px
+        }
+
+        .KUOpl-1vw {
+            padding-left: 1vw
+        }
+
+        .KUOpl-dot6vw {
+            padding-left: .6vw
+        }
+
+        .KUOpr-1vw {
+            padding-right: 1vw
+        }
+
+        .KUOpr-dot2 {
+            padding-right: .2vw
+        }
+
+        .KUOpl-dot2 {
+            padding-left: .2vw
+        }
+
+        .KUOplr-dot5vw {
+            padding-left: 0.5vw;
+            padding-right: 0.5vw
+        }
+
+        .KUObb-1dw {
+            border-bottom: 1px dashed #fff
+        }
+
+        /*text*/
+        .KUO-text-shadow-1w {
+            text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff, 1px 1px 0 #fff
+        }
+
+        .KUO-text-shadow-1b {
+            text-shadow: 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000
+        }
+
+        .KUO-text-shadow-1n {
+            text-shadow: -1px 1px 0 #006, 1px -1px 0 #006, -1px 0 0 #006, 1px 0 0 #006
+        }
+
+        .KUO-text-shadow-1w-t {
+            text-shadow: 1px 0 #fff, -1px 0 #fff, 0 1px #fff, 0 2px 0 rgba(192, 192, 192, 0.4)
+        }
+
+        .KUO-text-shadow-1c {
+            text-shadow: 1px 1px 1px cyan, -1px -1px 1px cyan, 1px -1px 1px cyan, -1px 1px 1px cyan;
+        }
+
+        .KUOlh-4 {
+            line-height: 4vw
+        }
+
+        .KUOlh-2 {
+            line-height: 2vw
+        }
+
+        .KUOlh-2dot5 {
+            line-height: 2.5vw
+        }
+
+        .KUOlh-3 {
+            line-height: 3vw
+        }
+
+        .KUOlh-1dot5 {
+            line-height: 1.5vw
+        }
+
+        .KUOlh-0 {
+            line-height: 0
+        }
+
+        .KUOlh-2s {
+            line-height: 2
+        }
+
+        .KUOlh-1s {
+            line-height: 1
+        }
+
+        .KUOlh-1 {
+            line-height: 1vw
+        }
+
+        .KUOva-b {
+            vertical-align: bottom
+        }
+
+        .KUOva-bl {
+            vertical-align: baseline
+        }
+
+        .KUOva-m {
+            vertical-align: middle
+        }
+
+        .KUOva-t {
+            vertical-align: top
+        }
+
+        .KUOva-tt {
+            vertical-align: text-top
+        }
+
+        .KUOva-tb {
+            vertical-align: text-bottom
+        }
+
+        .KUOta-c {
+            text-align: center
+        }
+
+        .KUOta-l {
+            text-align: left
+        }
+
+        .KUOtd-u {
+            text-decoration: underline
+        }
+
+        .KUOls-5 {
+            letter-spacing: 5px
+        }
+
+        .KUOls-2 {
+            letter-spacing: 2px
+        }
+
+        .KUOls-1 {
+            letter-spacing: 1px
+        }
+
+        .KUOls-0 {
+            letter-spacing: 0
+        }
+
+        .KUOls-n1 {
+            letter-spacing: -1px
+        }
+
+        .KUOrot-45deg {
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg)
+        }
+
+        .KUOrot-180deg {
+            -webkit-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotate(180deg)
+        }
+
+        .KUOrot-270deg {
+            -webkit-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            transform: rotate(270deg)
+        }
+
+        .KUOrot-n90deg {
+            -moz-transform: translateX(-40%) translateY(160%) rotate(-90deg);
+            -webkit-transform: translateX(-40%) translateY(160%) rotate(-90deg);
+            transform: translateX(-40%) translateY(160%) rotate(-90deg)
+        }
+
+        .KUOtxsb {
+            text-shadow: 1px 1px #000
+        }
+
+        /*font*/
+        .KUOfs-4 {
+            font-size: 4vw
+        }
+
+        .KUOfs-3 {
+            font-size: 3vw
+        }
+
+        .KUOfs-2dot5 {
+            font-size: 2.5vw
+        }
+
+        .KUOfs-2 {
+            font-size: 2vw
+        }
+
+        .KUOfs-1dot65 {
+            font-size: 1.65vw
+        }
+
+        .KUOfs-1dot8 {
+            font-size: 1.8vw
+        }
+
+        .KUOfs-1 {
+            font-size: 1vw
+        }
+
+        .KUOfs-dot5 {
+            font-size: 0.5vw
+        }
+
+        .KUOfs-1dot2 {
+            font-size: 1.2vw
+        }
+
+        .KUOfs-1dot5 {
+            font-size: 1.5vw
+        }
+
+        .KUOfs-20px {
+            font-size: 20px
+        }
+
+        .KUOfs-1dot4 {
+            font-size: 1.4vw
+        }
+
+        .KUOfs-12px {
+            font-size: 12px
+        }
+
+        .KUOfs-16px {
+            font-size: 16px
+        }
+
+        .KUOfs-1dot6 {
+            font-size: 1.6vw
+        }
+
+        .KUOfs-dot8 {
+            font-size: 0.8vw
+        }
+
+        .KUOfs-dot4 {
+            font-size: 0.4vw
+        }
+
+        .KUOfs-24px {
+            font-size: 24px
+        }
+
+        .KUOfw-b {
+            font-weight: bold
+        }
+
+        .KUOfs-i {
+            font-style: italic
+        }
+
+        .KUOfs-n {
+            font-style: normal
+        }
+
+        .KUOff-bkt {
+            font-family: "標楷體"
+        }
+
+        .KUOff-msb {
+            font-family: "微軟正黑體"
+        }
+
+        .KUOff-tnr {
+            font-family: "Times New Roman"
+        }
+
+        .KUOff-ab {
+            font-family: "Arial Black"
+        }
+
+        .KUOff-a {
+            font-family: Arial
+        }
+
+        .KUOff-c-tm {
+            font-family: '"Times New Roman","微軟正黑體"'
+        }
+
+        .KUOff-c-am {
+            font-family: "Arial", "微軟正黑體"
+        }
+
+        .KUOff-c-tb {
+            font-family: "Times New Roman", "標楷體", "sans-serif"
+        }
+
+        .KUOff-s {
+            font-family: Sriracha
+        }
+
+        .KUOff-m {
+            font-family: Monoton
+        }
+
+        .KUOff-mono {
+            font-family: monospace
+        }
+
+        /*color*/
+        .KUOclr-bk {
+            color: #000
+        }
+
+        .KUOclr-red {
+            color: #f00
+        }
+
+        .KUOclr-blue {
+            color: #00f
+        }
+
+        .KUOclr-gray {
+            color: #888
+        }
+
+        .KUOclr-w {
+            color: #fff
+        }
+
+        .KUOclr-peachpuff {
+            color: peachpuff
+        }
+
+        .KUOclr-yg {
+            color: yellowgreen
+        }
+
+        /*position*/
+        .KUOf-l {
+            float: left
+        }
+
+        .KUOf-r {
+            float: right
+        }
+
+        .KUOd-ib {
+            display: inline-block
+        }
+
+        .KUOd-i {
+            display: inline
+        }
+
+        .KUOd-n {
+            display: none
+        }
+
+        .KUOd-f {
+            display: flex
+        }
+
+        .KUOp-r {
+            position: relative
+        }
+
+        .KUOp-a {
+            position: absolute
+        }
+
+        .KUOz-1 {
+            z-index: 1
+        }
+
+        .KUOz-2 {
+            z-index: 2
+        }
+
+        .KUOz-3 {
+            z-index: 3
+        }
+
+        .KUOz-4 {
+            z-index: 4
+        }
+
+        .KUOz-5 {
+            z-index: 5
+        }
+
+        .KUOof-h {
+            overflow: hidden
+        }
+
+        .KUO-l0-t0 {
+            left: 0;
+            top: 0
+        }
+
+        .KUO-r0-t0 {
+            right: 0;
+            top: 0
+        }
+
+        .KUO-l0-b0 {
+            left: 0;
+            bottom: 0
+        }
+
+        .KUO-w2-h2 {
+            width: 2vw;
+            height: 2vw;
+        }
+
+        .KUO-w1-h1 {
+            width: 1vw;
+            height: 1vw
+        }
+
+        .KUO-w1dot2-h1dot2 {
+            width: 1.2vw;
+            height: 1.2vw
+        }
+
+        .KUO-w3dot75 {
+            width: 3.75vw
+        }
+
+        .KUO-w1dot5-h1dot5 {
+            width: 1.5vw;
+            height: 1.5vw;
+        }
+
+        .KUO-w6dot5 {
+            width: 6.5vw
+        }
+
+        .KUOh-30px {
+            height: 30px
+        }
+
+        /*image*/
+        .KUOicon {
+            height: 2vw;
+            max-height: 35px;
+            vertical-align: middle
+        }
+
+        .KUOicon2 {
+            height: 1vw;
+            max-height: 35px;
+            vertical-align: middle
+        }
+
+        .KUOicon3 {
+            height: 1.5vw;
+            vertical-align: middle;
+        }
+
+        .KUOc-p {
+            cursor: pointer
+        }
+
+        .KUOc-m {
+            cursor: move
+        }
+
+        .KUOc-na {
+            cursor: not-allowed
+        }
+
+        /*DATE-INPUT*/
+        .idate {
+            width: 10vw
+        }
+
+        .idate[type=number] {
+            -moz-appearance: textfield
+        }
+
+        .idate[type=number]::-webkit-inner-spin-button,
+        .idate[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0
+        }
+
+        .iyear {
+            width: 5vw
+        }
+
+        .imon {
+            width: 3vw
+        }
+
+        .iyear[type=number],
+        .imon[type=number] {
+            -moz-appearance: textfield
+        }
+
+        .iyear[type=number]::-webkit-inner-spin-button,
+        .iyear[type=number]::-webkit-outer-spin-button,
+        .imon[type=number]::-webkit-inner-spin-button,
+        .imon[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0
+        }
+
+        #fdate1:focus,
+        #fdate2:focus {
+            background-color: #ff0
+        }
+
+        #fdate3:focus {
+            background-color: #FF7F11
+        }
+
+        #fdate4:focus {
+            background-color: #03a9f4
+        }
+
+        #fdate5:focus {
+            background-color: #7b48ee
+        }
+
+        #fdate6:focus,
+        #fdate7:focus {
+            background-color: #adff2f
+        }
+
+        #mfyear:focus,
+        #mfmon:focus {
+            background-color: #666
+        }
+
+        /*DRAGDROP-BUTTON*/
+        #dragdropbtn {
+            position: absolute;
+            left: 1vw;
+            bottom: 1vw;
+            z-index: 3;
+            vertical-align: middle;
+            float: left
+        }
+
+        .btdgdp,
+        .btdgdp2 {
+            background-color: rgba(0, 128, 255, 0.5);
+            border: 4px solid #aaa;
+            box-shadow: 0 0 2px #000;
+            height: 46px;
+            width: 46px;
+            vertical-align: middle;
+            cursor: pointer;
+            border-radius: 14px;
+            text-align: center;
+            display: inline-block;
+            font-size: 26px;
+            color: #aaa;
+            font-weight: bold
+        }
+
+        .btdgdp:hover {
+            background-color: #08f;
+            border: 4px solid #fff;
+            color: #000
+        }
+
+        .btdgdp2:hover {
+            background-color: #f08;
+            border: 4px solid #fff;
+            color: #000
+        }
+
+        button.btdgdp2 {
+            background-color: rgba(255, 0, 128, 0.5)
+        }
+
+        /*MAIN-DIV*/
+        .KUO-main {
+            border-style: solid;
+            border-color: #000
+        }
+
+        .KUO-map-size {
+            height: 99vh;
+            width: 99vw
+        }
+
+        .KUO-toggle-form {
+            line-height: 1.2;
+            margin-left: .6vw;
+            top: 80px;
+            transition: 0.5s
+        }
+
+        #maptoggleform {
+            left: 0
+        }
+
+        #popup {
+            position: absolute;
+            background-color: white;
+            text-align: center;
+            width: 90px;
+            left: 50%;
+            bottom: 150%;
+            margin-bottom: 10px;
+            padding: 3px 0;
+            margin-left: -45px;
+            border-radius: 4px;
+            border-width: 1px;
+            border-style: solid
+        }
+
+        #tdCursor {
+            vertical-align: middle;
+            line-height: 0;
+            /*margin-top:5px;*/
+            position: absolute;
+            bottom: 8px;
+            left: 45vw;
+            color: #000;
+            z-index: 2
+        }
+
+        #tdCursor2 {
+            background-color: rgba(0, 0, 0, 0.6);
+            margin-top: .5vw;
+            padding-left: 5px;
+            padding-right: 5px
+        }
+
+        #map {
+            background-color: #000;
+            touch-action: none
+        }
+
+        /*OPENLAYERS*/
+        .ol-zoom {
+            left: auto;
+            top: auto;
+            right: 8px;
+            /*bottom:8px*/
+            top: 68vh
+        }
+
+        .ol-control {
+            padding: 1px
+        }
+
+        .ol-control button {
+            background-color: rgba(0, 0, 0, 0.8);
+            cursor: pointer
+        }
+
+        /*OL-EXT*/
+        .ol-selectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .ol-popup.placemark .ol-popup-content {
+            overflow: visible;
+            cursor: move
+        }
+
+        .nominatim {
+            top: 4vw;
+            right: 1vw !important;
+            background-color: rgba(127, 127, 127, 0.5);
+            font-family: Arial
+        }
+
+        .nominatim:hover {
+            background-color: rgba(127, 127, 127, .75)
+        }
+
+        .ol-searchgps {
+            top: 4vw;
+            right: 4vw !important;
+            background-color: rgba(127, 127, 127, 0.5);
+            font-family: Arial
+        }
+
+        .ol-searchgps:hover {
+            background-color: rgba(127, 127, 127, .75)
+        }
+
+        .ol-control.ol-searchgps>button:first-child:before {
+            content: "位"
+        }
+
+        .ol-control.ol-searchgps .ol-switch span {
+            box-shadow: 0 0 0 1px #000;
+            color: #fff
+        }
+
+        .ol-control.ol-searchgps .ol-switch span:before {
+            background-color: #000;
+            border: 2px solid #fff
+        }
+
+        .ol-control.ol-searchgps .ol-switch {
+            float: left
+        }
+
+        .ol-searchgps button.ol-geoloc {
+            float: right
+        }
+
+        .ol-search button {
+            float: right;
+            right: 2px
+        }
+
+        .ol-search {
+            right: 3em;
+            left: unset !important
+        }
+
+        .ol-control.ol-searchgps .ol-latitude label,
+        .ol-control.ol-searchgps .ol-longitude label {
+            transform: none;
+            font-weight: bold;
+            font-size: large;
+            text-align: center
+        }
+
+        .ol-popup-content pre,
+        .ol-overlay-container pre {
+            margin-top: 2px;
+            margin-bottom: 2px;
+            cursor: move
+        }
+
+        .ol-overlay-container div i {
+            text-shadow: 1px 1px 2px #000
+        }
+
+        .ol-overlay-container.ol-selectable {
+            cursor: move
+        }
+
+        /*USERDRAWPANEL*/
+        #drawpanel {
+            position: absolute;
+            top: 4.5vw;
+            right: 120px;
+            width: 380px;
+            z-index: 11;
+            font-size: 20px;
+            font-family: 微軟正黑體;
+            color: #000;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 3px 1px #000;
+            transition: right 0.5s
+        }
+
+        #dragdrawpanel {
+            cursor: move;
+            height: 30px;
+            background-color: #000;
+            color: #fff;
+            vertical-align: middle;
+            padding-left: 8px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        #drawpanelblock {
+            transition: left 1s;
+            overflow: hidden
+        }
+
+        #btbackdrawpanel {
+            position: absolute;
+            top: 15px;
+            right: 5px;
+            z-index: 15;
+            font-size: 2vw;
+            font-family: 微軟正黑體;
+            color: #888;
+            text-shadow: 1px 1px #000, 0 0 3px rgba(127, 127, 127, 0.5), 0 0 5px #fff;
+            cursor: pointer
+        }
+
+        #btbackdrawpanel:hover {
+            color: #fff;
+            text-shadow: 1px 1px #aaa, 0 0 3px #000, 0 0 5px #fff
+        }
+
+        #drawpanelhead {
+            margin-top: 3px;
+            margin-left: 5px
+        }
+
+        #drawpanelhead ul {
+            list-style-type: none;
+            padding-left: 4px;
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        #drawpanelhead ul li {
+            margin-bottom: 4px
+        }
+
+        #drawpanelhead input[type=text] {
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid #000;
+            font-size: 20px;
+            max-width: 120px
+        }
+
+        #drawpanelhead label {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .drawselect {
+            font-size: 20px;
+            cursor: pointer;
+            padding-left: 5px;
+            padding-right: 5px
+        }
+
+        .drawaddoption {
+            width: 108px
+        }
+
+        .drawaddoptionbt {
+            background-color: transparent;
+            color: #080;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            vertical-align: middle;
+            padding-left: 0
+        }
+
+        #drawaddoptionbt:hover {
+            color: #0a0;
+            text-shadow: 1px 2px #000;
+        }
+
+        #drawpanelhead input[type=checkbox] {
+            height: 24px;
+            width: 24px;
+            vertical-align: middle;
+            cursor: pointer
+        }
+
+        #drawpanelstyle {
+            margin-top: 6px;
+            margin-left: 5px;
+            border-top: 1px dashed #888
+        }
+
+        #drawpanelstyle ul {
+            list-style-type: none;
+            padding-left: 4px;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            padding-right: 5px
+        }
+
+        #drawpanelstyle ul li {
+            margin-top: 6px;
+            margin-bottom: 12px
+        }
+
+        #drawpanelstyle ul li span {
+            margin-right: 5px
+        }
+
+        #drawpanelclr {
+            vertical-align: top
+        }
+
+        #drawpanelclr i {
+            cursor: pointer;
+            margin-left: 2px;
+            vertical-align: bottom;
+            border-radius: 24px;
+            border: 2px solid transparent;
+            box-shadow: 0 0 3px transparent
+        }
+
+        #drawpanelclr i:hover {
+            border: 2px solid #888
+        }
+
+        #drawpanelclr i.drawclrchk {
+            border: 2px solid #fff;
+            box-shadow: 0 0 3px #000
+        }
+
+        #drawpanelstyle input[type=number] {
+            font-size: 20px;
+            text-align: center
+        }
+
+        #drawpanelstyle input[type=radio] {
+            vertical-align: baseline;
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            margin-left: 5px
+        }
+
+        #drawpanelstyle input[type=checkbox] {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            vertical-align: top
+        }
+
+        #drawssize {
+            border: none;
+            background-color: transparent;
+            width: 66px;
+            border-bottom: 2px solid #000
+        }
+
+        .btdrawssize {
+            height: 24px;
+            padding: 0;
+            cursor: pointer;
+            color: #000;
+            background-color: #ccc;
+            border-radius: 2px;
+            border: 1px solid #000
+        }
+
+        .btdrawssize:hover {
+            background-color: #000;
+            color: #ccc;
+        }
+
+        /*#drawssize::-webkit-outer-spin-button,#drawssize::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}#drawssize{-moz-appearance:textfield}*/
+        #drawsmark label {
+            cursor: pointer;
+            vertical-align: middle;
+            padding: 2px 0 0 0;
+            margin-right: 3px;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2)
+        }
+
+        #drawsmark label:hover {
+            background-color: #aaa
+        }
+
+        #drawsmark label:first-of-type {
+            margin-left: -3px
+        }
+
+        #drawssign {
+            vertical-align: top
+        }
+
+        #drawssign .fas {
+            font-size: 24px
+        }
+
+        #drawssign i {
+            cursor: pointer;
+            margin-left: 2px;
+            vertical-align: bottom;
+            border-radius: 2px;
+            border: 2px solid transparent;
+            box-shadow: 0 0 3px transparent
+        }
+
+        #drawssign i:hover {
+            border: 2px solid #888
+        }
+
+        #drawssign i.drawsignchk {
+            border: 2px solid #fff;
+            box-shadow: 0 0 3px #000
+        }
+
+        #drawsshac {
+            padding-left: 0;
+            padding-right: 0
+        }
+
+        #drawsfill {
+            width: 80px;
+            cursor: pointer
+        }
+
+        #drawsshaw {
+            width: 50px;
+            border: none;
+            border-bottom: 2px solid #000
+        }
+
+        #drawsfont+span label {
+            margin-left: 3px;
+            vertical-align: text-top;
+            cursor: pointer;
+            border: 1px solid #888;
+            padding-right: 2px
+        }
+
+        /*USERDRAWLIST*/
+        .userdrawlist {
+            position: absolute;
+            top: 50px;
+            left: 1vw;
+            width: 470px;
+            height: 450px;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 5;
+            padding: 0px 0px 6px 0px;
+            border-radius: 5px;
+            overflow: hidden;
+            resize: both;
+            border: 1px solid #000;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            transition: left 0.5s;
+        }
+
+        .draguserdrawlist {
+            cursor: move;
+            height: 26px;
+            background-color: #000;
+            color: #000;
+            vertical-align: middle;
+            padding-left: 5px;
+            font-size: 20px;
+            line-height: 24px
+        }
+
+        .draguserdrawlist i {
+            font-size: 20px;
+            color: #fff
+        }
+
+        #btbackdrawlist {
+            position: absolute;
+            top: 16vw;
+            left: 5px;
+            z-index: 15;
+            font-size: 2vw;
+            font-family: 微軟正黑體;
+            color: #888;
+            text-shadow: 1px 1px #000, 0 0 3px rgba(127, 127, 127, 0.5), 0 0 5px #fff;
+            cursor: pointer
+        }
+
+        #btbackdrawlist:hover {
+            color: #fff;
+            text-shadow: 1px 1px #aaa, 0 0 3px #000, 0 0 5px #fff
+        }
+
+        .userdrawlist tbody tr td {
+            font-size: 14px
+        }
+
+        .dt-button[data-cv-idx="0"],
+        .dt-button[data-cv-idx="1"],
+        .dt-button[data-cv-idx="3"] {
+            display: none
+        }
+
+        .dt-button,
+        .dt-button span {
+            color: #000;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-top: 3px
+        }
+
+        .dataTables_scroll {
+            border-top: 1px solid #aaa
+        }
+
+        .dt-button.buttons-columnVisibility:not(.active) {
+            text-decoration: line-through;
+            color: #000
+        }
+
+        .drawlistbody tr:hover {
+            background-color: #fcf !important
+        }
+
+        .drawlisthover {
+            background-color: #fcf !important
+        }
+
+        /*table.dataTable tbody tr:hover{background-color:#fcf !important;cursor:pointer}*/
+        table.dataTable.cell-border tbody tr td:first-child {
+            cursor: move;
+            width: 12px;
+            background-color: #fef
+        }
+
+        button.dt-button,
+        div.dt-button,
+        a.dt-button {
+            padding: 0
+        }
+
+        .buttons-copy,
+        .buttons-csv {
+            display: none !important
+        }
+
+        .drawlistbody tr td ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0
+        }
+
+        .drawlistbody tr td:nth-child(2) {
+            font-size: 12px;
+            text-align: center;
+            padding: 0
+        }
+
+        .drawlistbody tr td:nth-child(3):hover {
+            background-color: #999
+        }
+
+        .drawlistbody tr td:nth-child(3) {
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+            padding: 0;
+            vertical-align: middle
+        }
+
+        .drawlistbody tr td:nth-child(7) {
+            cursor: pointer;
+            text-shadow: 1px 1px #888;
+            text-align: center;
+            padding: 0
+        }
+
+        .drawlistbody tr td:nth-child(3) i.material-icons {
+            text-shadow: 1px 1px #000
+        }
+
+        .KUOdt-foot {
+            z-index: -1;
+            line-height: 28px;
+            font-size: 24px;
+            vertical-align: middle;
+            position: absolute;
+            left: 6px;
+            bottom: 6px
+        }
+
+        .KUOdt-foot button {
+            box-shadow: 0 0 1px #000;
+            border-radius: 3px;
+            cursor: pointer;
+            text-shadow: 1px 1px 4px #aaa;
+            line-height: 24px;
+            font-size: 20px;
+            border: 2px solid #333;
+            background-color: #eee;
+            color: #000
+        }
+
+        .KUOdt-foot button:hover {
+            background-color: #000;
+            border: 2px solid #eee;
+            color: #fff;
+            box-shadow: 0 0 0 2px #000
+        }
+
+        table.dataTable.stripe tbody.drawlistbody tr.drawlist2mod {
+            background-color: #fdf
+        }
+
+        .drawtext {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 6;
+            padding: 5px;
+            border-radius: 5px;
+            overflow: hidden;
+            resize: both;
+            border: 1px solid #fff;
+            font-size: 16px;
+            box-shadow: 0 0 5px #000;
+            color: #fff;
+            display: none
+        }
+
+        .dragdrawtext {
+            cursor: move;
+            height: 24px;
+            background-color: #000;
+            color: #fff;
+            vertical-align: middle;
+            padding-left: 5px;
+            font-size: 20px;
+            line-height: 24px
+        }
+
+        .dragdrawtext i {
+            font-size: 20px;
+            color: #fff
+        }
+
+        #drawtext label,
+        #drawtext input,
+        #drawtext button {
+            cursor: pointer
+        }
+
+        #drawtext button {
+            font-family: '微軟正黑體';
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 3px
+        }
+
+        #drawtext button:hover {
+            border-color: #fff
+        }
+
+        #ftext {
+            width: 95%;
+            min-height: 100px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px
+        }
+
+        #ftext:focus {
+            border: 2px solid #000;
+            background-color: #fff
+        }
+
+        /*NAVBAR*/
+        #navbar {
+            margin-top: .5vw;
+            margin-left: 1vw;
+            z-index: 2;
+            cursor: pointer;
+            height: 30px;
+            display: inline-block;
+            float: left
+        }
+
+        .navbar {
+            overflow: hidden;
+            font-family: 'Arial,"微軟正黑體"'
+        }
+
+        .navbar span,
+        .navbar label {
+            float: left;
+            font-size: 1.5vw;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            min-width: 6vw;
+            background-color: #333
+        }
+
+        .navbar>div {
+            min-width: 8vw;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            background-color: #333;
+            margin-left: 3px;
+        }
+
+        .dropdown {
+            float: left;
+            overflow: hidden
+        }
+
+        .dropdown .dropbtn {
+            font-size: 1.5vw;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 5px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+            width: 100%;
+            cursor: pointer
+        }
+
+        .navbar span:hover,
+        .dropdown:hover .dropbtn {
+            background-color: #800
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            min-width: 10vw;
+            z-index: 3;
+            margin-top: 0;
+            color: #fff
+        }
+
+        .dropdown-content span,
+        .dropdown-content label {
+            font-size: 1vw;
+            vertical-align: middle
+        }
+
+        .dropdown-content span {
+            float: none;
+            color: #fff;
+            padding: 8px;
+            display: block;
+            text-align: left
+        }
+
+        .dropdown-content span:hover {
+            background-color: #800
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block
+        }
+
+        .dropdown-content label {
+            float: none;
+            color: #fff;
+            display: block;
+            text-align: left;
+            cursor: pointer
+        }
+
+        .dropdown-content label:hover {
+            background-color: #800
+        }
+
+        .dropdown-content label input {
+            cursor: pointer
+        }
+
+        .dropdown-content label input[type=checkbox] {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle
+        }
+
+        .navbardivon {
+            display: block
+        }
+
+        .dropdown-content label.navbarhoriz,
+        .dropdown-content span.navbarhoriz {
+            float: left
+        }
+
+        .navbar span.selbasemap {
+            background-color: #800;
+            color: #fff
+        }
+
+        /*
+%btnanim{position:absolute;content:'';transition:all .5s}
+.navbtn{padding:5px;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);vertical-align:middle;transition:all .5s;background-color:#333;color:#fff;font-size:2vw;
+&::before{@extend %btnanim;bottom:-10px;height:10px;width:100%;left:4px;transform:skewX(45deg);background-color:lighten(#333,30%);}
+&::after{@extend %btnanim;right:-10px;height:100%;width:10px;bottom:-5.5px;transform:skewY(45deg);background-color:lighten(#333,20%);}
+&:active{margin-left:10px;margin-top:10px;&::before{bottom:-5px;height:5px;left:3px;}&::after{right:-5px;width:5px;bottom:-3px;}}}
+*/
+
+        /*DRAWTYPE*/
+        #drawtype {
+            position: absolute;
+            right: -4vw;
+            top: 6vw;
+            z-index: 3;
+            border-radius: 5px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 5px 5px #888;
+            vertical-align: middle;
+            padding-top: 5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            background-color: #333;
+            text-align: center;
+            line-height: 2
+        }
+
+        #drawtype:hover {
+            right: 0
+        }
+
+        #drawtype label {
+            margin-top: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            padding-top: 8px;
+            padding-bottom: 3px;
+            /*height:30px;*/
+            vertical-align: middle;
+            font-size: 24px;
+            color: #fff
+        }
+
+        #drawtype input[type=radio] {
+            display: none
+        }
+
+        #drawtype label i {
+            vertical-align: text-top
+        }
+
+        input[name=drawtype]:checked+label {
+            box-shadow: 0 0 0 3px #fff, 0 0 3px 5px #000;
+            background-color: #800
+        }
+
+        #drawtype label:hover {
+            background-color: rgba(0, 0, 0, 0.5)
+        }
+
+        /*GOLIVE*/
+        #iolive {
+            display: none
+        }
+
+        label[for='iolive'] {
+            font-family: Verdana;
+            color: #fff;
+            background-color: #333;
+            padding: 0 3px 0 3px;
+            line-height: 2vw;
+            height: 2vw;
+            top: 0;
+            right: .5vw;
+            margin-top: .5vw;
+            z-index: 30;
+            border-radius: 6px;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 3px #333
+        }
+
+        label[for='iolive']:hover {
+            background-color: #003
+        }
+
+        /*TIMELINE*/
+        .vis-timeline {
+            min-height: 110px
+        }
+
+        .vis-item.vis-selected {
+            background-color: #d5ddf6 !important;
+            border-color: #97b0f8 !important;
+            z-index: 1 !important;
+        }
+
+        .vis-item {
+            box-shadow: 0px 0px 1px 1px #00f
+        }
+
+        #mintimeline {
+            position: absolute;
+            z-index: 10;
+            top: calc(95vh - 113px);
+            right: 0;
+            margin: 0;
+            padding-right: 5px;
+            color: #fff
+        }
+
+        #mintimeline i {
+            font-size: 36px;
+            text-shadow: 1px 1px 3px #000
+        }
+
+        #mintimeline i:hover {
+            text-shadow: 0 0 10px #f00
+        }
+
+        #drawtimeline {
+            position: absolute;
+            top: calc(95vh - 113px);
+            right: 60px;
+            background-color: #fff;
+            width: 70vw
+        }
+
+        #visualization .vis-time-axis .vis-text {
+            color: #fff;
+            font-size: large;
+        }
+
+        #visualization {
+            background-color: rgba(0, 0, 0, 0.9);
+            min-height: 120px;
+        }
+
+        .vis-item-content {
+            cursor: pointer
+        }
+
+        /*UPLOADIMG*/
+        #imgupload {
+            position: absolute;
+            z-index: 32;
+            background-color: rgba(0, 0, 0, 0.5);
+            left: 50px;
+            top: -700px;
+            width: 550px;
+            height: 500px;
+            overflow: hidden;
+            transition: top 0.5s
+        }
+
+        #imgupload tr td {
+            text-align: center
+        }
+
+        #imgupload tr td:nth-child(2) {
+            width: 300px;
+            text-align: center;
+            align: center
+        }
+
+        #imgupload tr:nth-child(2) {
+            height: 300px
+        }
+
+        #imgupload tr:nth-child(1),
+        #imgupload tr:nth-child(3) {
+            height: 50px
+        }
+
+        #imgupload input {
+            width: 120px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            font-size: 16px;
+            -moz-appearance: textfield;
+        }
+
+        #imgupload input::-webkit-inner-spin-button,
+        #imgupload input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0
+        }
+
+        #imgupload span {
+            font-size: 24px;
+            color: #fff
+        }
+
+        #imgupload table tr td {
+            text-align: center;
+            vertical-align: middle;
+            margin-left: auto;
+            margin-left: auto;
+        }
+
+        #imgupload button {
+            cursor: pointer;
+            font-size: 1.5vw;
+            border-radius: 5px;
+            font-family: "微軟正黑體";
+            border: 2px solid #aaa
+        }
+
+        #imgupload button:hover {
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #aaa
+        }
+
+        #imgpreview {
+            max-width: 300px;
+            max-height: 300px
+        }
+
+        /*QUICKIMPORT*/
+        #divquickimport {
+            position: absolute;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.5);
+            right: -35vw;
+            top: 0;
+            width: 30vw;
+            height: 99vh;
+            overflow: hidden;
+            transition: right 0.5s
+        }
+
+        #divquickimport button {
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #fff
+        }
+
+        #divquickimport button:hover {
+            background-color: #008;
+            color: #fff
+        }
+
+        #divquickimport label {
+            cursor: pointer
+        }
+
+        #quickimport {
+            font-size: 16px;
+            min-width: 20vw;
+            min-height: 65vh;
+            border: 2px solid #fff;
+            outline: none;
+            overflow: scroll;
+            line-height: 16px;
+            background: linear-gradient(to bottom, #aaa, #fff 1px, #fff);
+            background-size: 100% 16px;
+        }
+
+        /*AIS*/
+        #aisnum {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 5px;
+            border: 3px solid #200;
+            box-shadow: 0 0 2px 3px #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            font-size: 36px;
+            font-family: Arial;
+            vertical-align: middle;
+            text-align: center;
+            color: #fff;
+            text-shadow: 1px 2px #600;
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 2px 10px;
+        }
+
+        /*LOGOUT*/
+        #btlogout {
+            border-radius: 5px;
+            margin-left: 10px;
+            margin-right: 5px;
+            vertical-align: text-top;
+            padding: 2px;
+            font-size: 18px;
+            box-shadow: 0 0 0 2px #666;
+            background-color: #ccc
+        }
+
+        #btlogout:hover {
+            background-color: #000;
+            color: #fff;
+            box-shadow: 0 0 0 2px #fff
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/7bcadfdf1c.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <!--HEADER-->
+    <div class='KUOf-l KUOd-ib KUOp-a KUOz-1 KUO-l0-t0 KUOmr-dot2'>
+
+        <!--logo-->
+        <div style="width:188px;display:inline;vertical-align:top;float:left;"><img src="/Public/logo_nrcc.png"
+                style="filter:drop-shadow(0px -1px 0 #fff) drop-shadow(1px 0px 0px #000) drop-shadow(0px 0px 2px white);width:58px;vertical-align:middle"><img
+                src="/Public/logo-2.png"
+                style="filter:drop-shadow(0px -1px 0 #fff) drop-shadow(1px 0px 0px #000) drop-shadow(0px 0px 2px white);width:130px;vertical-align:middle">
+        </div>
+
+        <!--tdCursor-->
+        <p id=tdCursor2
+            class='KUOd-ib KUOml-dot5vw KUOclr-w KUOfs-1 KUOlh-1 KUOva-t KUOta-l KUO-text-shadow-1b KUOls-1 KUOfw-b KUOff-mono'
+            onmouseover="this.style.visibility='visible'" ondragover="dragoverRFkmz(event)"
+            ondrop="dropoverRFkmz(event)">DDD<sup>o</sup>MM.mm’E<br>&nbsp;DD<sup>o</sup>MM.mm’N</p>
+
+        <!--UserName-->
+        <div class='KUOd-ib KUOfs-24px KUOml-1vw KUOmt-1vw' style=background-color:rgba(255,255,255,0.5)>嗨，<span
+                id=drawuser class='KUOtd-u KUOfw-b KUOc-p' title='點擊修改使用者名稱' onclick="changeUsername();"></span><span
+                class='KUOml-1vw KUOpl-4px KUOff-c-tm KUOfs-20px KUOfs-i' style="border-left:1px solid #aaa">專案名稱：<u
+                    id=drawproject class=KUOc-p>case20210323</u>&nbsp;</span><span id="btlogout"
+                class="KUOc-p KUOff-msb"
+                onclick="window.location.replace('https://gis.mds.com.tw/rescue/admin/logout')">登出</span></div>
+
+        <!--NavBar-->
+        <div id=navbar>
+            <div class='navbar'>
+                <!--div class='dropdown'><button class='dropbtn'>匯入<i class='fa fa-caret-down'></i></button><div class='dropdown-content'-->
+                <div class='dropdown'><button
+                        onclick="if ($('.navbardivon:not(#gisimport)').length>0) {$('.navbardivon').removeClass('navbardivon'); $('.navbarhoriz').removeClass('navbarhoriz');}; $('#gisimport span').toggleClass('navbarhoriz'); $('#gisimport').toggleClass('navbardivon');"
+                        class='dropbtn'>匯入<i class='fa fa-caret-down'></i></button>
+                    <div id=gisimport class='dropdown-content'>
+                        <span
+                            onclick="alert('可直接拖曳現有GIS資料至地圖即可直接套疊。\n(GPX、KML、KMZ、SHP (zip)、GeoJSON、TopoJSON等)\n註：(左下角&#10062;按鈕以以滑鼠右鍵點擊可隱藏圖層)')">GIS檔拖放</span>
+                        <span id=iodeclutter data-n=0 onclick="toggleDeclutter(this.dataset.n==0)">標記<u>固定顯示</u></span>
+                        <span
+                            onclick="document.getElementById('imgupload').style.top='100px';document.getElementById('uploadimg').click();">圖片檔</span>
+                        <!--span>向量檔</span><span>設定檔</span>
+</div></div>
+<div class='dropdown'><button class='dropbtn'>匯出<i class='fa fa-caret-down'></i></button><div class='dropdown-content'>
+<span>PNG圖</span><span>CSV檔</span><span>PDF文件</span><span>KML檔</span><span>GeoJSON</span>
+</div></div-->
+                        <!--div class='dropdown'><button class='dropbtn'>小工具<i class='fa fa-caret-down'></i></button><div class='dropdown-content'>
+<span>加入圖例</span><span>加上網格</span><span>加上尺規</span><span>浮貼圖片</span><span>測量工具</span><span>手繪塗鴉</span>
+</div></div-->
+                        <span
+                            onclick='var i=document.getElementById("divquickimport").style.right; document.getElementById("divquickimport").style.right=(i[0]=="0")?"-35vw":"0";'>經緯度資料</span>
+                    </div>
+                </div>
+                <div class='dropdown'><button
+                        onclick="if ($('.navbardivon:not(#divoverlayss)').length>0) {$('.navbardivon').removeClass('navbardivon'); $('.navbarhoriz').removeClass('navbarhoriz');}; $('#divoverlayss label').toggleClass('navbarhoriz'); $('#divoverlayss').toggleClass('navbardivon');"
+                        class='dropbtn'>套疊<i class='fa fa-caret-down'></i></button>
+                    <div class='dropdown-content' id=divoverlayss>
+                        <label for=btoverlaym><input type=checkbox id=btoverlaym onchange=toggleSNisland(this.checked)
+                                checked>南北島圖(p17)</label>
+                        <label for=btoverlayw><input type=checkbox id=btoverlayw
+                                onchange=toggleWind(this.checked)>即時氣象</label>
+                        <label for=btoverlay0><input type=checkbox id=btoverlay0
+                                onchange="grid.setVisible(this.checked);this.parentElement.style.backgroundColor=(this.checked)?'#800':'';">經緯度格線</label>
+                        <label for=btoverlay1><input type=checkbox id=btoverlay1
+                                onchange=overlayOpenData(1,this.checked)>1/5000圖框</label>
+                        <label for=btoverlay2><input type=checkbox id=btoverlay2
+                                onchange=overlayOpenData(2,this.checked)>地質敏感區</label>
+                        <label for=btoverlay3><input type=checkbox id=btoverlay3
+                                onchange=overlayOpenData(3,this.checked)>便利商店</label>
+                        <label for=btoverlay4><input type=checkbox id=btoverlay4
+                                onchange=overlayOpenData(4,this.checked)>村里鄰界</label>
+                        <label for=btoverlay5><input type=checkbox id=btoverlay5
+                                onchange=overlayOpenData(5,this.checked)>AED位置</label>
+                        <label for=btoverlay6><input type=checkbox id=btoverlay6
+                                onchange=overlayOpenData(6,this.checked)>消防栓</label>
+                        <label for=btoverlay7><input type=checkbox id=btoverlay7
+                                onchange=overlayOpenData(7,this.checked)>土石流潛勢</label>
+                        <label for=btoverlay8><input type=checkbox id=btoverlay8
+                                onchange=overlayOpenData(8,this.checked)>道路路網</label>
+                        <label for=btoverlay9><input type=checkbox id=btoverlay9
+                                onchange=overlayOpenData(9,this.checked)>港口燈塔</label>
+                        <label for=btoverlay10><input type=checkbox id=btoverlay10
+                                onchange=overlayOpenData(10,this.checked)>大眾運輸</label>
+                        <label for=ais><input type=checkbox id=ais onchange=toggleAIS(this.checked)>AIS船舶</label>
+                    </div>
+                </div>
+                <div class='dropdown'><button
+                        onclick="if ($('.navbardivon:not(#basemap)').length>0) {$('.navbardivon').removeClass('navbardivon'); $('.navbarhoriz').removeClass('navbarhoriz');}; $('#basemap span').toggleClass('navbarhoriz'); $('#basemap').toggleClass('navbardivon');"
+                        class='dropbtn'>底圖<i class='fa fa-caret-down'></i></button>
+                    <div id=basemap class='dropdown-content'>
+                        <span data-n=0 class=selbasemap>臺灣通用電子地圖</span><span data-n=1>BingMap衛星地圖</span><span
+                            data-n=5>魯地圖彩色版</span><span data-n=7>魯地圖臺灣版</span><span data-n=2>EsriMap衛星地圖</span><span
+                            data-n=4>正射影像(等高線)</span><span data-n=6>OpenStreetMap</span><span
+                            data-n=8>TGOS黑色底圖</span><span data-n=9>OpenTopo地圖</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--DrawBar-->
+    <p id=drawtype class=KUOd-ib>
+        <input type=radio name=drawtype id=drawtype0 value=0 checked><label for=drawtype0><i
+                class=material-icons>arrow_drop_down</i>開始</label><br>
+        <input type=radio name=drawtype id=drawtype1 value=1><label for=drawtype1><i
+                class=material-icons>place</i>單點</label><br>
+        <input type=radio name=drawtype id=drawtype2 value=2><label for=drawtype2><i
+                class=material-icons>linear_scale</i>直線</label><br>
+        <input type=radio name=drawtype id=drawtype3 value=3><label for=drawtype3><i
+                class=material-icons>show_chart</i>折線</label><br>
+        <input type=radio name=drawtype id=drawtype4 value=4><label for=drawtype4><i
+                class=material-icons>gesture</i>手繪</label><br>
+        <input type=radio name=drawtype id=drawtype5 value=5><label for=drawtype5><i
+                class=material-icons>crop_free</i>方框</label><br>
+        <input type=radio name=drawtype id=drawtype6 value=6><label for=drawtype6><i
+                class=material-icons>donut_large</i>圓形</label><br>
+        <input type=radio name=drawtype id=drawtype7 value=7><label for=drawtype7><i
+                class=material-icons>translate</i>文字</label>
+    </p>
+
+    <p id=tdCursor class='KUOd-ib KUOml-1vw KUOclr-w KUOfs-1 KUOta-l'></p>
+    <!--MainDIV-->
+    <div id=mapcontainer class='KUOp-r KUOf-l KUOd-ib KUO-map-size KUO-main'>
+        <div id=map class='KUO-map-size KUOz-1 KUOf-l'
+            onmouseleave="document.getElementById('tdCursor2').innerHTML='DDD<sup>o</sup>MM.mm&rsquo;E<br>&nbsp;DD<sup>o</sup>MM.mm&rsquo;N';/*popup.setPosition(undefined);*/"
+            onmouseenter="document.getElementById('tdCursor2').style.visibility='visible';"></div>
+        <div id=popup></div>
+
+        <!--GoLive-->
+        <!--label for=iolive class='KUOc-p KUOfs-2 KUOp-a KUOfw-b' style=display:none><input type=checkbox id=iolive autocomplete="off" onchange='toggleGoLive(this.checked)'>GoLive</label-->
+
+        <!--DrawPanel-->
+        <div id=drawpanel style=right:-600px>
+            <div id=dragdrawpanel>
+                <i class='material-icons KUOrot-45deg KUOfs-20px KUOh-30px'>zoom_out_map</i>&nbsp;調色盤&nbsp;<span
+                    class='KUOml-5px KUOff-mono'>[&nbsp;ID&nbsp;=&nbsp;<span id=nud data-n=-1
+                        class=KUOff-mono>-1</span>&nbsp;]</span>
+                <!--span id=mindrawpanel class='material-icons KUOmr-5px KUOmt-3px KUOd-ib KUOfs-24px KUOf-r KUOclr-w KUOc-p KUOva-m' onclick='var i=document.getElementById("drawpanelblock").style.height[0]=="0"; if(!this.dataset.n) {this.dataset.n=document.getElementById("drawpanelblock").clientHeight+"px";}; document.getElementById("drawpanelblock").style.height=i?this.dataset.n:"0";this.innerHTML=i?"indeterminate_check_box":"add_box";'>indeterminate_check_box</span-->
+                <span id=mindrawpanel
+                    class='material-icons KUOmr-5px KUOmt-3px KUOd-ib KUOfs-24px KUOf-r KUOclr-w KUOc-p KUOva-m KUOrot-180deg'
+                    onclick='minmaxDrawlistPanel()' title=收起>more</span>
+            </div>
+            <div id=drawpanelblock style=height:auto>
+                <!--drawhead-->
+                <div id=drawpanelhead style=display:none>
+                    <ul>
+                        <li>
+                            <label>群組分類=<span class=KUOd-ib>
+                                    <select id=drawgroup class=drawselect>
+                                        <option value='Public'>Public</option>
+                                    </select>
+                                    <span class=KUOd-ib><input type=text class=drawaddoption id=drawgrouptext
+                                            placeholder=或新增群組 autocomplete="off">
+                                        <button id=drawgroupadd class=drawaddoptionbt
+                                            onclick="var i=document.getElementById('drawgrouptext').value; if(i.length>0){var j=document.createElement('option'),k=document.getElementById('drawgroup');j.text=i;j.value=i;k.add(j,0);k.value=i;document.getElementById('drawgrouptext').value='';}"><i
+                                                class=material-icons>add</i></button></span>
+                                </span></label>
+                        </li>
+                        <li>
+                            <label>圖層名稱=<span class=KUOd-ib>
+                                    <select id=drawlayer class=drawselect>
+                                        <option value='Layer0'>Layer0</option>
+                                    </select>
+                                    <span class=KUOd-ib><input type=text class=drawaddoption id=drawlayertext
+                                            placeholder=或新增圖層 autocomplete="off">
+                                        <button id=drawlayeradd class=drawaddoptionbt
+                                            onclick="var i=document.getElementById('drawlayertext').value; if(i.length>0){var j=document.createElement('option'),k=document.getElementById('drawlayer');j.text=i;j.value=i;k.add(j,0);k.value=i;document.getElementById('drawlayertext').value='';}"><i
+                                                class=material-icons>add</i></button></span>
+                                </span></label>
+                        </li>
+                        <li>
+                            <span class=KUOd-ib><label>對外開放=<input type=checkbox id=drawioopen checked></label></span>
+                            <span style='margin-left:4px'>，</span>
+                            <span class=KUOd-ib><label>(非本人)可修改=<input type=checkbox id=drawiomod
+                                        checked></label></span>
+                        </li>
+                    </ul>
+                </div>
+                <!--drawstyle-->
+                <div id=drawpanelstyle>
+                    <ul>
+                        <li><span class='KUOd-ib KUOva-t'>顏<br>色</span>
+                            <div id=drawpanelclr class=KUOd-ib></div>
+                        </li>
+                        <li><label>大小=<span class='btdrawssize'
+                                    onclick="changeDrawsSize(Math.max(parseInt(document.getElementById('drawssize').value)-1,0))"><i
+                                        class='fas fa-less-than'></i></span>
+                                <input type=number id=drawssize step=1 min=0 max=100 value=20
+                                    onchange=changeDrawsSize(parseInt(this.value))>
+                                <span class='btdrawssize'
+                                    onclick="changeDrawsSize(Math.min(100,parseInt(document.getElementById('drawssize').value)+1))"><i
+                                        class='fas fa-greater-than'></i></span>&nbsp;px</label>
+                            <label class='KUOc-p'>，鎖定比例<input type=checkbox id=ioratio
+                                    onchange=toggleRatio(this.checked)></label>
+                        </li>
+                        <li>地標=<span id=drawsmark>
+                                <label><input type=radio name=drawsmark value=defaults data-n=0 checked><i
+                                        class=material-icons>brightness_1</i></label>
+                                <label><input type=radio name=drawsmark value=defaults data-n=1><i
+                                        class=material-icons>place</i></label>
+                                <label><input type=radio name=drawsmark value=needle data-n=2><i
+                                        class=material-icons>nature</i></label>
+                                <label><input type=radio name=drawsmark value=blazon data-n=3><i
+                                        class=material-icons>assistant</i></label>
+                                <label><input type=radio name=drawsmark value=flag data-n=4><i
+                                        class=material-icons>flag</i></label>
+                            </span></li>
+                        <li>符號=<span id=drawssign class='KUOd-i'></span></li>
+                        <li>陰影=<select id=drawsshac class=drawselect>
+                                <option value='#000'>黑</option>
+                                <option value='#fff'>白</option>
+                                <option value='#f00'>紅</option>
+                                <option value='#00f'>藍</option>
+                                <option value='#080'>綠</option>
+                                <option value='#ff0'>黃</option>
+                            </select>
+                            <input type=number id=drawsshaw step=1 min=0 max=100 value=6>px，填滿<input type=range
+                                id=drawsfill step=10 min=0 max=100 value=0>%
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--drawtext-->
+        <div id=drawtext class=drawtext data-n=-1>
+            <div id=dragdrawtext class=KUOc-m><i class="material-icons KUOrot-45deg KUOfs-20px">zoom_out_map</i></div>
+            <span class=KUOd-ib><select id=drawsfont class=drawselect>
+                    <option value='微軟正黑體'>微軟正黑體</option>
+                    <option value='標楷體'>標楷體</option>
+                    <option value='新細明體'>新細明體</option>
+                </select></span>
+            <span class=KUOd-ib><label><input type=checkbox id=drawsbold>粗體</label><label><input type=checkbox
+                        id=drawsitalic>斜體</label></span>
+            <span class='KUOd-ib KUOfs-20px'><label><input type=radio name=drawsdiag value=0
+                        checked>文字&nbsp;</label><label><input type=radio name=drawsdiag value=1>文字框</label>
+                <select id=drawsposi class='drawselect KUOml-5px'>
+                    <option value="bottom-left">左下</option>
+                    <option value="center-left">左</option>
+                    <option value="top-left">左上</option>
+                    <option value="top-center">上</option>
+                    <option value="top-right">右上</option>
+                    <option value="center-right">右</option>
+                    <option value="bottom-right">右下</option>
+                    <option value="bottom-center">下</option>
+                    <option value="center-center">中</option>
+                </select></span><br>
+            <textarea id=ftext placeholder=輸入文字></textarea><br>
+            <button type=button id=bttext
+                onclick="setDrawtext(document.getElementById('drawtext').dataset.n,parseInt(document.querySelector('input[name=drawsdiag]:checked').value),document.getElementById('drawsposi').value,document.getElementById('drawsfont').value,[document.getElementById('drawsbold').checked,document.getElementById('drawsitalic').checked])">確定</button><button
+                type=button id=bttextx class=KUOml-5px onclick=abortDrawtext()>取消</button>
+            <!--span class='KUOml-1vw KUOfs-16px KUOclr-w KUOff-msb KUOva-m KUOta-l'>(可換行)</span-->
+        </div>
+    </div>
+
+    <!--timeline-->
+    <div id=drawtimeline style=display:block>
+        <div id="visualization"></div>
+    </div>
+
+    <!--toggletimeline-->
+    <div id=mintimeline class='KUOd-ib KUOc-p KUOva-m'><i id=movetimeline class=material-icons
+            title='拖曳垂直位置'>import_export</i><br><i id=mintimelinei class=material-icons style=transform:rotate(180deg)
+            title='顯示/隱藏時間軸'
+            onclick='var i=document.getElementById("drawtimeline"); if(i.style.display=="block"){i.style.display="none";i="0";}else{i.style.display="block";i="180";};document.getElementById("mintimelinei").style.transform="rotate("+i+"deg)";'>more</i>
+    </div>
+
+    <!--ImageUpload-->
+    <table id=imgupload>
+        <caption id=imgfilename style='color:#fff;'></caption>
+        <tr>
+            <td></td>
+            <td><input type=number id=imgboundn placeholder=北 value=24.88855914250551></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type=number id=imgboundw placeholder=西 value=121.6428719040098></td>
+            <td><img id=imgpreview></td>
+            <td><input type=number id=imgbounde placeholder=東 value=121.86866285192703></td>
+        </tr>
+        <tr>
+            <td><button onclick='document.getElementById("imgupload").style.top="-700px";'>取消</button></td>
+            <td><input type=number id=imgbounds placeholder=南 value=24.748898664040216></td>
+            <td><button id=btimgupload onclick='uploadImage()'>確定</button></td>
+        </tr>
+    </table>
+    <!--InputFile-->
+    <input type=file id=uploadimg class=KUOd-n onchange='uploadImagePreview(this)' multiple accept='.png,.jpg,.gif'>
+
+    <!--QuickImport-->
+    <div id=divquickimport style=right:-35vw>
+        <span class='KUOfs-3 KUOclr-w KUOff-msb KUOml-1vw KUOfw-b'><i class='fas fa-angle-double-right KUOc-p'
+                onclick='document.getElementById("divquickimport").style.right="-35vw";'></i>快速匯入</span><br>
+        <span class='KUOfs-1 KUOclr-w KUOff-msb KUOml-1vw'></span><br>
+        <div class=KUOml-1vw><span class='KUOfs-1dot2 KUOclr-w'>投影座標：</span><select id=quickimportproj
+                class='KUOc-p KUOml-3px KUOfs-1dot2 KUOpl-4px'>
+                <option value=4326>WGS84&nbsp;(4326)</option>
+                <option value=3857>Mercator&nbsp;(3857)</option>
+                <option value=3824>TWD97-121&nbsp;(3826)</option>
+                <option value=3825>TWD97-119&nbsp;(3825)</option>
+                <option value=3828>TWD67-121&nbsp;(3828)</option>
+            </select></div>
+        <div class='KUOml-1vw KUOfs-1dot2'><span class='KUOclr-w KUOff-msb'>格式</span>
+            <label class='KUOclr-w KUOff-msb'><input type=radio name=quickimportxy id=quickimportxy value=1 checked
+                    style='width:1.2vw;height:1.2vw;cursor:pointer'>經度、緯度</label>
+            <label class='KUOclr-w KUOff-msb'><input type=radio name=quickimportxy value=2
+                    style='width:1.2vw;height:1.2vw;cursor:pointer'>緯度、經度</label>
+        </div>
+        <textarea id=quickimport class='KUOml-1vw' placeholder="貼上批次匯入座標："></textarea><br>
+        <div class=KUOml-1vw><span class='KUOfs-1dot2 KUOclr-w KUOff-msb'>全部取代=</span>
+            <input type=text id=quickimportrep1 placeholder='原來的' class='KUOfs-1dot2 KUOpl-3px KUOff-msb'
+                style=width:4.5vw>
+            <span class='KUOfs-1dot2 KUOclr-w KUOff-msb'>:</span>
+            <input type=text id=quickimportrep2 placeholder='取代為' class='KUOfs-1dot2 KUOpl-3px KUOff-msb'
+                style=width:4.5vw>
+            <button type=button class='KUOfs-1dot2' onclick=repQuickImport()>開始</button>
+        </div><br>
+        <div class=KUOml-1vw><button id=subquickimport type=button class='KUOfs-2' onclick=subQuickImport()>確定</button>
+        </div>
+    </div>
+
+    <!--DragDropBtn-->
+    <div id=dragdropbtn></div>
+
+    <!--AISnumber-->
+    <div id=aisnum></div>
+
+    <!--ListPanelBtn-->
+    <div id=btbackdrawlist title='表格' style=display:block
+        onclick=minmaxDrawlistTable(document.getElementById('drawproject').innerHTML)><i
+            class='material-icons KUOfs-2'>format_list_numbered</i><i
+            class='material-icons KUOfs-2 KUOrot-180deg'>more</i></div>
+    <div id=btbackdrawpanel title='樣式' style=display:block onclick=minmaxDrawlistPanel()><i
+            class='material-icons KUOfs-2'>more</i><i class='material-icons KUOfs-2'>color_lens</i></div>
+
+    <!--script async defer type=text/javascript src=/odbargo/static/js/d3.v5.min.js></script-->
+    <script type=text/javascript src=/odbargo/static/js/jquery-3.5.1.min.js> </script>
+    <script src=/odbargo/static/js/MDS_datatables.min.js> </script>
+    <script
+        src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,fetch,Math.sign">
+        </script>
+    <!--script defer type=text/javascript src="https://openlayers.org/en/v5.3.0/build/ol.js"></script-->
+    <script type=text/javascript src=/odbargo/static/js/ol6.5.0.js> </script>
+    <script type=text/javascript src=/odbargo/static/js/ol-ext3.1.16a.min.js> </script>
+    <script type=text/javascript src=https://cdnjs.cloudflare.com/ajax/libs/jszip/2.6.1/jszip.min.js> </script>
+    <script type=text/javascript>
+        document.addEventListener("DOMContentLoaded",function() { if (window.location.href.indexOf("?")>0) {
+    document.getElementById('drawproject').innerHTML=window.location.href.split("?case=")[1].split("&")[0];
+  } else {
+    document.getElementById('drawproject').innerHTML='casetest';
+    document.getElementById('drawproject').style.color='#888';
+  };
+  dragfig(document.getElementById('drawpanel'));
+  dragfigYonly(document.getElementById('mintimeline'));
+  if (document.getElementById('drawpanelclr').innerHTML.length<10) {
+/*initStylepanelColor*/
+    var sf="<i class='material-icons drawclrchk' style=color:"+userclr[0]+" data-n=0>lens</i>";
+    for ( var i=1; i<userclr.length; i++) {
+      sf+="<i class='material-icons' style=color:"+userclr[i]+" data-n="+i+">lens</i>";
+      if ( (i+1)%10==0 ) { sf=sf+"<br>"; };
+    };
+    document.getElementById('drawpanelclr').innerHTML=sf;
+/*detectDrawColorChanged*/
+    $("#drawpanelclr i").on("click",function(){
+      document.querySelector('.drawclrchk').className='material-icons';
+      this.className='material-icons drawclrchk';
+      udclr=parseInt(this.dataset.n)
+      if($('.drawlist2mod').length>0 || document.getElementById('drawtext').style.display=='block') { setDrawlistStyle(); };
+    });
+/*initStylepanelSign*/
+    var drawssign=['','exclamation-circle','question-circle','minus-circle',
+      'arrow-circle-up','arrow-circle-down','arrow-circle-left','arrow-circle-right','campground',
+      'anchor','life-ring','ship','helicopter','plane','shuttle-van','ambulance','car-side','motorcycle','walking'];
+    var sf1="<i class='KUOff-msb drawsignchk' style='font-style:normal;font-size:18px;vertical-align:top' data-n=0 data-ii='<i class="+'"fas fa-circle" '+"data-n=0></i>'>(無)</i>";
+    for ( var i=1; i<drawssign.length; i++) {
+      var j="<i class='fas fa-"+drawssign[i]+"' data-n="+i+"></i>"; j=j.replace(' data-n=',' data-ii="'+j+'" data-n='); sf1=sf1+j;
+    };
+/*detectDrawSignChanged*/
+    document.getElementById('drawssign').innerHTML=sf1; document.getElementById('drawssign').dataset.n=0;
+    $("#drawssign i").on("click",function() {
+      udsty2=parseInt(this.dataset.n);
+      var i=document.querySelector('.drawsignchk').className; document.querySelector('.drawsignchk').className=i.replace(' drawsignchk','');
+      i=this.className; this.className=i+' drawsignchk';
+      if($('.drawlist2mod').length>0) { setDrawlistStyle(); }
+    });
+    //document.getElementById('drawpanel').style.display='none';
+    dragfig(document.getElementById('drawtext'));
+/*setUserNameCookie*/
+    if (document.cookie.split('mdsuser=').length==1) {
+      mdsuser=prompt("初次登入，請輸入使用者名稱(可修改)：","某某某");
+      mdsuser=encodeURIComponent(mdsuser);
+      document.cookie="mdsuser="+mdsuser+"; expires='Fri, 01 Jan 2100 00:00:00 GMT'";
+    } else {
+      mdsuser=document.cookie.split('mdsuser=')[1].split(';')[0];
+    };
+    document.getElementById('drawuser').innerHTML=decodeURIComponent(mdsuser);
+/*initDrawlistTable*/
+    initDrawlistTable(document.getElementById('drawproject').innerHTML,undefined);
+/*initDrawTimeline*/
+    initDrawTimeline();
+/*toggleBaseMap*/
+    $("#basemap span").on("click",function() {
+      toggleBaselayer(this.dataset.n);
+    });
+/*modSearchGPSLabel*/
+    document.querySelector('.ol-longitude label').innerHTML='經度(東)=';
+    document.querySelector('.ol-latitude label').innerHTML='緯度(北)=';
+/*addMyLocationGPS*/
+    document.getElementsByClassName('ol-geoloc')[0].onclick=function() {
+      var a=mylocationsrc.getFeatures().length;
+      if (a==0 || mylocationsrc.getFeatures()[a-1].get('name')!=search.geolocation.getPosition().join('')) {
+        if (!search.geolocation.getPosition()) {
+          setTimeout(function(){updmylocationsrc(search.geolocation.getPosition());},500);
+        } else {
+          updmylocationsrc(search.geolocation.getPosition());
+        };
+      };
+      function updmylocationsrc(p) {
+        mylocationsrc.addFeature(new ol.Feature({geometry:new ol.geom.Point(ol.proj.fromLonLat(p)),name:p.join('')}));
+      };
+    };
+/*defaultSNislandON*/
+    toggleSNisland(true);
+  };
+});
+
+var mdsuser;
+var mdscode=new Date().getTime();
+
+window.onbeforeunload = function () {
+  $.getJSON('/rescue/rtdraws/delete?name0='+mdsuser+'&code0='+mdscode,function(i) { 'bye' });
+};
+
+/*detectDrawtypeChanged*/
+var drawtype=0;
+$('input[name=drawtype]').change(function(){
+  if(drawtype.toString()!=this.value){drawtype=parseInt(this.value);toggleDrawpanel(true);}
+  if(document.querySelector('.drawlist2mod')) {document.querySelector('.drawlist2mod td:nth-child(3)').click();};
+});
+var udsiz=-1;
+//document.getElementById('drawssize').onchange=(function(){udsiz=parseInt(this.value);if($('.drawlist2mod').length>0){setDrawlistStyle();}});
+function changeDrawsSize(a) {
+  document.getElementById('drawssize').value=a.toString(); udsiz=a; if($('.drawlist2mod').length>0){setDrawlistStyle();};
+};//end of func changeDrawsSize
+var udsty1=0,udsty2=0;
+$('input[name=drawsmark]').change(function(){
+  if(udsty1.toString()!=this.dataset.n) { udsty1=parseInt(this.dataset.n); if($('.drawlist2mod').length>0){setDrawlistStyle();} }
+});
+var udsty3=0;
+document.getElementById('drawsshac').onchange=(function(){udsty3=parseInt(this.selectedIndex);if($('.drawlist2mod').length>0){setDrawlistStyle();}});
+var udsty4=6;
+document.getElementById('drawsshaw').onchange=(function(){udsty4=parseInt(this.value);if($('.drawlist2mod').length>0){setDrawlistStyle();}});
+var udsty5=0;
+document.getElementById('drawsfill').onchange=(function(){udsty5=parseInt(this.value);if($('.drawlist2mod').length>0){setDrawlistStyle();}});
+var udclr=0,udhover=-1;
+var nud=0;
+var ioratio=false;
+
+var userclr=["#ff0000","#ff8700","#ffd300","#deff0a","#a1ff0a","#0aff99","#0aefff","#147df5","#580aff","#be0aff","#7f0000","#7f4400","#7f6a00","#6f7f05","#507f05","#057f4d","#05787f","#0a3f7b","#2c057f","#5f057f"];
+var userclr1=["#FFFFFF","#C0C0C0","#808080","#000000","#FF0000","#800000","#FFFF00","#808000","#00FF00","#008000","#00FFFF","#008080","#0000FF","#000080","#FF00FF","#800080"];
+var userclr2=['#0080FF','#00A0FF','#40C0FF','#40E0FF','#40FFFF','#40FF40','#80FF40','#C0FF40','#FFFF40','#FFE040','#FFA040','#FF6040','#FF2040','#FF60C0','#FFA0FF','#FFE0FF'];
+
+var iojsshp=0;
+var iojsproj4=0;
+var iojszip=0;
+var mapzoom = (window.location.href.indexOf("map=")>0)?((window.location.href.split("map=")[1]).split("&")[0].split(",")[2]):7;
+var da0=new Date(); /*da1.setDate(da2.getDate()-7);*/da0=da0.getFullYear()+("0"+(da0.getMonth()+1)).slice(-2)+("0"+da0.getDate()).slice(-2);
+var pj='3857';//var imgextent=new ol.extent.applyTransform([105,2,135,35],ol.proj.getTransform('EPSG:4326','EPSG:3857'))
+var baselayer = new ol.layer.Tile({zIndex:1}); var initbaselayer=0; toggleBaselayer(initbaselayer);
+
+var select = new ol.Feature();
+var userdraw;
+var userdrawsrc=new ol.source.Vector();
+var userdrawvec=new ol.layer.Vector({source:userdrawsrc,zIndex:16,renderMode:'image'});
+
+var mylocationsrc=new ol.source.Vector();
+var mylocationvec=new ol.layer.Vector({source:mylocationsrc,style:new ol.style.Style({text:new ol.style.Text({text:'\uf05b',font:'normal 3vw FontAwesome',fill:new ol.style.Fill({color:'#000'}),stroke:new ol.style.Stroke({width:3,color:"#f8f"}),textBaseline:'middle',textAlign:'center'})}),zIndex:5});
+
+var grid=new ol.layer.Graticule({strokeStyle:new ol.style.Stroke({color:'rgba(255,120,0,.9)',width:2/*,lineDash:[.5,4]*/}),zIndex:6,showLabels:true,visible:false});
+var wind = new ol.layer.Image({zIndex:14,visible:false});
+var cwbanim;
+
+var snisland=new ol.layer.Image({source:new ol.source.ImageStatic({url:"/Public/p17.jpg",projection:'EPSG:3857',imageExtent:new ol.proj.transformExtent([121.64201880000002,24.75549999999997,121.86833266000009,24.88951111],'EPSG:4326','EPSG:3857'),crossOrigin:'anonymous'}),zIndex:2,visible:false});
+
+var aissrc=new ol.source.Vector();//{format:new ol.format.GeoJSON(),crossOrigin:'anonymous'});
+//var aisclr=['#0ff2da','#ff06ff','#fe0601','#ff8000','#ffff00','#0aff00','#0600ff','#996633','#0fffff','#555555','#aaaaaa','#000000','#ffffff','#222222','#888888','#cccccc','#ff0088','#0088ff'];
+var aisclr=['blue','red','purple','yellow','green','gray','lightblue'];
+//var aisstyle=(function(f){console.log(f);return new ol.style.Style({text:new ol.style.Text({text:String.fromCodePoint(0x27A4),font:'900 '+Math.round(mapzoom*2)+'px "Arial"',stroke:new ol.style.Stroke({color:'#000',width:2}),fill:new ol.style.Fill({color:f.get('clr')}),rotation:f.get('cog')})})});
+const aisiconCache={};
+function aisstyle(f,_) {
+  //let a1=f.get('Ship_and_Cargo_Type').toString()[0];
+  let a1=f.get('shiptype').toString()[0];
+  //let a2=Math.round(f.get('COG')%360/20)*20;
+  let a2=Math.round(f.get('cog')%360/20)*20;
+  let s=aisiconCache[a1+'_'+a2];
+  if (!s) {
+    //s=aisiconCache[a1+'_'+a2]=new ol.style.Style({text:new ol.style.Text({text:String.fromCodePoint(0x27A4),font:'900 '+Math.round(mapzoom*2)+'px "Arial"',stroke:new ol.style.Stroke({color:'#000',width:2}),fill:new ol.style.Fill({color:userclr[a1]}),rotation:a2})});
+    s=aisiconCache[a1+'_'+a2]=new ol.style.Style({image:new ol.style.Icon({anchor:[0.5,0.5],anchorXUnits:'fraction',anchorYUnits:'fraction',src:"/odbargo/static/figs/ais/ship_"+aisclr[a1%7]+".png",rotation:a2})});
+  };
+  return s
+};
+var ais = new ol.layer.Vector({source:aissrc,zIndex:17,renderMode:'vector',style:aisstyle/*,renderOrder:null*/});
+
+var map = new ol.Map({
+  controls: ol.control.defaults({zoom:true,attribution:false,rotate:false}),
+  layers: [baselayer,snisland,grid,wind,userdrawvec,mylocationvec,ais],target:'map',
+  interactions: ol.interaction.defaults({altShiftDragRotate:false,shiftDragZoom:false,pinchRotate:false}),
+  view:new ol.View({projection:'EPSG:'+pj,center:ol.proj.transform([121,24],"EPSG:4326","EPSG:3857"),
+  extent:ol.extent.applyTransform([0,-85,360,85],ol.proj.getTransform("EPSG:4326","EPSG:3857")),
+  zoom:mapzoom,minZoom:5-1,maxZoom:15+15}),
+  pixelRatio:1,
+  logo: false
+});
+
+var divpop = document.getElementById('popup');
+var popup = new ol.Overlay({element: document.getElementById('popup')});
+map.addOverlay(popup);
+
+var placemark=new Array(),textbox=new Array();
+var dragplace=new ol.interaction.DragOverlay({overlays:[]});
+dragplace.on('dragstart',function(e) {
+  var ii=userdrawsrc.getFeatureById(e.overlay.id);
+  if (ii.get('type0')!=7) { $("#drawlistbody"+ii.get('layer')+" tr[data-n='"+ii.getId()+"'] td:nth-child(3)").click(); };
+});
+dragplace.on('dragend',function(e){
+  var ii=userdrawsrc.getFeatureById(e.overlay.id);
+  ii.getGeometry().setCoordinates(e.coordinate);
+  var ixy=ol.proj.transform(e.coordinate,'EPSG:3857','EPSG:4326');
+  var a=ii.get('layer');
+  var i=$("#drawlistbody"+a+" tr[data-n='"+e.overlay.id+"']").index();
+  var j=$("#drawlist"+a).DataTable().row(i).data(); j[4]=ixy[0].toFixed(5); j[5]=ixy[1].toFixed(5);
+  $("#drawlist"+a).DataTable().row(i).data(j).draw();
+  var jj=ii.get('type0');
+});
+map.addInteraction(dragplace);
+dragplace.setActive(false);
+
+var tooltip=new ol.Overlay.Tooltip();
+map.addOverlay(tooltip);
+
+var transform=new ol.interaction.Transform({layers:[userdrawvec],translateFeature:false,selection:false,
+  filter:function(f,r){return f.getGeometry().getType()!='Point';},modifyCenter:function(e){return !e.pointerEvent.ctrlKey}});
+map.addInteraction(transform);
+transform.on(['rotateend','translateend','scaleend'],function (e){
+//kuokuo 'a' should be 'layer name' instead of '1'. 2020.10.23
+  var a=e.feature.get('layer');
+  switch (e.feature.getGeometry().getType()) {
+    case 'LineString': case 'Polygon':
+      modDrawlistTable2(a,e.feature.getId(),e.feature);
+      break;
+    case 'Circle':
+      modDrawlistTable3(a,e.feature.getId(),e.feature);
+      break;
+  };
+  if(!document.querySelector('.drawlist2mod')) {$("#drawlistbody"+a+" tr[data-n='"+e.feature.getId()+"'] td:nth-child(3)").click();};
+});
+transform.setActive(false);
+
+var search = new ol.control.SearchGPS({maxItems:1});
+map.addControl(search);
+search.on('select', function(e){
+  var a=mylocationsrc.getFeatures().length;
+  if (a==0 || mylocationsrc.getFeatures()[a-1].get('name')!=e.search.gps.join('')) {
+    mylocationsrc.addFeature(new ol.Feature({geometry:new ol.geom.Point(e.search.coordinate),name:e.search.gps.join('')}));
+console.log(e);
+    map.getView().animate({center:e.search.coordinate});
+  } else {
+    map.getView().animate({center:e.search.coordinate,zoom:Math.min(Math.max(mapzoom+3,12),20)});
+  };
+});
+
+var locate=new ol.control.SearchNominatim({polygon:false,reverse:true,position:true});
+map.addControl(locate);
+locate.on('select',function(e){
+  if (document.querySelector('.ol-searchgps.ol-search.ol-unselectable.ol-control.ol-collapsed')) {
+    $('.ol-searchgps.ol-search.ol-unselectable.ol-control.ol-collapsed').removeClass('ol-collapsed');
+  };
+  if (e.search.geojson) {
+    var f=new ol.format.GeoJSON().readFeature(e.search.geojson,{dataProjection:"EPSG:4326",featureProjection:'EPSG:3857'});
+    console.log(f);
+  };
+  var i=[parseFloat(e.search.lon),parseFloat(e.search.lat)];
+  var j=new Array(3).fill(0); j[0]=Math.floor(i[0]); j[1]=Math.floor((i[0]-j[0])*60.0); j[2]=Math.floor(((i[0]%1)*60.0-j[1])*60.0);
+  var k=new Array(3).fill(0); k[0]=Math.floor(i[1]); k[1]=Math.floor((i[1]-k[0])*60.0); k[2]=Math.floor(((i[1]%1)*60.0-k[1])*60.0);
+  document.querySelector('.autocomplete li:first-child').innerHTML=k[0]+'°'+('0'+k[1].toString()).slice(-2)+'′'+('0'+k[2].toString()).slice(-2)+'″N '+j[0]+'°'+('0'+j[1].toString()).slice(-2)+'′'+('0'+j[2].toString()).slice(-2)+'″E';
+  //if (document.querySelector(".ol-switch input[type=checkbox]").checked) {
+  document.querySelectorAll('.ol-longitude input.ol-dms')[0].value=j[0]; document.querySelectorAll('.ol-latitude input.ol-dms')[0].value=k[0];
+  document.querySelectorAll('.ol-longitude input.ol-dms')[1].value=j[1]; document.querySelectorAll('.ol-latitude input.ol-dms')[1].value=k[1];
+  document.querySelectorAll('.ol-longitude input.ol-dms')[2].value=j[2]; document.querySelectorAll('.ol-latitude input.ol-dms')[2].value=k[2];
+  document.querySelector('.ol-longitude input.ol-decimal').value=parseFloat(i[0].toFixed(7));
+  document.querySelector('.ol-latitude input.ol-decimal').value=parseFloat(i[1].toFixed(7));
+  //document.querySelector('.autocomplete.history li:first-child').click();
+  if (i) {
+    var ii=ol.proj.transform(i,'EPSG:4326','EPSG:3857');
+    mylocationsrc.addFeature(new ol.Feature({geometry:new ol.geom.Point(ii),name:[i[0].toFixed(7),i[1].toFixed(7)].join('')}));
+    map.getView().animate({center:ii});
+  };
+});
+
+map.on('singleclick',function(evt) {
+  //if (document.querySelector(":focus")){document.querySelector(":focus").blur();}
+  var f1= this.forEachFeatureAtPixel(evt.pixel, function(feature,layer) {
+    if (layer==userdrawvec && (!userdraw || !userdraw.getActive()) && feature.getGeometry().getType()!='Point') {
+      $("#drawlistbody"+feature.get('layer')+" tr[data-n='"+feature.getId()+"'] td:nth-child(3)").click();
+      transform.setSelection([feature]);
+      return feature;
+    } else if (layer==mylocationvec) {
+      mylocationsrc.removeFeature(feature);
+    } else if (layer==ais) {
+      //document.querySelectorAll('.vis-item-content')[0].click()
+
+    }
+  });
+  if (!f1) {
+    transform.select();
+    if(document.querySelector('.drawlist2mod')) {document.querySelector('.drawlist2mod td:nth-child(3)').click();};
+  };
+});
+
+map.on('pointermove',function(evt) {
+  var a=0;
+  var feature = this.forEachFeatureAtPixel(evt.pixel, function(feature,layer) {
+    switch (layer) {case userdrawvec: a=4; break; case mylocationvec: a=6; break; case ais: a=7; break;
+      default: if (layer && layer.get('name').indexOf('dgdp')>=0) { a=8; }; break; }; return feature;
+  });
+  //if (udhover>=0) { $("#drawlistbody1 tr[data-n='"+udhover+"']").removeClass('drawlisthover'); udhover=-1; };
+  if (udhover>=0) { $(".drawlisthover").removeClass('drawlisthover'); udhover=-1; };
+  if (a>0) {
+    this.getTargetElement().style.cursor = 'pointer';
+    divpop.style.display='block';
+    switch (a) {
+      case 4:
+        if (document.getElementById('drawtype0').checked || !userdraw.getActive()) {
+          divpop.style.width='80px';
+          divpop.innerHTML='ID=<b>'+feature.getId()+'.</b><br>'+decodeURIComponent(feature.get('name0'));
+          popup.setPosition(evt.coordinate);
+          $("#drawlistbody"+feature.get('layer')+" tr[data-n='"+feature.getId()+"']").addClass('drawlisthover')
+          $("#drawlistbody"+feature.get('layer')+" tr[data-n='"+feature.getId()+"']")[0].scrollIntoView();
+          udhover=feature.getId();
+          //document.querySelector("#drawlistbody"+feature.get('layer')+" tr[data-n='"+feature.getId()+"']").scrollIntoView();
+          //$("#drawlistbody"+feature.get('layer')+" tr[data-n='"+feature.getId()+"']")[0].scrollIntoView();
+        } else {
+          divpop.style.display='none';
+        };
+        break;
+      case 6:
+        this.getTargetElement().style.cursor = 'no-drop';
+        divpop.style.display='none';
+        break;
+      case 7:
+        divpop.style.width='220px';
+        divpop.innerHTML='<div style="text-align:left;font-family:微軟正黑體;padding-left:5px">'+(['mmsi',/*'imo','callsign',*/'shipname','lon','lat','time',/*'sog','cog','stat',*/'shiptype'].map(function(ii){return '<b>'+ii+':</b> '+feature.get(ii)}).join('<br>'))+'</div>';
+        //divpop.innerHTML='<div style="text-align:left;font-family:微軟正黑體;padding-left:5px">'+(['MMSI','IMO_Number','Call_Sign','ShipName','Longitude','Latitude','Record_Time','SOG','COG','Navigational_Status','Ship_and_Cargo_Type','fid'].map(function(ii){return ii+': '+feature.get(ii)}).join('<br>'))+'</div>';
+        //var xy=map.getView().calculateExtentInternal();
+        //popup.setPosition([xy[0]+(xy[2]-xy[0])*0.05,xy[1]]);
+        popup.setPosition(evt.coordinate);
+        break;
+      case 8:
+        divpop.style.width='220px';
+        if (feature) {
+          var j=feature.get('description') || feature.get('name') || feature.get('_name') || feature.get('layer');
+          if (j) { divpop.innerHTML=j; popup.setPosition(evt.coordinate); } else { divpop.style.display='none'; };
+        } else {
+          divpop.style.display='none';
+        };
+        break;
+    };
+  } else {
+    this.getTargetElement().style.cursor = '';
+    divpop.style.display='none';
+    select.setStyle(null);
+  }
+});
+
+map.getViewport().addEventListener('contextmenu', function (e) {
+  if(userdraw && !document.getElementById('drawtype0').checked) {
+    e.preventDefault(); if(userdraw) { userdraw.setActive(!userdraw.getActive()); }
+  };
+  tooltip.removeFeature();
+  if (userdraw) {dragplace.setActive(!userdraw.getActive()); transform.setActive(!userdraw.getActive());};
+});
+
+map.getView().on('change:resolution',function() {
+  mapzoom=map.getView().getZoom();
+  if (ioratio) {
+    textbox.forEach(function(i){
+      if (i) { i.element.firstElementChild.style.transform="scale("+Math.min(Math.max(Math.pow(2,mapzoom)/Math.pow(2,userdrawsrc.getFeatureById(i.getId()).get('k')[3]/1000.0),0.1),10)+")"; }
+    });
+    placemark.forEach(function(i){
+      if (i) { i.element.firstElementChild.style.transform="scale("+Math.min(Math.max(Math.pow(2,mapzoom)/Math.pow(2,userdrawsrc.getFeatureById(i.getId()).get('k')[4]),0.2),5)+")"; }
+    });
+  };
+});
+
+map.getViewport().addEventListener('dragover',function(event) { event.preventDefault(); });
+map.getViewport().addEventListener('drop',function(e) {
+  var f=e.dataTransfer.files;
+  for (var i=0; i<f.length; i++) {
+    switch (f[i].name.substr(-3).toLowerCase()) {
+      case 'zip': dropovershp(e,i); break;
+      case 'kmz': dropoverkmz(e,i); break;
+    };
+  };
+});
+
+var mousepos = new ol.control.MousePosition({
+  coordinateFormat: function(c) {document.getElementById('tdCursor2').innerHTML=(~~c[0])+"<sup>o</sup>"+("00"+((c[0]%1)*60).toFixed(2)).slice(-5)+"'E<br>&nbsp;"+(~~c[1])+"<sup>o</sup>"+("00"+((c[1]%1)*60).toFixed(2)).slice(-5)+"'N";
+    return ol.coordinate.format(c," {x} <sup>o</sup>E , {y} <sup>o</sup>N&nbsp;",4)},
+  projection: 'EPSG:4326', className: 'custom-mouse-position', target: document.getElementById('tdCursor'),
+  undefinedHTML: " Longitude<sup>o</sup>E , Latitude<sup>o</sup>N&nbsp;"
+});
+map.addControl(mousepos);
+
+/*DragDropVectorFile*/
+var styledragdrop = {
+  'Point':new ol.style.Style({image:new ol.style.Circle({fill:new ol.style.Fill({color:'rgba(128,128,0,0.5)'}),
+     radius:5,stroke:new ol.style.Stroke({color:'#ff0',width:1})})}),
+  'LineString':new ol.style.Style({stroke:new ol.style.Stroke({color:'#f00',width:3})}),
+  'Polygon':new ol.style.Style({fill:new ol.style.Fill({color:'rgba(0,128,128,0.5)'}),
+     stroke:new ol.style.Stroke({color:'#0ff',width:1})}),
+  'MultiPoint':new ol.style.Style({image:new ol.style.Circle({fill:new ol.style.Fill({color:'rgba(128,0,128,0.5)'}),
+      radius:5,stroke:new ol.style.Stroke({color:'#f0f',width:1})})}),
+  'MultiLineString':new ol.style.Style({stroke:new ol.style.Stroke({color:'#f00',width:3})}),
+  'MultiPolygon':new ol.style.Style({fill:new ol.style.Fill({color:'rgba(0,0,128,0.5)'}),
+      stroke:new ol.style.Stroke({color:'#00f',width:1})})
+};
+var styledragdropfun = function(f,r){  var fStyleFunc=f.getStyleFunction();
+  if (fStyleFunc) { return fStyleFunc.call(f,r); } else { return styledragdrop[f.getGeometry().getType()]; }
+};
+var dragdropinteraction = new ol.interaction.DragAndDrop({formatConstructors: [
+    ol.format.GPX,ol.format.GeoJSON,ol.format.IGC,ol.format.KML,ol.format.TopoJSON]
+});
+dragdropinteraction.on('addfeatures',function(e) { var vsr=new ol.source.Vector({features:e.features});
+  var ii=(map.getLayers().getArray().length).toString()+new Date().getSeconds().toString();
+  map.addLayer(new ol.layer.Vector({renderMode:'hybrid',source:vsr,style:styledragdropfun,zIndex:10,name:"dgdp"+ii}));
+  map.getView().fit(vsr.getExtent());
+  var i=document.createElement("BUTTON"); i.innerHTML="&#10006;"; i.id="btdgdp"+ii; i.className="btdgdp"; i.title=e.file.name;
+  i.setAttribute("onclick","closeDragDropLayer("+ii+")");
+  i.setAttribute("oncontextmenu","event.preventDefault(); hideDragDropLayer("+ii+")");
+  document.getElementById("dragdropbtn").appendChild(i);
+});
+map.addInteraction(dragdropinteraction);
+
+var timeline,tlitems;
+function initDrawTimeline() {
+  $.getJSON('/rescue/draws/listjson?case='+document.getElementById('drawproject').innerHTML,function(g) {
+    var tl=new Array();
+    //for (var i=0; i<g.id.length; i++) { tl.push({id:g.id[i],content:g.content[i]/*+'<i class=KUOd-n>'+g.start[i]+'</i>'*/,start:new Date(g.start[i])}); };
+    for (var i=0; i<g.id.length; i++) { tl.push({id:new Date(g.start[i]).getTime(),content:g.content[i],start:new Date(g.start[i])}); };
+    tlitems = new vis.DataSet(tl);
+    timeline = new vis.Timeline(document.getElementById('visualization'), tlitems, {cluster:true,locale:'en',onInitialDrawComplete:function() {
+      document.getElementById("drawtimeline").dataset.h=document.getElementById('drawtimeline').offsetHeight;
+    },min:'1986-02-20',max:'2100-12-31'});
+    timeline.on("click",function(i) {
+      if (!i.isCluster && i.item) {
+//kuokuo should try to extract 'layer' from tlitems
+        var l=document.getElementById('drawproject').innerHTML,m=tlitems.get(i.item).content,mm=tlitems.get(i.item).start.toISOString();
+/*        if (i.event.toElement) {
+          if (i.event.toElement.style.backgroundColor) {
+            i.event.toElement.style.backgroundColor='';
+            var j=userdrawsrc.getFeatures();
+            for (var k=0; k<j.length; k++) {
+              if (j[k].get('tim0') && j[k].get('tim0')==mm && j[k].get('layer')==l && decodeURIComponent(j[k].get('name0'))==decodeURIComponent(m)) {delDrawlistID(l,j[k].getId())}
+            };
+          } else {
+            i.event.toElement.style.backgroundColor="#fbf";
+            getDrawlistgj([l,m,mm]);
+          };
+        } else {
+*/          if (i.event.target.style.backgroundColor) {
+            i.event.target.style.backgroundColor='';
+            var j=userdrawsrc.getFeatures();
+            for (var k=0; k<j.length; k++) {
+              if (j[k].get('tim0') && j[k].get('tim0')==mm && j[k].get('layer')==l && decodeURIComponent(j[k].get('name0'))==decodeURIComponent(m)) {delDrawlistID(l,j[k].getId())}
+            };
+          } else {
+            i.event.target.style.backgroundColor="#fbf";
+            getDrawlistgj([l,m,mm]);
+          };
+//        };
+      } else {
+        if (i.isCluster) {
+          var j=[i.snappedTime._d,i.snappedTime._i];
+          j=(j[1]-j[0]>0)?j:[j[1],j[0]];
+          var jj=(j[1]-j[0])/(parseInt(i.event.target.innerText)-1);
+          j=[j[0].setTime(j[0].getTime()-jj),j[1].setTime(j[1].getTime()+jj)];
+          timeline.setWindow(new Date(j[0]).toISOString(),new Date(j[1]).toISOString());
+        };
+      }
+    });
+  });
+};//end of func getDrawTimeline
+
+function userdrawstyle() {return [new ol.style.Style({stroke:new ol.style.Stroke({width:udsty4,color:document.getElementById('drawsshac').value})}),new ol.style.Style({stroke:new ol.style.Stroke({width:4,color:userclr[udclr]}),image:new ol.style.Circle({radius:5,fill:new ol.style.Fill({color:userclr[udclr]}),stroke:new ol.style.Stroke({width:1,color:'#000'})})}),new ol.style.Style({stroke:new ol.style.Stroke({width:5,color:userclr[udclr]}),fill:new ol.style.Fill({color:"rgba("+('0x'+userclr[udclr][1]+userclr[udclr][2]|0)+","+('0x'+userclr[udclr][3]+userclr[udclr][4]|0)+","+('0x'+userclr[udclr][5]+userclr[udclr][6]|0)+","+(udsty5/100).toFixed(1)+")"})})];};
+
+function toggleDrawpanel(a) {
+  document.querySelector('label[for=drawtype0]').innerHTML=(drawtype>0)?'<i class=material-icons>check_circle</i>完成':'<i class=material-icons>arrow_drop_down</i>開始';
+  map.removeInteraction(userdraw);
+  if (drawtype>0) {
+    document.getElementById('drawpanel').style.right='120px';
+    document.getElementById('btbackdrawpanel').style.display='none';
+    document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+    initDrawlistTable(document.getElementById('drawproject').innerHTML,true);
+    transform.setActive(false); dragplace.setActive(false);
+  } else {
+    document.getElementById('drawpanel').style.right='-600px';
+    document.getElementById('btbackdrawpanel').style.display='block';
+    document.getElementById('userdrawlist'+document.getElementById('drawproject').innerHTML).style.left='-600px';
+    document.getElementById('btbackdrawlist').style.display='block';
+    transform.select(); tooltip.removeFeature();
+    if(userdrawsrc.getFeatures().length>0) {transform.setActive(false); dragplace.setActive(false);};
+    return;
+  };
+  switch (drawtype) {
+    case 1:
+      if (udsiz<9) { document.getElementById('drawssize').value='20'; };
+      udsiz=parseInt(document.getElementById('drawssize').value);
+      userdraw=new ol.interaction.Draw({source:userdrawsrc,style:userdrawstyle,type:'Point',condition:function(e){return e.originalEvent.buttons===1}});
+      userdraw.on('drawstart',function(evt){
+        if ($('.drawlist2mod').length>0) {
+          var s=parseInt($('.drawlist2mod').attr('data-n'));
+          $('.drawlist2mod').removeClass('drawlist2mod'); var ii=userdrawsrc.getFeatureById(s).get('type0');
+          if (ii==1) {
+            placemark[userdrawsrc.getFeatureById(s).get('ftext')].element.firstElementChild.style.removeProperty('box-shadow');
+          } else { ii=userdrawsrc.getFeatureById(s).getStyle();
+            if (ii.length==3) { userdrawsrc.getFeatureById(s).setStyle([ii[1],ii[2]]); }; $('#nud').text(nud);
+          };
+        };
+      });
+      userdraw.on('drawend',function(evt){ evt.feature.setId(nud);
+        var tk=new Date().getTime();
+        evt.feature.setProperties({group0:document.getElementById('drawgroup').value,name0:mdsuser,
+          iomod:(document.getElementById("drawiomod").checked?1:0),ioopen:(document.getElementById('drawioopen').checked?1:0),
+          layer:document.getElementById('drawproject').innerHTML,type0:drawtype,k:[udclr,udsiz,udsty1,udsty2,Math.round(mapzoom)],ftext:placemark.length,tk:tk});
+        evt.feature.setStyle(new ol.style.Style({image:new ol.style.Circle({radius:1,stroke:new ol.style.Stroke({width:0,color:'#000'})})}));
+        if (parseInt(document.querySelector('input[name=drawsmark]:checked').dataset.n)>0) {
+          placemark.push(new ol.Overlay.Placemark({stopEvent:false}));
+        } else {
+          placemark.push(new ol.Overlay({positioning:'center-center',stopEvent:false,position:evt.feature.getGeometry().getCoordinates(),element:ol.ext.element.create('DIV',
+            {html:document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii.replace('<i','<i style="color:'+userclr[udclr]+';font-size:'+udsiz+'px"')})}));
+        };
+        var p=placemark[placemark.length-1]; p.id=nud;
+        if (parseInt(document.querySelector('input[name=drawsmark]:checked').dataset.n)>0) {
+          p.setColor(userclr[udclr]); p.setContentColor('#000'); p.setClassName(document.querySelector('input[name=drawsmark]:checked').value);
+          p.options.element.style.fontSize=udsiz+'px'; map.addOverlay(p);
+          p.show(evt.feature.getGeometry().getCoordinates(),(udsty2==0)?'<i></i>':document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii);
+        } else {
+          map.addOverlay(p); p.getElement().style.borderRadius=udsiz+'px';
+        };
+        dragplace.addOverlay(p); p.set('tk',tk); addDrawlistTable1(evt.feature.get('layer'),p,false);
+        placemark[placemark.length-1].element.firstElementChild.style.transform="scale(1)";
+        placemark[placemark.length-1].element.firstElementChild.style.transformOrigin='50% 100%';
+        nud=nud+1;
+        document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+      }); break;
+    case 2:case 3:case 4:
+      if (udsiz>10 || udsiz<0) { udsiz=5; document.getElementById('drawssize').value='5'; };
+      userdraw=new ol.interaction.Draw({source:userdrawsrc,maxPoints:(drawtype==2)?2:Infinity,style:userdrawstyle,
+        type:'LineString',condition:function(e){return e.originalEvent.buttons===1},freehand:(drawtype==4)?true:false
+      });
+      userdraw.on('drawstart',function(evt) {
+        if ($('.drawlist2mod').length>0) {
+          document.querySelector('.drawlist2mod td:nth-child(3)').click();
+        };
+        tooltip.setFeature(evt.feature);
+      });
+      userdraw.on('drawend',function(evt) {
+        evt.feature.setId(nud); evt.feature.setProperties({group0:document.getElementById('drawgroup').value,name0:mdsuser,
+          iomod:(document.getElementById("drawiomod").checked?1:0),ioopen:(document.getElementById('drawioopen').checked?1:0),
+          layer:document.getElementById('drawproject').innerHTML,type0:drawtype,k:[udclr,udsiz,udsty3,udsty4,udsty5],
+          ftext:Math.round(evt.feature.getGeometry().getLength()),tk:new Date().getTime()});
+        evt.feature.setStyle([new ol.style.Style({stroke:new ol.style.Stroke({width:udsty4,color:document.getElementById('drawsshac').value})}),
+          new ol.style.Style({stroke:new ol.style.Stroke({width:udsiz,color:userclr[udclr]})})]);
+//kuokuo ....... CHECK: why Distance different. 2020.10.23
+        if (drawtype==4) {
+          var d=evt.feature.getGeometry().getLength()/1000.0*Math.ceil(evt.feature.getGeometry().getCoordinates().length/100);
+          evt.feature.setGeometry(evt.feature.getGeometry().simplify(d));
+        };
+        addDrawlistTable2(evt.feature.get('layer'),nud,evt.feature,false);
+        nud=nud+1; tooltip.removeFeature();
+        document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+      }); break;
+   case 5:
+      if (udsiz>10 || udsiz<0) { udsiz=5; document.getElementById('drawssize').value='5'; };
+      userdraw=new ol.interaction.Draw({source:userdrawsrc,type:'Circle',geometryFunction:new ol.interaction.Draw.createBox(),style:userdrawstyle,
+        condition:function(e){return e.originalEvent.buttons===1}});
+      userdraw.on('drawstart',function(evt) {
+        if ($('.drawlist2mod').length>0) {
+          document.querySelector('.drawlist2mod td:nth-child(3)').click();
+        };
+        tooltip.setFeature(evt.feature);
+      });
+      userdraw.on('drawend',function(evt) {
+        evt.feature.setId(nud); evt.feature.setProperties({group0:document.getElementById('drawgroup').value,name0:mdsuser,
+          iomod:(document.getElementById("drawiomod").checked?1:0),ioopen:(document.getElementById('drawioopen').checked?1:0),
+          layer:document.getElementById('drawproject').innerHTML,type0:drawtype,k:[udclr,udsiz,udsty3,udsty4,udsty5],
+          ftext:Math.round(evt.feature.getGeometry().getArea()/1000000),tk:new Date().getTime()});
+        evt.feature.setStyle([new ol.style.Style({stroke:new ol.style.Stroke({width:udsty4,color:document.getElementById('drawsshac').value})}),
+          new ol.style.Style({stroke:new ol.style.Stroke({width:udsiz,color:userclr[udclr]}),fill:new ol.style.Fill({color:"rgba("+('0x'+userclr[udclr][1]+userclr[udclr][2]|0)+","+('0x'+userclr[udclr][3]+userclr[udclr][4]|0)+","+('0x'+userclr[udclr][5]+userclr[udclr][6]|0)+","+(udsty5/100).toFixed(1)+")"})})]);
+        addDrawlistTable2(evt.feature.get('layer'),nud,evt.feature,false);
+        nud=nud+1; tooltip.removeFeature();
+        document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+      }); break;
+    case 6:
+      if (udsiz>10 || udsiz<0) { udsiz=5; document.getElementById('drawssize').value='5'; }
+      userdraw=new ol.interaction.Draw({source:userdrawsrc,type:'Circle',style:userdrawstyle,condition:function(e){return e.originalEvent.buttons===1}});
+      userdraw.on('drawstart',function(evt) {
+        if ($('.drawlist2mod').length>0) {
+          document.querySelector('.drawlist2mod td:nth-child(3)').click();
+        };
+        tooltip.setFeature(evt.feature);
+      });
+      userdraw.on('drawend',function(evt) {
+        evt.feature.setId(nud); evt.feature.setProperties({group0:document.getElementById('drawgroup').value,name0:mdsuser,
+          iomod:(document.getElementById("drawiomod").checked?1:0),ioopen:(document.getElementById('drawioopen').checked?1:0),
+          layer:document.getElementById('drawproject').innerHTML,type0:drawtype,k:[udclr,udsiz,udsty3,udsty4,udsty5],
+          ftext:Math.round(evt.feature.getGeometry().getRadius()),tk:new Date().getTime()});
+        evt.feature.setStyle([new ol.style.Style({stroke:new ol.style.Stroke({width:udsty4,color:document.getElementById('drawsshac').value})}),
+          new ol.style.Style({stroke:new ol.style.Stroke({width:udsiz,color:userclr[udclr]}),fill:new ol.style.Fill({color:"rgba("+('0x'+userclr[udclr][1]+userclr[udclr][2]|0)+","+('0x'+userclr[udclr][3]+userclr[udclr][4]|0)+","+('0x'+userclr[udclr][5]+userclr[udclr][6]|0)+","+(udsty5/100).toFixed(1)+")"})})]);
+        addDrawlistTable3(evt.feature.get('layer'),nud,evt.feature,false);
+        nud=nud+1; tooltip.removeFeature();
+        document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+      }); break;
+    case 7:
+      if (udsiz<9) { document.getElementById('drawssize').value='20'; };
+      udsiz=parseInt(document.getElementById('drawssize').value);
+      userdraw=new ol.interaction.Draw({source:userdrawsrc,style:userdrawstyle,type:'Point',condition:function(e){return e.originalEvent.buttons===1}});
+      userdraw.on('drawstart',function(evt){
+        if ($('.drawlist2mod').length>0) {
+          document.querySelector('.drawlist2mod td:nth-child(3)').click();
+        };
+      });
+      userdraw.on('drawend',function(evt){ evt.feature.setId(nud);
+        evt.feature.setProperties({group0:document.getElementById('drawgroup').value,name0:mdsuser,
+          iomod:(document.getElementById("drawiomod").checked?1:0),ioopen:(document.getElementById('drawioopen').checked?1:0),
+          layer:document.getElementById('drawproject').innerHTML,type0:drawtype,k:[udclr,udsiz,0,0,textbox.length],ftext:'',tk:new Date().getTime()});
+        evt.feature.setStyle(new ol.style.Style({image:new ol.style.Circle({radius:1,stroke:new ol.style.Stroke({width:1,color:'#000'}),fill:new ol.style.Fill({color:'#000'})})}));
+        if (document.getElementById('drawtext').style.display=='block') { abortDrawtext(); };
+        var px=evt.target.downPx_,wx=[window.innerWidth,window.innerHeight];
+        document.getElementById('drawtext').setAttribute('style','display:block;'+((px[1]>wx[1]/2)?('bottom:'+(wx[1]-px[1])):('top:'+px[1]))+'px;'+((px[0]>wx[0]/2)?('right:'+(wx[0]-px[0])):('left:'+px[0]))+'px');
+        document.getElementById('drawtext').dataset.n=nud;
+        nud=nud+1;
+        document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+      }); break;
+  };
+  map.addInteraction(userdraw);
+};//end of func toggleDrawpanel
+function modDrawlistStyle(a,b,c) {
+  transform.select();
+  if ( c && parseInt($('.drawlist2mod').attr('data-n'))==b ) {
+    document.getElementById('nud').innerHTML=nud; var ii=userdrawsrc.getFeatureById(b);
+    if (ii.get('type0')==1) { placemark[ii.get('ftext')].element.firstElementChild.style.removeProperty('box-shadow');
+    } else { var jj=ii.getStyle(); if(jj.length==3) {userdrawsrc.getFeatureById(b).setStyle([jj[1],jj[2]]); }; };
+    $("#drawlistbody"+a+" tr[data-n='"+b+"']").removeClass('drawlist2mod');
+  } else {
+    document.getElementById('nud').innerHTML=b;
+    var k=userdrawsrc.getFeatureById(b).get('k');
+    $('.drawclrchk').removeClass('drawclrchk'); $("#drawpanelclr i[data-n='"+k[0]+"']").addClass('drawclrchk'); $('#drawssize').val(k[1]); udclr=k[0]; udsiz=k[1];
+    switch (userdrawsrc.getFeatureById(b).get('type0')) {
+      case 1:
+        $('.drawsignchk').removeClass('drawsignchk'); $("#drawssign i[data-n='"+k[3]+"']").addClass('drawsignchk');
+        $("input[name='drawsmark'][data-n='"+k[2]+"']").click(); udsty1=k[2]; udsty2=k[3]; break;
+      default:
+        document.getElementById('drawsshac').selectedIndex=k[2]; document.getElementById('drawsshaw').value=k[3]; document.getElementById('drawsfill').value=k[4];
+        udsty3=k[2]; udsty4=k[3]; udsty5=k[4]; break;
+    };
+    if (c) {
+      if (document.querySelector(".drawlist2mod")) {
+        var ii=userdrawsrc.getFeatureById(parseInt($(".drawlist2mod").attr('data-n')));
+        if (ii.get('type0')==1) { placemark[ii.get('ftext')].element.firstElementChild.style.removeProperty('box-shadow');
+        } else { var jj=ii.getStyle(); if (jj.length==3) {userdrawsrc.getFeatureById(ii.getId()).setStyle([jj[1],jj[2]]);}; };
+        $(".drawlist2mod").removeClass('drawlist2mod');
+      };
+      $("#drawlistbody"+a+" tr[data-n='"+b+"']").addClass('drawlist2mod');
+      if([1,7].indexOf(userdrawsrc.getFeatureById(b).get('type0'))<0) { transform.setSelection([userdrawsrc.getFeatureById(b)]); };
+    };
+  };
+};//end of func modDrawlistStyle
+function setDrawlistStyle() {
+  var b=userdrawsrc.getFeatureById(parseInt(document.getElementById('nud').innerHTML));
+  if (b) {
+    switch (b.get('type0')) {
+      case 1:
+        if (b.get('k')[2]>0) {
+          placemark[b.get('ftext')].setColor(userclr[udclr]);
+          placemark[b.get('ftext')].setClassName(document.querySelector('input[name=drawsmark]:checked').value);
+          placemark[b.get('ftext')].options.element.style.fontSize=udsiz+'px';
+          placemark[b.get('ftext')].show(placemark[b.get('ftext')].getPosition(),document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii);
+        } else {
+          placemark[b.get('ftext')].setElement(ol.ext.element.create('DIV',{html:document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii}));
+          placemark[b.get('ftext')].getElement().getElementsByTagName('i')[0].style.color=userclr[udclr];
+          placemark[b.get('ftext')].getElement().getElementsByTagName('i')[0].style.fontSize=udsiz+'px';
+          placemark[b.get('ftext')].getElement().style.borderRadius=udsiz+'px';
+        };
+        b.set('k',[udclr,udsiz,udsty1,udsty2,Math.round(mapzoom)]);
+        $("#drawlistbody"+b.get('layer')+" tr[data-n='"+b.getId()+"'] td:nth-child(3) i").attr('style','color:'+userclr[udclr]);
+        $("#drawlistbody"+b.get('layer')+" tr[data-n='"+b.getId()+"'] td:nth-child(3) i").html(document.querySelector("#drawsmark label:nth-child("+(udsty1+1)+") i").innerHTML);
+        $("#drawlistbody"+b.get('layer')+" tr[data-n='"+b.getId()+"'] td:nth-child(6)").html(document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii)
+        break;
+      case 2: case 3: case 4:
+        b.setStyle([new ol.style.Style({stroke:new ol.style.Stroke({width:udsty4,color:document.getElementById('drawsshac').value})}),
+          new ol.style.Style({stroke:new ol.style.Stroke({width:udsiz,color:userclr[udclr]})})]);
+        b.set('k',[udclr,udsiz,udsty3,udsty4,udsty5]);
+        $("#drawlistbody"+b.get('layer')+" tr[data-n='"+b.getId()+"'] td:nth-child(3) i").attr('style','color:'+userclr[udclr]+';text-shadow:1px 1px '+document.getElementById('drawsshac').value);
+        break;
+      case 5: case 6:
+        b.setStyle([new ol.style.Style({stroke:new ol.style.Stroke({width:udsty4,color:document.getElementById('drawsshac').value})}),
+          new ol.style.Style({stroke:new ol.style.Stroke({width:udsiz,color:userclr[udclr]}),fill:new ol.style.Fill({color:"rgba("+('0x'+userclr[udclr][1]+userclr[udclr][2]|0)+","+('0x'+userclr[udclr][3]+userclr[udclr][4]|0)+","+('0x'+userclr[udclr][5]+userclr[udclr][6]|0)+","+(udsty5/100).toFixed(1)+")"})})]);
+        b.set('k',[udclr,udsiz,udsty3,udsty4,udsty5]);
+        $("#drawlistbody"+b.get('layer')+" tr[data-n='"+b.getId()+"'] td:nth-child(3) i").attr('style','color:'+userclr[udclr]+';text-shadow:1px 1px '+document.getElementById('drawsshac').value);
+        break;
+      case 7:
+        //textbox[b.get('k')[4]].element.firstElementChild.getElementsByTagName('pre')[0].style.fontSize=udsiz+'px';
+        //kuokuo 2020.12.04
+        textbox[b.get('k')[4]].element.firstElementChild.getElementsByTagName('pre')[0].style.fontSize=b.get('k')[1]+'px';
+        if (b.get('k')[2]==0) {
+          textbox[b.get('k')[4]].element.firstElementChild.getElementsByTagName('pre')[0].style.color=userclr[udclr];
+        } else {
+          textbox[b.get('k')[4]].element.firstElementChild.style.border="2px solid "+userclr[udclr];
+          textbox[b.get('k')[4]].element.firstElementChild.querySelector('.anchor').style.color=userclr[udclr];
+        };
+        b.set('k',[udclr,udsiz,b.get('k')[2],b.get('k')[3],b.get('k')[4]]);
+        break;
+    };
+  };
+};//end of func setDrawlistStyle
+function setDrawtext(b,diag,posi,font,bdit) {
+  var bb=userdrawsrc.getFeatureById(b);
+  if (bb) {
+    var ftext='<pre style="'+((diag==0)?'text-shadow:1px 1px #000;':'')+'font-family:'+document.getElementById('drawsfont').value+';font-size:'+bb.get('k')[1]+'px;'+((diag==0)?('color:'+userclr[bb.get('k')[0]]+';'):'')+(bdit[0]?'font-weight:bold;':'')+(bdit[1]?'font-style:italic':'')+'">'+document.getElementById('ftext').value+'</pre>';
+    var ij=textbox[bb.get('k')[4]];
+    if (!ij) {
+      if (diag==0) {
+        textbox.push(new ol.Overlay({closeBox:false,positioning:posi,position:bb.getGeometry().getCoordinates(),
+          element:ol.ext.element.create('DIV',{html:ftext}),stopEvent:false}));
+      } else {
+        textbox.push(new ol.Overlay.Popup({closeBox:false,positioning:posi,position:bb.getGeometry().getCoordinates(),html:ftext,stopEvent:false}));
+      };
+    } else {
+      map.removeOverlay(textbox[bb.get('k')[4]]);
+      if (diag==0) {
+        textbox[bb.get('k')[4]]=new ol.Overlay({closeBox:false,positioning:posi,position:bb.getGeometry().getCoordinates(),
+          element:ol.ext.element.create('DIV',{html:ftext}),stopEvent:false});
+      } else {
+        textbox[bb.get('k')[4]]=new ol.Overlay.Popup({closeBox:false,positioning:posi,position:bb.getGeometry().getCoordinates(),html:ftext,stopEvent:false});
+      };
+    };
+    userdrawsrc.getFeatureById(b).set('k',[bb.get('k')[0],bb.get('k')[1],diag,document.getElementById('drawsposi').selectedIndex+Math.round(mapzoom*100)*10,bb.get('k')[4]]);
+    userdrawsrc.getFeatureById(b).set('ftext',ftext);
+    var p=textbox[bb.get('k')[4]]; p.id=b; map.addOverlay(p); dragplace.addOverlay(p);
+    var i=posi.split('-')[0],j=posi.split('-')[1];
+    textbox[textbox.length-1].element.firstElementChild.style.transform="scale(1)";
+    textbox[textbox.length-1].element.firstElementChild.style.transformOrigin=(['left','center','right']).indexOf(j)*50+'% '+(['top','center','bottom']).indexOf(i)*50+'%';
+    textbox[textbox.length-1].set('tk',userdrawsrc.getFeatureById(b).get('tk'));
+    if (!ij) {
+      addDrawlistTable4(bb.get('layer'),p,false);
+    } else {
+      $("#drawlistbody"+bb.get('layer')+" tr[data-n='"+b+"'] td:nth-child(3)").html('<i class="KUOtxsb '+((diag==0)?'fas fa-font':'fas fa-comment-alt')+'" style=color:'+userclr[bb.get('k')[0]]+'></i>');
+    };
+    if (diag==1) {
+      textbox[bb.get('k')[4]].element.firstElementChild.style.border="2px solid "+userclr[bb.get('k')[0]];
+      textbox[bb.get('k')[4]].element.firstElementChild.querySelector('.anchor').style.color=userclr[bb.get('k')[0]];
+    };
+  };
+  document.getElementById('drawtext').style.display='none'; $('.drawlist2mod').removeClass('drawlist2mod');
+};//end of func setDrawtext
+function toggleRatio(a) {
+  ioratio=a;
+  textbox.forEach(function(i){
+    if (i) { i.element.firstElementChild.style.transform="scale("+(ioratio?Math.min(Math.max(Math.pow(2,mapzoom)/Math.pow(2,userdrawsrc.getFeatureById(i.getId()).get('k')[3]/1000.0),0.1),10):1)+")"; }
+  });
+  placemark.forEach(function(i){
+    if (i) { i.element.firstElementChild.style.transform="scale("+(ioratio?Math.min(Math.max(Math.pow(2,mapzoom)/Math.pow(2,userdrawsrc.getFeatureById(i.getId()).get('k')[4]),0.2),5):1)+")"; }
+  });
+};//end of func toggleRatio
+function abortDrawtext() {
+  document.getElementById('drawtext').style.display='none';
+  var b=parseInt(document.getElementById('drawtext').dataset.n);
+  var i=userdrawsrc.getFeatureById(b);
+  if ((nud-1)==b && i && !document.querySelector("#drawlistbody"+i.get('layer')+" tr[data-n='"+b+"']")) {
+    userdrawsrc.removeFeature(i); nud=nud-1;
+    document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+  };
+};//end of func abortDrawtext
+function addDrawlistTable1(a,b,ioindb) {
+  var ixy=ol.proj.transform(b.getPosition(),'EPSG:3857','EPSG:4326');
+  var ii='<i class=material-icons style=color:'+userclr[udclr]+'>'+document.querySelector("#drawsmark label:nth-child("+(udsty1+1)+") i").innerHTML+'</i>';
+  var kkk=$("#drawlist"+a).DataTable().row.add([b.getId(),'',b.getId(),ii,ixy[0].toFixed(5),ixy[1].toFixed(5),document.querySelector('.drawsignchk').dataset.ii,
+    '<i class="material-icons udbut" onclick=delDrawlistID("'+a+'",'+b.getId()+')>cancel</i><i class="material-icons udbut'+(ioindb?'':' KUOd-n')+'" onclick=if(confirm("確定要將此筆點位紀錄永久刪除?")){DBdelDrawlistID("'+a+'",'+b.getId()+')}>delete_forever</i>']).draw();
+  kkk=kkk.index()+1;
+  if ($("#drawlist"+a).DataTable().row(0).data()[0]=="-1") {
+    $("#drawlist"+a).DataTable().row(0).remove().draw(); kkk=kkk-1;
+  };
+  document.querySelector("#drawlistbody"+a+" tr:nth-child("+kkk+")").dataset.n=b.getId();
+  //document.querySelector("#drawlistbody"+a+" tr:last-child").dataset.n=b.getId();
+  b.element.onmouseenter=(function(){document.querySelector("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").scrollIntoView();
+    $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").addClass("drawlisthover")});
+  b.element.onmouseleave=(function(){$("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").removeClass("drawlisthover")});
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").mouseenter(function(){
+    b.element.firstElementChild.style.boxShadow='inset 0 0 0 8px,0 0 3px 8px #000';
+    //b.element.firstElementChild.querySelector('.anchor').style.visibility='hidden';
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").mouseleave(function(){
+    if (this.className.indexOf('drawlist2mod')<0) { b.element.firstElementChild.style.removeProperty('box-shadow'); };
+    //b.element.firstElementChild.querySelector('.anchor').style.removeProperty('visibility');
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(3)").on("click",function(i){modDrawlistStyle(a,b.getId(),true);});
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(4)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(5)").attr("contentEditable","true");
+  document.getElementById('drawlist'+a).scrollIntoView(false);
+};//end of func addDrawlistTable1
+function addDrawlistTable2(a,c,b,ioindb) {
+  var dt00=b.get('type0'),k=['','','fas fa-slash','fas fa-project-diagram','fas fa-signature','fas fa-vector-square'];
+  var i=$("#drawlistbody"+a+" tr[data-n='"+c+"']"); if (i.length>0) { $("#drawlist"+a).DataTable().row(i.index()).remove().draw(); }
+  var xy=b.getGeometry().getCoordinates(); var ix='<ul>',iy='<ul>',ii=b.getGeometry();
+  if (dt00<=4) {
+    if (dt00==4) {xy=[xy[0],xy[xy.length-1]];}; b.set('ftext',Math.round(ii.getLength())); ii='<ul><li>'+Math.round(ii.getLength()/10)/100+'</li></ul>';
+  } else { 
+    xy=xy[0]; b.set('ftext',Math.round(ii.getArea()/1000000.0)); ii='<ul><li>'+Math.round(ii.getArea()/1000000.0)+'</li></ul>';
+  }
+  for (var j=0; j<xy.length; j++) {
+    var ixy=ol.proj.transform(xy[j],'EPSG:3857','EPSG:4326');ix=ix+'<li>'+ixy[0].toFixed(5)+'</li>';iy=iy+'<li>'+ixy[1].toFixed(5)+'</li>';
+  }; ix=ix+'</ul>'; iy=iy+'</ul>';
+  var kkk=$("#drawlist"+a).DataTable().row.add([c,'',c,'<i class="'+k[dt00]+'" style="color:'+userclr[udclr]+';text-shadow:1px 1px '+$("#drawsshac").val()+'"></i>',
+    ix,iy,ii,'<i class="material-icons udbut" onclick=delDrawlistID("'+a+'",'+c+')>cancel</i><i class="material-icons udbut'+(ioindb?'':' KUOd-n')+'" onclick=if(confirm("確定要將此筆線框紀錄永久刪除?")){DBdelDrawlistID("'+a+'",'+c+')}>delete_forever</i>']).draw();
+  kkk=kkk.index()+1;
+  if ($("#drawlist"+a).DataTable().row(0).data()[0]=="-1") {
+    $("#drawlist"+a).DataTable().row(0).remove().draw(); kkk=kkk-1;
+  };
+  document.querySelector("#drawlistbody"+a+" tr:nth-child("+kkk+")").dataset.n=c;
+  if (dt00!=4) {
+    $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(4) li").attr("contentEditable","true");
+    $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(5) li").attr("contentEditable","true");
+  };
+  $("#drawlistbody"+a+" tr[data-n='"+c+"']").mouseenter(function(){
+    var i=userdrawsrc.getFeatureById(c).getStyle();
+    if (i.length==2/* && this.className.indexOf('drawlist2mod')<0*/) {
+      i.unshift(new ol.style.Style({stroke:new ol.style.Stroke({color:'#000',width:Math.max(i[0].getStroke().getWidth(),i[1].getStroke().getWidth())+3})}));
+      userdrawsrc.getFeatureById(c).setStyle(i);
+    };
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+c+"']").mouseleave(function(){
+    var ii=userdrawsrc.getFeatureById(c).getStyle();
+    if (ii.length==3/* && this.className.indexOf('drawlist2mod')<0*/) { userdrawsrc.getFeatureById(c).setStyle([ii[1],ii[2]]); }
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(3)").on("click",function(i){modDrawlistStyle(a,b.getId(),true);});
+  document.getElementById('drawlist'+a).scrollIntoView(false);
+};//end of func addDrawlistTable2
+function addDrawlistTable3(a,c,b,ioindb) {
+  var i=$("#drawlistbody"+a+" tr[data-n='"+c+"']"); if (i.length>0) { $("#drawlist"+a).DataTable().row(i.index()).remove().draw(); }
+  var xy=ol.proj.transform(b.getGeometry().getCenter(),'EPSG:3857','EPSG:4326');
+  var kkk=$("#drawlist"+a).DataTable().row.add([c,'',c,'<i class="fas fa-circle-notch" style="color:'+userclr[udclr]+';text-shadow:1px 1px '+$("#drawsshac").val()+'"></i>',xy[0].toFixed(5),xy[1].toFixed(5),'<ul><li>'+(b.getGeometry().getRadius()/1000).toFixed(1)+'</li></ul>','<i class="material-icons udbut" onclick=delDrawlistID("'+a+'",'+c+')>cancel</i><i class="material-icons udbut'+(ioindb?'':' KUOd-n')+'" onclick=if(confirm("確定要將此筆圓形紀錄永久刪除?")){DBdelDrawlistID("'+a+'",'+c+')}>delete_forever</i>']).draw();
+  kkk=kkk.index()+1;
+  if ($("#drawlist"+a).DataTable().row(0).data()[0]=="-1") {
+    $("#drawlist"+a).DataTable().row(0).remove().draw(); kkk=kkk-1;
+  };
+  b.set('ftext',Math.round(b.getGeometry().getRadius()));
+  document.querySelector("#drawlistbody"+a+" tr:nth-child("+kkk+")").dataset.n=c;
+  //document.querySelector("#drawlistbody"+a+" tr:last-child").dataset.n=c;
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(3)").on("click",function(i){modDrawlistStyle(a,c,true);});
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(4)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(5)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(6)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+c+"']").mouseenter(function(){
+    if (this.className.indexOf('drawlist2mod')<0) {
+      var i=userdrawsrc.getFeatureById(c).getStyle(); if(i.length==2) { i.unshift(new ol.style.Style({stroke:new ol.style.Stroke({color:'#000',width:Math.max(i[0].getStroke().getWidth(),i[1].getStroke().getWidth())+3})})); userdrawsrc.getFeatureById(c).setStyle(i); }
+    };
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+c+"']").mouseleave(function(){
+    var ii=userdrawsrc.getFeatureById(c).getStyle();
+    if (ii.length==3 && this.className.indexOf('drawlist2mod')<0) { userdrawsrc.getFeatureById(c).setStyle([ii[1],ii[2]]); };
+  });
+  document.getElementById('drawlist'+a).scrollIntoView(false);
+};//end of func addDrawlistTable3
+function addDrawlistTable4(a,b,ioindb) {
+  var ixy=ol.proj.transform(b.getPosition(),'EPSG:3857','EPSG:4326');
+  var bb=userdrawsrc.getFeatureById(b.getId()); 
+  //var ii='<i class=material-icons style=color:'+userclr[bb.get('k')[0]]+'>'+((bb.get('k')[2]==0)?'format_color_text':'chat_bubble')+'</i>';
+  var ii='<i class="KUOtxsb '+((bb.get('k')[2]==0)?'fas fa-font':'fas fa-comment-alt')+'" style=color:'+userclr[bb.get('k')[0]]+'></i>';
+  var kkk=$("#drawlist"+a).DataTable().row.add([b.getId(),'',b.getId(),ii,ixy[0].toFixed(5),ixy[1].toFixed(5),'',
+    '<i class="material-icons udbut" onclick=delDrawlistID("'+a+'",'+b.getId()+')>cancel</i><i class="material-icons udbut'+(ioindb?'':' KUOd-n')+'" onclick=if(confirm("確定要將此筆紀錄永久刪除?")){DBdelDrawlistID("'+a+'",'+b.getId()+')}>delete_forever</i>']).draw();
+  kkk=kkk.index()+1;
+  if ($("#drawlist"+a).DataTable().row(0).data()[0]=="-1") {
+    $("#drawlist"+a).DataTable().row(0).remove().draw(); kkk=kkk-1;
+  };
+  document.querySelector("#drawlistbody"+a+" tr:nth-child("+kkk+")").dataset.n=b.getId();
+  b.element.onmouseenter=(function(){$("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']")[0].scrollIntoView();
+    $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").addClass("drawlisthover")});
+  b.element.onmouseleave=(function(){$("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").removeClass("drawlisthover")});
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").mouseenter(function(){ b.element.firstElementChild.style.boxShadow='0 0 2px 5px #000'; });
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").mouseleave(function(){
+    if (this.className.indexOf('drawlist2mod')<0) { b.element.firstElementChild.style.removeProperty('box-shadow'); };
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(3)").on("click",function(i){
+    if (document.querySelector('.drawlist2mod')) { document.querySelector('.drawlist2mod td:nth-child(3)').click(); };
+    document.getElementById('nud').innerHTML=b.getId(); var k=userdrawsrc.getFeatureById(b.getId()).get('k');
+    $('.drawclrchk').removeClass('drawclrchk');$("#drawpanelclr i[data-n='"+k[0]+"']").addClass('drawclrchk');$('#drawssize').val(k[1]); udclr=k[0]; udsiz=k[1];
+    $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"']").addClass('drawlist2mod'); document.getElementById('drawtext').dataset.n=b.getId();
+    document.getElementById('drawtext').style.display='block'; 
+    var iitx=userdrawsrc.getFeatureById(b.getId()).get('ftext');
+    document.getElementById('ftext').value=iitx.substring(iitx.indexOf('>')+1,iitx.lastIndexOf('<'));
+  });
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(4)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+b.getId()+"'] td:nth-child(5)").attr("contentEditable","true");
+  document.getElementById('drawlist'+a).scrollIntoView(false);
+};//end of func addDrawlistTable4
+function modDrawlistTable2(a,c,b) {
+  var dt00=b.get('type0'),k=['','','fas fa-slash','fas fa-project-diagram','fas fa-signature','fas fa-vector-square'];
+  //var i=$("#drawlistbody"+a+" tr[data-n='"+c+"']"); if (i.length>0) { $("#drawlist"+a).DataTable().row(i.index()).remove().draw(); }
+  var xy=b.getGeometry().getCoordinates(); var ix='<ul>',iy='<ul>',ii=b.getGeometry();
+  if (dt00<=4) {
+    if (dt00==4) {xy=[xy[0],xy[xy.length-1]];}; b.set('ftext',Math.round(ii.getLength())); ii='<ul><li>'+Math.round(ii.getLength()/10)/100+'</li></ul>';
+  } else { 
+    xy=xy[0]; b.set('ftext',Math.round(ii.getArea()/1000000.0)); ii='<ul><li>'+Math.round(ii.getArea()/1000000.0)+'</li></ul>';
+  }
+  for (var j=0; j<xy.length; j++) {
+    var ixy=ol.proj.transform(xy[j],'EPSG:3857','EPSG:4326');ix=ix+'<li>'+ixy[0].toFixed(5)+'</li>';iy=iy+'<li>'+ixy[1].toFixed(5)+'</li>';
+  }; ix=ix+'</ul>'; iy=iy+'</ul>';
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(4)").html(ix);
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(5)").html(iy);
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(6)").html(ii);
+  if (dt00!=4) {
+    $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(4) li").attr("contentEditable","true");
+    $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(5) li").attr("contentEditable","true");
+  };
+};//end of func modDrawlistTable2
+function modDrawlistTable3(a,c,b) {
+  var xy=ol.proj.transform(b.getGeometry().getCenter(),'EPSG:3857','EPSG:4326');
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(4)").html(xy[0].toFixed(5));
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(5)").html(xy[1].toFixed(5));
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(6)").html((b.getGeometry().getRadius()/1000).toFixed(1));
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(4)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(5)").attr("contentEditable","true");
+  $("#drawlistbody"+a+" tr[data-n='"+c+"'] td:nth-child(6)").attr("contentEditable","true");
+};//end of func modDrawlistTable3
+function initDrawlistTable(a,b) {
+  if (!document.getElementById("userdrawlist"+a)) {
+    //var i=document.querySelector('.userdrawlist'); if (i) { document.querySelector('#'+i.id+' button.btclose5').click(); }
+    var ii=document.createElement('div'); ii.id="userdrawlist"+a; ii.className="userdrawlist";
+    ii.setAttribute('style',"left:16px;top:100px;"); ii.setAttribute("onmouseup","resizeDrawlistTable('"+a+"',0);");
+    var jj="<div id=draguserdrawlist"+a+" class=draguserdrawlist><i class='material-icons KUOva-tt KUOrot-45deg KUOpl-4px'>zoom_out_map</i>&nbsp;"+document.getElementById("drawproject").innerHTML+"<span class='material-icons KUOmr-5px KUOd-ib KUOfs-24px KUOf-r KUOclr-w KUOc-p KUOva-m KUOrot-180-deg' onclick=minmaxDrawlistTable('"+a+"')>more</span></div>";
+
+    ii.innerHTML=jj+"<table id=drawlist"+a+" class='cell-border hover row-border stripe KUOf-l KUOff-c-am KUOfs-16px'><thead><tr><th>id</th><th style=padding:0><i class='material-icons KUOva-m'>import_export</i></th><th>id</th><th><i class='material-icons KUOva-m'>palette</i></th><th>x</th><th>y</th><th>km<sup>(2)</sup></th><th><!--i class=material-icons>info_outline</i--><i class='material-icons KUOc-p KUOd-i' title='全部清除' onclick='if(confirm("+'"確定要將地圖全部清空?"'+")){delDrawlistALL("+'"'+a+'"'+")}'>cancel</i><i class='material-icons KUOc-p KUOd-i' title='全部永久刪除' onclick='if(confirm("+'"確定要將這些紀錄永久刪除?"'+")){DBdelDrawlistALL("+'"'+a+'"'+")}'>delete_forever</i></th></tr></thead><tbody id=drawlistbody"+a+" class=drawlistbody></tbody><div class=KUOdt-foot><button onclick=$('.buttons-copy[aria-controls=drawlist"+a+"]').click()>複製&nbsp;<i class='material-icons KUOva-m'>content_copy</i></button><button class=KUOml-5px onclick=$('.buttons-csv[aria-controls=drawlist"+a+"]').click()>CSV&nbsp;<i class='material-icons KUOva-t'>file_download</i></button><button class=KUOml-5px onclick=saveDrawlist('"+a+"')>儲存&nbsp;<i class='material-icons KUOva-t'>save</i>&nbsp;</button><span id=iosaved class='KUOfs-20px KUOff-msb KUOva-m KUOta-l KUOml-1vw' style=display:none>已儲存！</span></div></table>";
+    document.body.appendChild(ii);
+    dragfig(document.getElementById("userdrawlist"+a));
+    document.getElementById('drawlistbody'+a).innerHTML='<tr><td>-1</td><td></td><td>id</td><td></td><td>Lon</td><td>Lat</td><td>more</td><td>x</td></tr>';
+
+    $("#drawlist"+a).DataTable({scrollY:330,scrollX:365,scrollCollapse:true,paging:false,
+      fixedColumns:{leftColumns:1,rightColumns:0},rowReorder:true,info:false,filter:false,
+      "columnDefs":[{"targets":[0],"visible":false},{"targets":[0,1,2,3,4,5,6,7],"orderable":false}],
+      dom:'Bfrtip',buttons:[//'columnsToggle',
+        {extend:'copy',exportOptions:{columns:[':visible:not(:first-Child)']},fieldSeparator:",",title:null,header:false},
+        {extend:'csvHtml5',title:document.getElementById('drawproject').innerHTML}]
+    });
+    document.getElementById("drawlist"+a).style.tableLayout='auto';
+    $(".buttons-columnVisibility[aria-controls='drawlist"+a+"']").attr("onclick","resizeDrawlistTable('"+a+"',1)");
+    $("#drawlist"+a).DataTable().columns.adjust().fixedColumns().relayout();
+
+    document.getElementById('drawlistbody'+a).addEventListener('keypress',function (e) {
+      var i=window.event.target.cellIndex+1 || e.path[2].cellIndex+1; var j=window.event.target.parentNode.rowIndex || e.path[3].rowIndex;
+      if (e.keyCode==13) {
+        if (i>3 && i<7) {
+          e.preventDefault();
+          var aa=parseInt($("#drawlistbody"+a+" tr:nth-child("+j+")").attr('data-n'));
+          var aa0=e.path[1].querySelectorAll('li'),aa1=window.event.target,aa2=userdrawsrc.getFeatureById(aa).get('type0');
+          if (aa2==5 && i<6 && aa0.item(0)!=aa0.item(aa0.length-1)) {
+            if (aa0.item(0)==aa1) {
+              $("#drawlistbody"+a+" tr:nth-child("+j+") td:nth-child("+i+") li:last-child").text(aa0.item(0).innerText);
+            } else {
+              $("#drawlistbody"+a+" tr:nth-child("+j+") td:nth-child("+i+") li:first-child").text(aa0.item(aa0.length-1).innerText);
+            };
+          };
+          xyModifyDraw(a,aa); window.event.target.blur();
+        };
+      };
+    },false);
+    //document.getElementById("drawlist"+a+"_wrapper").style.padding='6px';
+    //if (!b) { document.getElementById("userdrawlist"+a).style.display='none'; };
+    if (!b) { document.getElementById("userdrawlist"+a).style.left='-600px'; document.getElementById('btbackdrawlist').style.display='block'; };
+  } else {
+    document.getElementById("userdrawlist"+a).style.left='1vw';
+    document.getElementById('btbackdrawlist').style.display='none';
+  };
+};//end of func initDrawlistTable
+function resizeDrawlistTable(a,b) {
+  if (b==0) {
+    document.getElementById("drawlist"+a).parentElement.style.maxHeight=(document.getElementById("userdrawlist"+a).style.height.replace('px','')-150+30)+'px';
+    var i=(document.getElementById("userdrawlist"+a).style.width.replace('px','')-18-62)+'px';
+    document.getElementById("drawlist"+a).style.width=i;
+    $("#userdrawlist"+a+" .dataTables_scrollHeadInner,#userdrawlist"+a+" .dataTables_scrollHeadInner table").width(i);
+  } else {
+    $("#userdrawlist"+a).width($("#drawlist"+a).width()+18+62);
+  };
+};//end of func resizeDrawlistTable
+function xyModifyDraw(a,j) {
+  var g=(['Point','LineString','Polygon','Circle']).indexOf(userdrawsrc.getFeatureById(j).getGeometry().getType());
+  switch (g) {
+    case 0:
+      if (userdrawsrc.getFeatureById(j).get('type0')==1) {
+        var i=placemark[userdrawsrc.getFeatureById(j).get('ftext')];
+        var ixy=ol.proj.transform([parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(4)").text()),
+          parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(5)").text())],'EPSG:4326','EPSG:3857');
+        userdrawsrc.getFeatureById(j).getGeometry().setCoordinates(ixy); placemark[userdrawsrc.getFeatureById(j).get('ftext')].setPosition(ixy);
+        userdrawsrc.changed(); 
+      } else {
+        var i=textbox[userdrawsrc.getFeatureById(j).get('k')[4]];
+        var ixy=ol.proj.transform([parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(4)").text()),
+          parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(5)").text())],'EPSG:4326','EPSG:3857');
+        userdrawsrc.getFeatureById(j).getGeometry().setCoordinates(ixy); textbox[userdrawsrc.getFeatureById(j).get('k')[4]].setPosition(ixy);
+        userdrawsrc.changed();
+      };
+      break;
+    case 1: case 2:
+      var ix=$("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(4) ul li"),iy=$("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(5) ul li");
+      var ixy=new Array();
+      for (var i=0; i<ix.length; i++) {ixy.push(ol.proj.transform([parseFloat(ix[i].innerHTML),parseFloat(iy[i].innerHTML)],'EPSG:4326','EPSG:3857'));};
+      if (g==2) { ixy=[ixy]; };
+      userdrawsrc.getFeatureById(j).getGeometry().setCoordinates(ixy); userdrawsrc.changed();
+      userdrawsrc.getFeatureById(j).set('ftext',
+        Math.round((g==1)?userdrawsrc.getFeatureById(j).getGeometry().getLength():userdrawsrc.getFeatureById(j).getGeometry().getArea()/1000000.0));
+      break;
+    case 3:
+      var iz=parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(6) ul li").text())*1000.0;
+      var ixy=ol.proj.transform([parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(4)").text()),
+        parseFloat($("#drawlistbody"+a+" tr[data-n='"+j+"'] td:nth-child(5)").text())],'EPSG:4326','EPSG:3857');
+      userdrawsrc.getFeatureById(j).getGeometry().setCenter(ixy); userdrawsrc.getFeatureById(j).getGeometry().setRadius(iz); userdrawsrc.changed();
+      userdrawsrc.getFeatureById(j).set('ftext',iz);
+      break;
+  };
+};//end of func xyModifyDraw
+function saveDrawlist(lay) {
+  if (userdrawsrc.getFeatures().length>0) {
+    var tablay=$("#drawlist"+lay).DataTable().rows().data();
+    var tm=new Date().toISOString(); /*var tkmin=new Date().getTime();*/ var ioaddtl=0;
+    for (let ik=0; ik<tablay.length; ik++) {
+      var f=userdrawsrc.getFeatureById(tablay[ik][0]);
+      var a=new ol.format.GeoJSON().writeFeatureObject(f,{featureProjection:'EPSG:3857'});
+      var b=a.properties; var c=a.geometry.coordinates; var geom;
+      if (b.name0==mdsuser) {
+        switch (b.type0) {
+          case 1: case 7: var ii=c.join(' '); geom='Point('+ii+')'; break;
+          case 5: var ii=c[0].join(';'); ii=ii.replace(/,/g,' '); ii=ii.replace(/;/g,','); geom='Polygon(('+ii+'))'; break;
+          case 6: var ii=ol.proj.transform(f.getGeometry().getCenter(),'EPSG:3857','EPSG:4326').join(' '); geom='Point('+ii+')'; break;
+          default:var ii=c.join(';'); ii=ii.replace(/,/g,' '); ii=ii.replace(/;/g,','); geom='LineString('+ii+')'; break;
+        };
+        $.getJSON('/rescue/draws/upload?tk='+b.tk+'&layer='+lay+'&group0='+b.group0+'&name0='+b.name0+'&type0='+b.type0+'&tm='+tm+'&k='+b.k.join(',')+'&ftext='+encodeURIComponent(b.ftext)+'&iomod='+b.iomod+'&ioopen='+b.ioopen+'&g='+geom,function(g){
+          ioaddtl=ioaddtl+g.io;
+          $("#drawlistbody"+lay+" tr[data-n='"+tablay[ik][0]+"'] td:nth-child(7) i:nth-child(2)").removeClass("KUOd-n");
+          //if (g.io==1) { f.set('tim0',tm); /*tkmin=Math.min(tkmin,b.tk);*/ };
+          userdrawsrc.getFeatureById(tablay[ik][0]).set('tim0',tm);
+          if (ik==tablay.length-1) {
+            document.getElementById('iosaved').style.display='inline';
+            setTimeout(function() { document.getElementById('iosaved').style.display='none'; },2000);
+            if (ioaddtl>0) {
+              //timeline.itemsData.add({id:tkmin,content:decodeURIComponent(mdsuser),start:new Date(tm)}); timeline.moveTo(tm);
+              timeline.itemsData.add({id:new Date(tm).getTime(),content:decodeURIComponent(mdsuser),start:new Date(tm)}); timeline.moveTo(tm);
+              //timeline.itemSet.getItemById(tkmin).dom.content.style.backgroundColor='#fbf';
+              timeline.itemSet.getItemById(new Date(tm).getTime()).dom.content.style.backgroundColor='#fbf';
+            };
+          };
+        });
+      } else {
+        $("#drawlistbody"+lay+" tr[data-n='"+tablay[ik][0]+"'] td:nth-child(7) i:nth-child(2)").remove();
+        if (ik==tablay.length && ioaddtl>0) {
+          //timeline.itemsData.add({id:tkmin,content:decodeURIComponent(mdsuser),start:new Date(tm)}); timeline.moveTo(tm);
+          timeline.itemsData.add({id:new Date(tm).getTime(),content:decodeURIComponent(mdsuser),start:new Date(tm)}); timeline.moveTo(tm);
+          //timeline.itemSet.getItemById(tkmin).dom.content.style.backgroundColor='#fbf';
+          timeline.itemSet.getItemById(new Date(tm).getTime()).dom.content.style.backgroundColor='#fbf';
+        };
+      };
+    };
+  };
+};//end of func saveDrawlist
+function delDrawlistID(a,b) {
+  transform.select(); //$('.drawlist2mod').removeClass('drawlist2mod');
+  if(document.querySelector('.drawlist2mod')) {document.querySelector('.drawlist2mod td:nth-child(3)').click();};
+  $("#drawlist"+a).DataTable().row($("#drawlistbody"+a+" tr[data-n='"+b+"']").index()).remove().draw();
+  switch (userdrawsrc.getFeatureById(b).get('type0')) {
+    case 1: map.removeOverlay(placemark[userdrawsrc.getFeatureById(b).get('ftext')]); placemark[userdrawsrc.getFeatureById(b).get('ftext')]=null; break;
+    case 7: map.removeOverlay(textbox[userdrawsrc.getFeatureById(b).get('k')[4]]); textbox[userdrawsrc.getFeatureById(b).get('k')[4]]=null; break;
+  }
+  userdrawsrc.removeFeature(userdrawsrc.getFeatureById(b));
+};//end of func delDrawlistID
+function DBdelDrawlistID(a,b) {
+  if (decodeURIComponent(userdrawsrc.getFeatureById(b).get('name0'))==decodeURIComponent(mdsuser)) {
+    $.getJSON('/rescue/draws/remove?tk='+userdrawsrc.getFeatureById(b).get('tk'),function(g) {
+      var c=userdrawsrc.getFeatureById(b).get('tim0');
+      delDrawlistID(a,b);
+      if (userdrawsrc.getFeatures().every(function(i){return i.get('tim0')!=c})) { timeline.itemsData.remove(new Date(c).getTime()); };
+    });
+  } else {
+    var c=userdrawsrc.getFeatureById(b).get('tim0');
+    delDrawlistID(a,b);
+    if (userdrawsrc.getFeatures().every(function(i){return i.get('tim0')!=c})) {
+      timeline.itemSet.getItemById(new Date(c).getTime()).dom.content.style.backgroundColor='';
+    };
+  };
+};//end of func DBdelDrawlistID
+function delDrawlistALL(a) {
+  var l=$("#drawlist"+a).DataTable().rows().data();
+  for (let i=0; i<l.length; i++) {
+    var j=userdrawsrc.getFeatureById(l[i][0]).get('tim0'); delDrawlistID(a,l[i][0]);
+    if (j) { timeline.itemSet.getItemById(new Date(j).getTime()).dom.content.style.backgroundColor=''; };
+  };
+};//end of func delDrawlistALL
+function DBdelDrawlistALL(a) {
+  var l=$("#drawlist"+a).DataTable().rows().data();
+  for (let i=0; i<l.length; i++) {
+    var j=userdrawsrc.getFeatureById(l[i][0]).get('tim0'); DBdelDrawlistID(a,l[i][0]);
+    //if (j) { timeline.itemsData.remove(new Date(j).getTime()); };
+  };
+};//end of func DBdelDrawlistALL
+function getDrawlistgj(k) {
+  document.getElementById("userdrawlist"+k[0]).style.display='block';
+  var kk=['sa','sb','sc','sd','se'];//,'type0','ftext','group0','layer','name0','iomod','ioopen'];
+  $.getJSON('/rescue/draws/geojson?name0='+k[1]+'&layer='+k[0]+'&tim0='+k[2],function(g) {
+    var gg=new ol.format.GeoJSON({featureProjection:'EPSG:3857',dataProjection:'EPSG:4326'}).readFeatures(g);
+    for (var i=0; i<gg.length; i++) {
+      var ggg=gg[i]; var jj=ggg.getProperties(); ggg.set('k',[jj.sa,jj.sb,jj.sc,jj.sd,jj.se]); ggg.set('layer',k[0]);
+      for (var j=0; j<kk.length; j++) { ggg.unset(kk[j]); };
+      ggg.setId(nud); ggg.set('tim0',k[2]); 
+      switch (jj.type0) {
+        case 1:
+        ggg.set('ftext',placemark.length);
+        ggg.setStyle(new ol.style.Style({image:new ol.style.Circle({radius:1,stroke:new ol.style.Stroke({width:1,color:'#000'}),fill:new ol.style.Fill({color:'#000'})})}));
+        userdrawsrc.addFeature(ggg); userdrawsrc.changed(); document.getElementById('nud').innerHTML=nud; modDrawlistStyle(k[0],nud,false);
+        if (jj.sc!=0) {
+          placemark.push(new ol.Overlay.Placemark({stopEvent:false}));
+        } else {
+          placemark.push(new ol.Overlay({positioning:'center-center',stopEvent:false,position:ggg.getGeometry().getCoordinates(),element:ol.ext.element.create('DIV',
+            {html:document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii.replace('<i','<i style="color:'+userclr[udclr]+';font-size:'+udsiz+'px"')})}));
+        };
+        var p=placemark[placemark.length-1]; p.id=nud;
+        if (jj.sc!=0) {
+          p.setColor(userclr[udclr]); p.setContentColor('#000'); p.setClassName(document.querySelector('input[name=drawsmark]:checked').value);
+          p.options.element.style.fontSize=udsiz+'px'; map.addOverlay(p);
+          p.show(ggg.getGeometry().getCoordinates(),(udsty2==0)?'<i></i>':document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii);
+        } else {
+          map.addOverlay(p); p.getElement().style.borderRadius=udsiz+'px';
+        };
+        dragplace.addOverlay(p); p.set('tk',jj.tk); addDrawlistTable1(k[0],p,true);
+        placemark[placemark.length-1].element.firstElementChild.style.transform="scale("+(ioratio?Math.min(Math.max(Math.pow(2,mapzoom)/Math.pow(2,jj.se),0.2),5):1)+")";
+        placemark[placemark.length-1].element.firstElementChild.style.transformOrigin='50% 100%'; break;
+        case 6:
+        ggg.setGeometry(new ol.geom.Circle(ggg.getGeometry().getCoordinates(),parseInt(ggg.get('ftext'))));
+        userdrawsrc.addFeature(ggg); userdrawsrc.changed(); document.getElementById('nud').innerHTML=nud; modDrawlistStyle(k[0],nud,false);
+        addDrawlistTable3(k[0],nud,ggg,true); break;
+        case 7:
+        ggg.set('k',[jj.sa,jj.sb,jj.sc,jj.sd,textbox.length]); ggg.set('ftext',decodeURIComponent(ggg.get('ftext')));
+        ggg.setStyle(new ol.style.Style({image:new ol.style.Circle({radius:1,stroke:new ol.style.Stroke({width:1,color:'#000'}),fill:new ol.style.Fill({color:'#000'})})}));
+        userdrawsrc.addFeature(ggg); userdrawsrc.changed(); document.getElementById('nud').innerHTML=nud; //modDrawlistStyle(k[0],nud,false);
+        var posi=document.querySelector("#drawsposi option:nth-child("+(jj.sd%10+1)+")").value;
+        if (jj.sc==0) {
+          textbox.push(new ol.Overlay({closeBox:false,positioning:posi,position:ggg.getGeometry().getCoordinates(),
+            element:ol.ext.element.create('DIV',{html:ggg.get('ftext')}),stopEvent:false}));
+        } else {
+          textbox.push(new ol.Overlay.Popup({closeBox:false,positioning:posi,position:ggg.getGeometry().getCoordinates(),
+            html:ggg.get('ftext'),stopEvent:false}));
+        };
+        var p=textbox[ggg.get('k')[4]]; p.id=nud; map.addOverlay(p); dragplace.addOverlay(p); p.set('tk',jj.tk); 
+        var posi1=posi.split('-')[0],posi2=posi.split('-')[1];
+        textbox[ggg.get('k')[4]].element.firstElementChild.style.transform="scale("+(ioratio?Math.min(Math.max(Math.pow(2,mapzoom)/Math.pow(2,jj.sd/1000),0.2),5):1)+")";
+        textbox[ggg.get('k')[4]].element.firstElementChild.style.transformOrigin=(['left','center','right']).indexOf(posi2)*50+'% '+(['top','center','bottom']).indexOf(posi1)*50+'%';
+        addDrawlistTable4(ggg.get('layer'),p,true); break;
+        default:
+        userdrawsrc.addFeature(ggg); userdrawsrc.changed(); document.getElementById('nud').innerHTML=nud; modDrawlistStyle(k[0],nud,false);
+        addDrawlistTable2(k[0],nud,ggg,true); break;
+      };
+      setDrawlistStyle();
+      nud=nud+1;
+    };
+  });
+};//end of func getUserdrawgj
+function minDrawlistTable(a) {
+  //$("#drawlist"+a).DataTable().destroy(true);
+  //$("#userdrawlist"+a).remove();
+  var i=document.getElementById('userdrawlist'+a);
+  if (i.style.height=='20px') {
+    $("#userdrawlist"+a+">div:not(.draguserdrawlist)").removeAttr('style');
+    i.style.height=i.dataset.h; i.style.resize='both';
+    document.querySelector('#draguserdrawlist'+a+' span').innerHTML='indeterminate_check_box';
+  } else {
+    i.dataset.h=i.offsetHeight+'px';
+    $("#userdrawlist"+a+">div:not(.draguserdrawlist)").attr('style','display:none');
+    i.style.height='20px'; i.style.resize='none';
+    document.querySelector('#draguserdrawlist'+a+' span').innerHTML='add_box';
+  };
+};//end of func minDrawlistTable
+function minmaxDrawlistTable(a) {
+  var i=document.getElementById('btbackdrawlist').style.display=='block';
+  document.getElementById('userdrawlist'+a).setAttribute('style','top:100px;left:'+(i?'1vw':'-600px'));
+  document.getElementById('btbackdrawlist').style.display=i?'none':'block';
+};//end of func minmaxDrawlistTable
+function minmaxDrawlistPanel() {
+  var i=document.getElementById('btbackdrawpanel').style.display=='block';
+  document.getElementById('drawpanel').setAttribute('style','top:4.5vw;right:'+(i?'100px':'-600px'));
+  document.getElementById('btbackdrawpanel').style.display=i?'none':'block';
+};//end of func minmaxDrawlistPanel
+
+function getUserdrawgjANIM(k) {
+  $.getJSON('/rescue/userdraw/geojson?name0='+k[0]+'&date0='+k[1],function(g) {
+    var gg=new ol.format.GeoJSON({featureProjection:'EPSG:3857',dataProjection:'EPSG:4326'}).readFeatures(g);
+    for (var i=0; i<gg.length; i++) {
+      var j=gg[i]; var jj=j.getProperties();
+      var kq=[jj.ftexts,jj.ftextz,jj.ftextb,jj.flinez,jj.farrow,jj.clr,jj.fshape];
+      j.setId(jj.fid); j.unset('clr'); j.unset('fid'); j.unset('farrow'); j.unset('flinez'); j.unset('ftextb');
+      j.unset('ftexts'); j.unset('ftextz'); j.unset('fshape'); j=getUserdrawstyle(kq[6],j,kq);
+      if (kq[6]==3 || kq[6]==5) {
+        var tmpvec=new Array();
+        var path=j.getGeometry().getCoordinates();
+        var style=j.getStyle();
+        var currentPoint = 0;
+        drawAnimatedLine(path[currentPoint], path[currentPoint+1], style, 50, 200, nextPoint);
+        function nextPoint() {
+          if (currentPoint < (path.length-1)) {
+            drawAnimatedLine(path[currentPoint], path[currentPoint+1], style, 50, 200, nextPoint);
+            currentPoint += 1;
+          } else {
+            userdrawsrc.addFeature(j); userdrawsrc.changed();
+            for (var iv=0; iv<tmpvec.length; iv++) { map.removeLayer(tmpvec[iv]); }; tmpvec.length=0;
+          }
+        }
+        function drawAnimatedLine(startPt, endPt, style, steps, time, fn) {
+          var directionX = (endPt[0] - startPt[0]) / steps;
+          var directionY = (endPt[1] - startPt[1]) / steps;
+          var ia = 0;
+          var prevLayer;
+          var ivlDraw;
+          ivlDraw = setInterval(function () {
+            if (ia > steps) {
+              clearInterval(ivlDraw);
+              if (fn) fn();
+              return;
+            }
+            var newEndPt = [startPt[0] + ia * directionX, startPt[1] + ia * directionY];
+            tmpvec.push(new ol.layer.Vector({source:new ol.source.Vector({
+              features: [new ol.Feature({geometry: new ol.geom.LineString([startPt,newEndPt])})]}),
+              style:new ol.style.Style({stroke:new ol.style.Stroke({color:'#000',width:3})}),zIndex:20,renderMode:'image'}));
+            map.addLayer(tmpvec[tmpvec.length-1]);
+            if(prevLayer){map.removeLayer(prevLayer);};
+            //map.render();
+            prevLayer = tmpvec[tmpvec.length-1];
+            ia++;
+          }, time / steps);
+        };
+      } else {
+        userdrawsrc.addFeature(j); userdrawsrc.changed();
+      };
+    };
+  });
+};//end of func getUserdrawgjANIM
+
+function dragoverimg(event) {
+  event.stopPropagation(); event.preventDefault(); event.dataTransfer.dropEffect="copy";
+};//end of func dragoverimg
+function dropoverimg(event) {
+  event.stopPropagation(); event.preventDefault();
+  var f=event.dataTransfer.files[0], r=new FileReader();
+  r.onload=function(e) {
+//    document.getElementById("dragdropimg").src=e.target.result; document.getElementById("dragdropdiv").style.display="block";
+    //var a=new ol.layer.Image({source:new ol.source.ImageStatic({url:e.target.result,projection:'EPSG:3857',imageExtent:new ol.proj.transformExtent([101.25,0,135,40.98],'EPSG:4326','EPSG:3857'),crossOrigin:'anonymous'}),map:map,zIndex:10,opacity:0.8});
+    //var a=new ol.layer.Image({source:new ol.source.ImageStatic({url:e.target.result,projection:'EPSG:3857',imageExtent:imgextent,crossOrigin:'anonymous'}),map:map,zIndex:10,opacity:1});
+    var aext=new ol.extent.applyTransform([121.3133628,24.20267666,121.4005496,24.350278],ol.proj.getTransform('EPSG:4326','EPSG:3857'));
+    var a=new ol.layer.Image({source:new ol.source.ImageStatic({url:e.target.result,projection:'EPSG:3857',imageExtent:aext,crossOrigin:'anonymous'}),map:map,zIndex:5,opacity:0.5});
+  };
+  r.readAsDataURL(f);
+};//end of func dropoverimg
+function uploadImage() {
+  var aext=new ol.extent.applyTransform([parseFloat($("#imgboundw").val()),parseFloat($("#imgbounds").val()),parseFloat($("#imgbounde").val()),parseFloat($("#imgboundn").val())],
+    ol.proj.getTransform('EPSG:4326','EPSG:3857'));
+  var ii=(map.getLayers().getArray().length).toString()+new Date().getSeconds().toString();
+  var upldimg=new ol.layer.Image({source:new ol.source.ImageStatic({url:document.getElementById("imgpreview").src,projection:'EPSG:3857',imageExtent:aext,crossOrigin:'anonymous'}),zIndex:3,opacity:1,name:'dgdp2'+ii});
+  map.addLayer(upldimg);
+  map.getView().fit(upldimg.getSource().getImageExtent());
+  document.getElementById('imgupload').style.top='-700px';
+  var i=document.createElement("BUTTON"); i.innerHTML="&#10006;";i.id="btdgdp2"+ii;i.className="btdgdp2";i.title=document.getElementById('imgfilename').innerHTML;
+  i.setAttribute("onclick","closeUploadImage("+ii+")");
+  i.setAttribute("oncontextmenu","event.preventDefault(); hideDragDropLayer("+("2"+ii)+")");
+  document.getElementById("dragdropbtn").appendChild(i);
+};//end of func uploadImage
+function uploadImagePreview(event) {
+  for (var i=0; i<event.files.length; i++) {
+    document.getElementById('imgfilename').innerHTML=event.files[i].name;
+    var f=event.files[i], r=new FileReader();
+    r.onload=function(e) {
+      document.getElementById("imgpreview").src=e.target.result
+    };
+    r.readAsDataURL(f);
+  };
+};//end of func uploadImagePreview
+function dragovershp(evt) {
+  evt.stopPropagation(); evt.preventDefault(); evt.dataTransfer.dropEffect="copy";
+};//end of func dragovershp
+function dropovershp(evt,i) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  var f=event.dataTransfer.files[i], r=new FileReader();
+  r.onload=function(e) { if (iojsshp===0) {
+      $.getScript("/odbargo/static/js/shp.js",function() { iojsshp=1; loadSHPfile(e); }); } else { loadSHPfile(e); };
+  };
+  r.readAsArrayBuffer(f);
+};//end of func dropovershp
+function loadSHPfile(e2) {
+  shp(e2.target.result).then(function(ee) {
+    if (ee.length) {
+      for (var j=0; j<ee.length; j++) {
+        var vsr=new ol.source.Vector({features:new ol.format.GeoJSON({
+          featureProjection:'EPSG:3857',dataProjection:'EPSG:4326'}).readFeatures(ee[j])});
+        var ii=(map.getLayers().getArray().length).toString()+new Date().getSeconds().toString();
+        map.addLayer(new ol.layer.Vector({renderMode:'image',source:vsr,style:styledragdropfun,zIndex:10,name:"dgdp"+ii}));
+        map.getView().fit(vsr.getExtent());
+        var i=document.createElement("BUTTON"); i.innerHTML="&#10006;"; i.id="btdgdp"+ii; i.className="btdgdp";
+        i.title=ee[j].fileName; i.setAttribute("onclick","closeDragDropLayer("+ii+")");
+        i.setAttribute("oncontextmenu","event.preventDefault(); hideDragDropLayer("+ii+")");
+        document.getElementById("dragdropbtn").appendChild(i);
+      };
+    } else {
+      var vsr=new ol.source.Vector({features:new ol.format.GeoJSON({
+        featureProjection:'EPSG:3857',dataProjection:'EPSG:4326'}).readFeatures(ee)});
+      var ii=(map.getLayers().getArray().length).toString()+new Date().getSeconds().toString();
+      map.addLayer(new ol.layer.Vector({renderMode:'image',source:vsr,style:styledragdropfun,zIndex:10,name:"dgdp"+ii}));
+      map.getView().fit(vsr.getExtent());
+      var i=document.createElement("BUTTON"); i.innerHTML="&#10006;"; i.id="btdgdp"+ii; i.className="btdgdp";
+      i.title=ee.fileName; i.setAttribute("onclick","closeDragDropLayer("+ii+")");
+      i.setAttribute("oncontextmenu","event.preventDefault(); hideDragDropLayer("+ii+")");
+      document.getElementById("dragdropbtn").appendChild(i);
+    };
+  });
+};//end of func loadSHPfile
+function dropoverkmz(evt,i) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  var e=event.dataTransfer.files[i];
+  if (iojszip===0) {
+    $.getScript("/odbargo/static/js/jszip3.6.0.min.js",function() {
+      $.getScript("/odbargo/static/js/jszip-utils.min.js",function() {
+        iojszip=1; loadKMZfile(e);
+      });
+    });
+  } else {
+    loadKMZfile(e);
+  };
+};//end of func dropoverkmz
+function loadKMZfile(e) {
+  if (e.name.substr(-3)=='kmz') {
+    JSZip.loadAsync(e).then(function (zip) {
+      var f; zip.forEach(function(i,z) { if (i.substr(-4)==".kml") { f=i; }});
+      return zip.file(f).async('string');
+    }).then(function(ff) {
+      var vsr=new ol.source.Vector({crossOrigin:'anonymous',features:new ol.format.KML({crossOrigin:'anonymous'}).readFeatures(ff,{
+        featureProjection:'EPSG:3857',dataProjection:'EPSG:4326'})});
+      var ii=(map.getLayers().getArray().length).toString()+new Date().getSeconds().toString();
+      map.addLayer(new ol.layer.VectorImage({renderMode:'hybrid',source:vsr,style:styledragdropfun,
+        declutter:document.getElementById('iodeclutter').dataset.n==1,zIndex:10,name:"dgdp"+ii}));
+      map.getView().fit(vsr.getExtent());
+      var i=document.createElement("BUTTON"); i.innerHTML="&#10006;"; i.id="btdgdp"+ii; i.className="btdgdp";
+      i.title=e.name; i.setAttribute("onclick","closeDragDropLayer("+ii+")");
+      i.setAttribute("oncontextmenu","event.preventDefault(); hideDragDropLayer("+ii+")");
+      document.getElementById("dragdropbtn").appendChild(i);
+    });
+  };
+};//end of func loadKMZfile
+function toggleDeclutter(a) {
+  document.getElementById('iodeclutter').innerHTML='標記<u>'+(a?'自動調整':'固定顯示')+'</u>';
+  document.getElementById('iodeclutter').dataset.n=a?1:0; 
+  var b=document.querySelectorAll('#dragdropbtn button.btdgdp');
+  if (b.length>0) {
+    var f=map.getLayers().getArray();
+    for (var i=0; i<b.length; i++) {
+      var ii=b[i].id.replace('btdgdp','');
+      for (var j=0; j<f.length; j++) {if(f[j].get("name")=='dgdp'+ii) {f[j].declutter_=a; f[j].changed(); break; }};
+    };
+  };
+};//end of func toggleDeclutter
+
+function dragoverRFkmz(event) {
+  event.stopPropagation(); event.preventDefault(); event.dataTransfer.dropEffect="copy";
+};//end of func dragoverRFkmz
+function dropoverRFkmz(event) {
+  event.stopPropagation(); event.preventDefault();
+  var e=event.dataTransfer.files;
+  if (iojszip===0) {
+    $.getScript("/odbargo/static/js/jszip3.6.0.min.js",function() {
+      $.getScript("/odbargo/static/js/jszip-utils.min.js",function() {
+        iojszip=1; for (var i=0; i<e.length; i++) { handleRFKMZ(e[i]); };
+      });
+    });
+  } else {
+    for (var i=0; i<e.length; i++) { handleRFKMZ(e[i]); };
+  };
+};//end of func dropoverRFkmz
+function handleRFKMZ(e) {
+  if (e.name.substr(-3)=='kmz') {
+    var data=e;
+    JSZip.loadAsync(data).then(function (zip) {
+      var f; zip.forEach(function(i,z) { if (i.substr(-4)==".kml") { f=i; }});
+      return zip.file(f).async('string');
+    }).then(function(ttxt){
+      var nn=ttxt.split('<GroundOverlay>').length-1;
+      var iofit=0; var iik=0;
+      for (var iin=0; iin<nn; iin++) {
+        let txt=ttxt.split('<GroundOverlay>')[iin+1].split('</GroundOverlay>')[0];
+        if (txt.indexOf('.png</href>')>0) {
+          var aext=[txt.split('<west>')[1].split('</west>')[0],txt.split('<south>')[1].split('</south>')[0],txt.split('<east>')[1].split('</east>')[0],txt.split('<north>')[1].split('</north>')[0]];
+          //var xy=[txt.split('<longitude>')[1].split('</longitude>')[0],txt.split('<latitude>')[1].split('</latitude>')[0]];
+          JSZip.loadAsync(data).then(function (fig) {
+            //console.log(txt.split('<href>')[1].split('</href>')[0])
+            return fig.file(txt.split('<href>')[1].split('</href>')[0]).async('base64')
+          }).then(function(b64){
+            iik=iik+1;
+            let nl=(map.getLayers().getArray().length).toString()
+            let ii=nl+(new Date().getSeconds()+iin).toString();
+            let i=document.createElement("BUTTON"); i.innerHTML="&#10006;";
+            i.id="btdgdp"+ii; i.className="btdgdp"; i.title=e.name+((nn>1)?('-'+iik.toString()):'');
+            i.setAttribute("onclick","closeDragDropLayer("+ii+")");
+            i.setAttribute("oncontextmenu","event.preventDefault(); hideDragDropLayer("+ii+")");
+            document.getElementById("dragdropbtn").appendChild(i);
+            if (iofit==0) { map.getView().fit(ol.proj.transformExtent(aext,'EPSG:4326','EPSG:3857')); iofit=1; };
+            var iimg=new Image();
+            iimg.crossOrigin="";
+            iimg.style.imageRendering='pixelrelated';
+            iimg.onload= function() {
+              var icanvas=document.createElement('canvas');
+              var ictx=icanvas.getContext("2d");
+              ictx.imageSmoothingQuality='low';
+              ictx.webkitImageSmoothingEnabled=ictx.imageSmoothingEnabled=ictx.mozImageSmoothingEnabled=ictx.oImageSmoothingEnabled=false;
+              var iw=this.width,ih=this.height;
+              icanvas.width=iw; icanvas.height=ih;
+              ictx.drawImage(iimg,0,0,iw,ih);
+              var iimgdata=ictx.getImageData(0,0,iw,ih);
+              var idata=iimgdata.data;
+              var ilen=idata.length;
+              for (var i=0; i<ilen; i+=4) {if (idata[i+3]!=0) {idata[i+3]=255;}};
+              ictx.putImageData(iimgdata,0,0);
+              var result=icanvas.toDataURL('image/png',0.99);
+              map.addLayer(new ol.layer.Image({zIndex:nl,name:"dgdp"+ii,opacity:0.8,zIndex:9,
+                source:new ol.source.ImageStatic({url:result,projection:'EPSG:3857',
+                imageExtent:ol.proj.transformExtent(aext,'EPSG:4326','EPSG:3857'),crossOrigin:'anonymous',imageSmoothing:false})}));
+              map.changed();
+            };
+            iimg.src="data:image/png;base64,"+b64;
+          });
+        };
+      };
+    });
+  };
+};//end of handleRFKMZ
+
+
+
+
+function dragfig(e) {
+  var pos1=0,pos2=0,pos3=0,pos4=0;
+  var mobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+  if (mobile) {
+    var de=document.getElementById("drag"+e.id)
+    de.addEventListener("touchmove",function(ee){
+      var touch=ee.targetTouches[0];
+      //e.style.left=touch.pageX+"px"; e.style.top=touch.pageY+"px";
+      e.style.left=touch.pageX-touch.radiusX+"px"; e.style.top=touch.pageY+touch.radiusY+"px";
+      ee.preventDefault();
+    },false);
+  } else {
+    if (document.getElementById("drag"+e.id)) { document.getElementById("drag"+e.id).onmousedown=dragfigmd;
+    } else { e.onmousedown=dragfigmd; };
+    function dragfigmd(ee) {
+      ee=ee||window.event; pos3=ee.clientX; pos4=ee.clientY; document.onmouseup=dragfigdone; document.onmousemove=dragfigelm;
+      if (document.getElementsByClassName("KUOz-11")[0]) { var i=document.getElementsByClassName("KUOz-11")[0];
+        document.getElementById(i.id).className=document.getElementById(i.id).className.replace(" KUOz-11",""); };
+      document.getElementById(e.id).className=document.getElementById(e.id).className+" KUOz-11"; };
+    function dragfigelm(ee) {
+      ee=ee||window.event; pos1=pos3-ee.clientX; pos2=pos4-ee.clientY; pos3=ee.clientX; pos4=ee.clientY;
+      e.style.top=(e.offsetTop-pos2)+"px"; e.style.left=(e.offsetLeft-pos1)+"px";};
+    function dragfigdone() {document.onmouseup=null; document.onmousemove=null;};
+  };
+};//end of func dragfig
+function dragfigYonly(e) {
+  var pos2=0,pos4=0;
+  var mobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+  if (mobile) {
+    var de=document.getElementById('movetimeline')
+    de.addEventListener("touchmove",function(ee){
+      var touch=ee.targetTouches[0];
+      e.style.top=touch.pageY+touch.radiusY+"px";
+      document.getElementById('drawtimeline').style.top=e.style.top;
+      document.getElementById('drawtimeline').style.display='block';
+      document.getElementById('mintimelinei').style.transform="rotate(180deg)";
+      ee.preventDefault();
+    },false);
+  } else {
+    if (document.getElementById('movetimeline')) { document.getElementById('movetimeline').onmousedown=dragfigYmd;
+    } else { e.onmousedown=dragfigYmd; };
+    function dragfigYmd(ee) {
+      ee=ee||window.event; pos4=ee.clientY; document.onmouseup=dragfigYdone; document.onmousemove=dragfigYelm;
+    };
+    function dragfigYelm(ee) {
+      ee=ee||window.event; pos2=pos4-ee.clientY; pos4=ee.clientY;
+      e.style.top=(e.offsetTop-pos2)+"px";};
+    function dragfigYdone() {
+      document.onmouseup=null; document.onmousemove=null;
+      document.getElementById('drawtimeline').style.top=e.style.top;
+      document.getElementById('drawtimeline').style.display='block';
+      document.getElementById('mintimelinei').style.transform="rotate(180deg)";
+    };
+  };
+};//end of func dragfigYonly
+function toggleBaselayer(a) {
+  initbaselayer=parseInt(a);
+  $('.selbasemap').removeClass('selbasemap'); $('#basemap span[data-n="'+a+'"]').addClass('selbasemap');
+  var baselayerurl=[
+    "https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}",//MOI 18
+    "Bing",//21
+    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",//Esri_ocean 12
+    "https://oceanmaps.moi.gov.tw/arcgis/rest/services/Oceanicmap/MOI_topography_blank/MapServer//tile/{z}/{y}/{x}",//Moi_black 12
+    "https://wmts.nlsc.gov.tw/wmts/PHOTO_MIX/default/EPSG:3857/{z}/{y}/{x}",//MOI_image 29
+    "https://gis.sinica.edu.tw/ls/file-exists.php?img=rudy-png-{z}-{x}-{y}",//Rubymap 29
+    "https://a.tile.thunderforest.com/cycle/{z}/{x}/{y}@2x.png?apikey=6170aad10dfd42a38d4d8c709a536f38",//OSM 21
+    "https://gis.sinica.edu.tw/ls/file-exists.php?img=moi_osm-png-{z}-{x}-{y}",//Rubymap_twmap 29
+    "https://wmts.nlsc.gov.tw/wmts/EMAP2/default/EPSG:3857/{z}/{y}/{x}",//TGOS_black 20
+    "https://b.tile.opentopomap.org/{z}/{x}/{y}.png",//OpenTopo 17
+    "http://www.historygis.udd.gov.taipei/arcgis/rest/services/Urban/DEM_2014/MapServer/WMTS/tile/1.0.0/Urban_DEM_2014/default/GoogleMapsCompatible/{z}/{y}/{x}.png"//1m 29
+  ];
+  //kuokuo  "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",//OSM 21
+  var baselayermaxzoom=[18,21,20,12,18,29,29,21,20,17,29];
+  switch (parseInt(a)) {
+    case 1://Bing
+      baselayer.setSource(new ol.source.BingMaps({imagerySet:'Aerial',
+        key:'AtxhFL61gkrGg34Rd6hUnrZbAYu3s_fpbocD79mi7w3YEWzY0SoK2wD0HJJlgg4I'})); break;
+    default:
+      baselayer.setSource(new ol.source.XYZ({url:baselayerurl[a],crossOrigin:'anonymous',maxZoom:baselayermaxzoom[a]}));
+  };
+};//end of func toggleBaselayer
+function overlayOpenData(a,b) {
+  document.querySelector('label[for="btoverlay'+a+'"]').style.backgroundColor=b?'#800':'';
+  var odurl=[
+    "",
+    "https://wmts.nlsc.gov.tw/wmts/MB5000/default/EPSG:3857/{z}/{y}/{x}",//1/5000 20
+    "https://wmts.nlsc.gov.tw/wmts/GeoSensitive/default/EPSG:3857/{z}/{y}/{x}",//GeoSensitive 20
+    "https://wmts.nlsc.gov.tw/wmts/ConvenienceStore/default/EPSG:3857/{z}/{y}/{x}",//ConvenienceStore 20
+    "https://wmts.nlsc.gov.tw/wmts/Village/default/EPSG:3857/{z}/{y}/{x}",//Village 20
+    "https://wmts.nlsc.gov.tw/wmts/AED/default/EPSG:3857/{z}/{y}/{x}",//AED 20
+    "https://wmts.nlsc.gov.tw/wmts/fireplug/default/EPSG:3857/{z}/{y}/{x}",//fireplug 20
+    "https://wmts.nlsc.gov.tw/wmts/MUDSLIDE_PG/default/EPSG:3857/{z}/{y}/{x}",//MUDSLIDE_PG 20
+    "https://wmts.nlsc.gov.tw/wmts/ROAD/default/EPSG:3857/{z}/{y}/{x}",//ROAD 20
+    "https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",//SEAMARK 18
+    "https://a.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png"//RAILWAY 19
+  ];
+  odmaxzoom=[0,20,20,20,20,20,20,20,20,18,19];
+  if (b) {
+    map.addLayer(new ol.layer.Tile({source:new ol.source.XYZ({url:odurl[a],crossOrigin:'anonymous',maxZoom:odmaxzoom[a]}),zIndex:3,name:'overlayopendata'+a}));
+  } else {
+    var i=map.getLayers().getArray(); for (var j=0; j<i.length; j++) { if(i[j].get('name')=='overlayopendata'+a) {map.removeLayer(i[j]); break;}}
+  };
+};//end of func overlayOpenData
+function closeDragDropLayer(a) {
+  var i=map.getLayers().getArray();
+  for (var j=0; j<i.length; j++) {if(i[j].get("name")=='dgdp'+a) {map.removeLayer(i[j]); break; }};
+  $("#btdgdp"+a).remove();
+};//end of func closeDragDropLayer
+function hideDragDropLayer(a) {
+  var i=map.getLayers().getArray();
+  for (var j=0; j<i.length; j++) {if(i[j].get("name")=='dgdp'+a) {
+    var k=i[j].getVisible();
+    document.getElementById("btdgdp"+a).innerHTML=k?'&#10033;':'&#10006;';
+    i[j].setVisible(!k); break;
+  }};
+};//end of func hideDragDropLayer
+function closeUploadImage(a) {
+  var i=map.getLayers().getArray();
+  for (var j=0; j<i.length; j++) {if(i[j].get("name")=='dgdp2'+a) {map.removeLayer(i[j]); break; }};
+  $("#btdgdp2"+a).remove();
+};//end of func closeUploadImage
+function subQuickImport() {
+  document.getElementById('quickimport').blur();
+  //var a=document.getElementById('quickimport').value.split(/(\r\n|\n|\r)/g);
+  var ia=document.getElementById('quickimport').value; document.getElementById('quickimport').value=ia.replace(/\r\n/g,'\n');
+  ia=document.getElementById('quickimport').value; document.getElementById('quickimport').value=ia.replace(/\r/g,'\n');
+  var a=document.getElementById('quickimport').value.split('\n');
+  var qp=document.getElementById('quickimportproj').value;
+  while (a.length>0 && a.indexOf('')>=0) {a.splice(a.indexOf(''),1);};
+  if (a.length>0) {
+    var ll=new Array();
+    if (drawtype==0) { document.getElementById('drawtype1').click(); };
+    if (drawtype>=1) {
+      for (var i=0; i<a.length; i++) {
+        var b=encodeURIComponent(a[i]),ii;
+        ii=0; while (ii<200 && b.length>0 && b.indexOf('%')>=0) { b=b.replace(b.substr(b.indexOf('%'),3),','); ii+=1;};
+        ii=0; while (ii<200 && b.length>0 && b.indexOf(',,')>=0) { b=b.replace(',,',','); ii+=1;};
+        b=b.replace(/,$/,'');
+        var c=b.split(',');
+        if (c.length>=2) {
+          var kxy;
+          switch (c.length) {
+            case 2: kxy=ol.proj.transform(document.getElementById('quickimportxy').checked?c:[c[1],c[0]],'EPSG:'+qp,'EPSG:3857'); break;
+            case 6: c=[parseFloat(c[0])+parseFloat(c[1])/60+parseFloat(c[2])/3600,parseFloat(c[3])+parseFloat(c[4])/60+parseFloat(c[5])/3600];
+              kxy=ol.proj.transform(document.getElementById('quickimportxy').checked?c:[c[1],c[0]],'EPSG:'+qp,'EPSG:3857'); break;
+          };
+          if (kxy && kxy.length==2) {
+            var tk=new Date().getTime();
+            var k=new ol.Feature({geometry:new ol.geom.Point(kxy),group0:document.getElementById('drawgroup').value,name0:mdsuser,
+              iomod:(document.getElementById("drawiomod").checked?1:0),ioopen:(document.getElementById('drawioopen').checked?1:0),
+              layer:document.getElementById('drawproject').innerHTML,type0:drawtype,k:[udclr,udsiz,udsty1,udsty2,Math.round(mapzoom)],ftext:placemark.length,tk:tk});
+            k.setStyle(new ol.style.Style({image:new ol.style.Circle({radius:1,stroke:new ol.style.Stroke({width:1,color:'#000'}),fill:new ol.style.Fill({color:'#000'})})}));
+            k.setId(nud); userdrawsrc.addFeature(k);
+            if (udsty1>0) {
+              placemark.push(new ol.Overlay.Placemark({stopEvent:false}));
+            } else {
+              placemark.push(new ol.Overlay({positioning:'center-center',stopEvent:false,position:kxy,element:ol.ext.element.create('DIV',
+                {html:document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii.replace('<i','<i style="color:'+userclr[udclr]+';font-size:'+udsiz+'px"')})}));
+            };
+            var p=placemark[placemark.length-1]; p.id=nud;
+            if (udsty1>0) {
+              p.setColor(userclr[udclr]); p.setContentColor('#000'); p.setClassName(document.querySelector('input[name=drawsmark]:checked').value);
+              p.options.element.style.fontSize=udsiz+'px'; map.addOverlay(p);
+              p.show(kxy,(udsty2==0)?'<i></i>':document.querySelector('#drawssign i[data-n="'+udsty2+'"]').dataset.ii);
+            } else {
+              map.addOverlay(p); p.getElement().style.borderRadius=udsiz+'px';
+            };
+            dragplace.addOverlay(p); p.set('tk',tk); addDrawlistTable1(k.get('layer'),p,false);
+            placemark[placemark.length-1].element.firstElementChild.style.transform="scale(1)";
+            placemark[placemark.length-1].element.firstElementChild.style.transformOrigin='50% 100%';
+            nud=nud+1;
+            document.getElementById('nud').innerHTML=nud; document.getElementById('nud').dataset.n=nud;
+          } else {
+            ll.push(a[i]);
+          };
+        } else {
+          ll.push(a[i]);
+        };
+      };
+    };
+    document.getElementById('quickimport').value=ll.join('\n');
+    if (ll.length==0) { document.getElementById('divquickimport').style.right='-35vw'; };
+  };
+};//end of func subQuickImport
+function repQuickImport() {
+  var a=document.getElementById('quickimportrep1').value;
+  document.getElementById('quickimportrep1').blur(); document.getElementById('quickimportrep2').blur();
+  if (a.length>0) {
+    var b=document.getElementById('quickimport').value;
+    document.getElementById('quickimport').value=b.replace(new RegExp(a,"g"),document.getElementById('quickimportrep2').value);
+    document.getElementById('quickimportrep1').value=''; document.getElementById('quickimportrep2').value=''; 
+  };
+};//end of func repQuickImport
+function toggleWind(a) {
+  document.querySelector('label[for="btoverlayw"]').style.backgroundColor=a?'#800':'';
+  if (a) {
+    var windfig=new Array();
+    wind.setSource(new ol.source.ImageStatic({url:"https://odbpo.oc.ntu.edu.tw/static/figs/cwbdata/R22.png",projection:'EPSG:3857',crossOrigin:'anonymous',imageExtent:ol.proj.transformExtent([115,17.75,126.5,29.25],'EPSG:4326','EPSG:3857')}));
+    for (var i=10; i<=22; i++) {
+      windfig[i-10]=new ol.source.ImageStatic({url:"https://odbpo.oc.ntu.edu.tw/static/figs/cwbdata/R"+i+".png",projection:'EPSG:3857',crossOrigin:'anonymous',imageExtent:ol.proj.transformExtent([115,17.75,126.5,29.25],'EPSG:4326','EPSG:3857')});
+    };
+    wind.setVisible(true);
+    cwbanim=setInterval(function() {
+      var i=wind.getSource().getUrl().substr(49,2)-1; i=(i>=10)?i:22; wind.setSource(windfig[i-10]); wind.changed(); },350);
+  } else {
+    clearInterval(cwbanim); wind.setVisible(a);
+  };
+};//end of func toggleWind
+function toggleSNisland(a) {
+  snisland.setVisible(a);
+};//end of func toggleSNisland
+/* AIS default ON*/
+//document.getElementById('ais').checked=true;
+document.getElementById('mintimelinei').click();
+//toggleAIS(true);
+var aisupd//=setInterval(function(){toggleAIS(true);},120000);
+
+function toggleAIS(a) {
+  aissrc.clear();
+  document.getElementById('aisnum').style.display=a?'block':'none';
+  if (a) {
+    overlayAIS();
+    aisupd=setInterval(function(){overlayAIS();},120000);
+  } else {
+    if (aisupd) {
+      clearInterval(aisupd);
+    };
+  };
+};//end of func toggleAIS
+
+function overlayAIS() {
+  $.getJSON("https://mpbais.motcmpb.gov.tw/webservice/geojsonais.ashx",function(gg) {
+    var ggg=gg.features;
+    document.getElementById('aisnum').innerHTML="AIS: "+ggg.length;
+    for (var i=0; i<ggg.length; i++) {
+      var g=ggg[i].properties;
+      var xy=ol.proj.transform([g.Longitude,g.Latitude],'EPSG:4326','EPSG:3857')
+      var k=new ol.Feature({geometry:new ol.geom.Point(xy),
+        rot:(parseInt(g.COG)-90)/180*Math.PI,clr:userclr[g.Ship_and_Cargo_Type.toString()[0]],
+        mmsi:g.MMSI,imo:g.IMO_Number,callsign:g.Call_Sign,shipname:g.ShipName,
+        lon:g.Longitude,lat:g.Latitude,time:g.Record_Time,sog:g.SOG,cog:g.COG,
+        stat:g.Navigational_Status,shiptype:g.Ship_and_Cargo_Type})
+      k.setId(parseInt(g.MMSI)); aissrc.addFeature(k);
+    };
+    ais.setStyle(aisstyle);
+  });
+};//end of func overlayAIS
+
+function changeUsername() {
+  mdsuser=prompt('修改使用者名稱',document.getElementById('drawuser').innerHTML);
+  if (mdsuser==null) { mdsuser=encodeURIComponent(document.getElementById('drawuser').innerHTML); return; };
+  mdsuser=encodeURIComponent(mdsuser);
+  document.cookie="mdsuser="+mdsuser+"; expires='Fri, 01 Jan 2100 00:00:00 GMT'";
+  document.getElementById('drawuser').innerHTML=decodeURIComponent(mdsuser);
+};//end of func changeUsername
+
+var saveAs=saveAs||function(e){"use strict";if(typeof e==="undefined"||typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),o="download"in r,a=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},i=/constructor/i.test(e.HTMLElement)||e.safari,f=/CriOS\/[\d]+/.test(navigator.userAgent),u=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},s="application/octet-stream",d=1e3*40,c=function(e){var t=function(){if(typeof e==="string"){n().revokeObjectURL(e)}else{e.remove()}};setTimeout(t,d)},l=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var o=e["on"+t[r]];if(typeof o==="function"){try{o.call(e,n||e)}catch(a){u(a)}}}},p=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob([String.fromCharCode(65279),e],{type:e.type})}return e},v=function(t,u,d){if(!d){t=p(t)}var v=this,w=t.type,m=w===s,y,h=function(){l(v,"writestart progress write writeend".split(" "))},S=function(){if((f||m&&i)&&e.FileReader){var r=new FileReader;r.onloadend=function(){var t=f?r.result:r.result.replace(/^data:[^;]*;/,"data:attachment/file;");var n=e.open(t,"_blank");if(!n)e.location.href=t;t=undefined;v.readyState=v.DONE;h()};r.readAsDataURL(t);v.readyState=v.INIT;return}if(!y){y=n().createObjectURL(t)}if(m){e.location.href=y}else{var o=e.open(y,"_blank");if(!o){e.location.href=y}}v.readyState=v.DONE;h();c(y)};v.readyState=v.INIT;if(o){y=n().createObjectURL(t);setTimeout(function(){r.href=y;r.download=u;a(r);h();c(y);v.readyState=v.DONE});return}S()},w=v.prototype,m=function(e,t,n){return new v(e,t||e.name||"download",n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){t=t||e.name||"download";if(!n){e=p(e)}return navigator.msSaveOrOpenBlob(e,t)}}w.abort=function(){};w.readyState=w.INIT=0;w.WRITING=1;w.DONE=2;w.error=w.onwritestart=w.onprogress=w.onwrite=w.onabort=w.onerror=w.onwriteend=null;return m}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!==null){define("FileSaver.js",function(){return saveAs})}
+
+
+</script>
+    <script type=text/javascript src=/odbargo/static/js/vis-timeline-graph2d_kuo.min.js> </script>
+</body>
+
+</html>

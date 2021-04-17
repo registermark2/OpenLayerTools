@@ -2,18 +2,31 @@
   font-family: "noto Sans TC", "sans-serif";
 }
 
-html,
+/* html,
 body {
   height: 100%;
-}
+} */
 
-body {
+/* body {
   background-color: #546377;
+} */
+.map{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-
 a {
   text-decoration: none;
   text-align: center;
+
+  
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+
 }
 
 nav a:hover {
@@ -21,6 +34,9 @@ nav a:hover {
 }
 
 .sideMenu {
+  position: absolute;
+  top: 10vh;
+  left: 10px;
   width: 100px;
   height: 100%;
   background-color: #ff7575;
@@ -32,6 +48,7 @@ nav a:hover {
   position: relative;
   transform: translateX(-100%);
   transition: 0.5s;
+  border-radius: 10px;
 }
 .sideMenu form {
   display: flex;
