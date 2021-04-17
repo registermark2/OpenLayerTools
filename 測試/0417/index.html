@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <link rel="stylesheet" href="css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"> -->
+
+
+  <!-- css -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'>
+  <link rel="stylesheet" href="./style.css">
+
+  <!--   boorstrap -->
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- web title -->
+  <title>氣象展示</title>
+  <!-- web icon  -->
+  <link rel="shortcut icon" href="./picture/mountain.png" />
+
+
+  <!-- openlayer -->
+  <script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
+  <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+  <!-- jquery  -->
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+
+  <input type="checkbox" name="" id="sideMenu--active">
+  <!-- 使用 checkbox 來做開關 -->
+  <div class="sideMenu">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              氣象資料
+            </div>
+          </div>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <input type="checkbox" value="1" name="Product_1"> 商品 1<br>
+            <input type="checkbox" value="2" name="Product_2"> 商品 2<br>
+            <!-- <input type="checkbox" value="3" name="Product_3"> 商品 3<br> -->
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+              底圖資料
+            </div>
+          </div>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+          <div class="panel-body">
+            <input id="moiMap" type="checkbox" value="1" name="Product_1"> 魯地圖<br>
+            <input id="osmMap" type="checkbox" value="2" name="Product_2"> OSM<br>
+              <!-- <input id="noaaWmsLayerMap" type="checkbox" value="3" name="Product_3"> NOAAWMS<br> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <label for="sideMenu--active">
+      <i class="fas fa-angle-right"></i>
+    </label>
+    <!-- label 寫在 nav 下方是為了比較好看到 -->
+  </div>
+
+  <!-- <div id="map" class="map"></div> -->
+
+  <script src="./script.js"></script>
+</body>
+
+</html>
