@@ -5,7 +5,7 @@
   -o-user-select: none;
   user-select: none;
 }
-
+/* map width adn height */
 #map{
   position: absolute;
   top: 0px;
@@ -13,7 +13,18 @@
   width: 100%;
 }
 
-
+/* popup border */
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  /* bottom: 15px; */
+  left: 20px;
+  min-width: 200px;
+}
 
 html,
 body {
@@ -45,7 +56,10 @@ nav a:hover {
 .panel-title:hover {
   color: #d81515;
 }
-
+.iconControl{
+  position: absolute;
+  bottom: 10px;
+}
 .sideMenu {
   position: absolute;
   top: 0px;

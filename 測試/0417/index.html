@@ -21,15 +21,21 @@
   <!-- web title -->
   <title>氣象展示</title>
   <!-- web icon  -->
-  <link rel="shortcut icon" href="./picture/mountain.png" />
+  <link rel="shortcut icon" href="./picture/nrcclogo_nobg.png" />
 
 
   <!-- openlayer -->
   <script src="https://openlayers.org/en/v6.4.3/build/ol.js"></script>
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css" />
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+  <script
+    src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL">
+  </script>
   <!-- jquery  -->
   <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+  <!-- js  -->
+  <!-- <script src="./script.js"></script> -->
+  <!-- <script src="./test.js"></script> -->
 </head>
 
 <body>
@@ -38,19 +44,28 @@
   <input type="checkbox" name="" id="sideMenu--active">
   <!-- 使用 checkbox 來做開關 -->
   <div class="sideMenu">
+    <!-- <img class="iconControl" src="./picture/favicon.ico" alt=""> -->
     <div class="panel-group" id="accordion">
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
             <div data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-              氣象資料
+              觀測資料
             </div>
           </div>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapseOne" class="panel-collapse collapse">
           <div class="panel-body">
-            <input type="checkbox" value="1" name="Product_1"> 商品 1<br>
-            <input type="checkbox" value="2" name="Product_2"> 商品 2<br>
+            <input id="hourRain" type="checkbox" name="Product_1"> 雨量<br>
+            <!-- <input type="checkbox" name="Product_2"> 雨量(mm/3hr)<br> -->
+            <input type="checkbox" name="Product_1"> 風速<br>
+            <input type="checkbox" name="Product_2"> 風向<br>
+            <input type="checkbox" name="Product_1"> 溫度<br>
+            <div class="adjustDistance">
+              <!-- <label>密集度</label> -->
+              <input id="distance" type="range" min="80" max="200" step="10" value="40" />
+            </div>
+            <!-- <input type="checkbox" value="2" name="Product_2"> <br> -->
             <!-- <input type="checkbox" value="3" name="Product_3"> 商品 3<br> -->
           </div>
         </div>
@@ -58,16 +73,33 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
-            <div data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+            <div data-toggle="collapse" data-parent="#accordion" href="#collapsetwo">
+              預報資料
+            </div>
+          </div>
+        </div>
+        <div id="collapsetwo" class="panel-collapse collapse">
+          <div class="panel-body">
+            <input id="" type="checkbox"> 預報雨量<br>
+            <!-- <input id="moiMap" type="checkbox" value="1" name="Product_1"> 魯地圖<br>
+            <input id="osmMap" type="checkbox" value="2" name="Product_2"> OSM<br> -->
+            <!-- <input id="noaaWmsLayerMap" type="checkbox" value="3" name="Product_3"> NOAAWMS<br> -->
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
               底圖資料
             </div>
           </div>
         </div>
-        <div id="collapseTwo" class="panel-collapse collapse">
+        <div id="collapseThree" class="panel-collapse collapse">
           <div class="panel-body">
             <input id="moiMap" type="checkbox" value="1" name="Product_1"> 魯地圖<br>
             <input id="osmMap" type="checkbox" value="2" name="Product_2"> OSM<br>
-              <!-- <input id="noaaWmsLayerMap" type="checkbox" value="3" name="Product_3"> NOAAWMS<br> -->
+            <!-- <input id="noaaWmsLayerMap" type="checkbox" value="3" name="Product_3"> NOAAWMS<br> -->
           </div>
         </div>
       </div>
@@ -77,7 +109,10 @@
     </label>
     <!-- label 寫在 nav 下方是為了比較好看到 -->
   </div>
-
+  <div id="popup" class="ol-popup">
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <div id="popup-content"></div>
+  </div>
   <!-- <div id="map" class="map"></div> -->
 
   <script src="./script.js"></script>

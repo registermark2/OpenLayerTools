@@ -460,19 +460,23 @@ var overlay = new ol.Overlay({
 var wmtsMap = new ol.layer.Tile({
     source: new ol.source.XYZ({
         url: 'https://wmts.nlsc.gov.tw/wmts/EMAP5/default/EPSG:3857/{z}/{y}/{x}.png'
-    })
+    }),
+    visible: true
 });
 
-var moiMap_simple = new ol.layer.Tile({
+
+var moiMap = new ol.layer.Tile({
     source: new ol.source.XYZ({
         url: 'https://rs.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png'
-    })
-})
+    }),
+    visible: false
+});
 
-var moiMap_colorful = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-        url: 'http://rudy.tile.basecamp.tw/{z}/{x}/{y}.png'
-    })
+var osmMap = new ol.layer.Tile({
+    source: new ol.source.OSM({
+        url: 'https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+    }),
+    visible: false
 })
 
 
@@ -665,3 +669,35 @@ lineChart = function (stationName, data, time) {
         }
     });
 }
+
+
+
+
+
+// function section
+$("#hourRain").click(function () {
+    if ($(this).is(":checked")) {
+        // O_A0002_001_readRainfallAPI(rainfallStationAPI_URL, rainfallStyle);
+        O_A0002_001_readRainfallAPI(rainfallStationAPI_URL, rainfallStyle);
+    } else {
+        map.removeLayer(rainfallStationClusters);
+    }
+});
+
+
+
+$("#moiMap").click(function () {
+    if ($(this).is(":checked")) {
+        moiMap.setVisible(true);
+    } else {
+        moiMap.setVisible(false);
+    }
+});
+
+$("#osmMap").click(function () {
+    if ($(this).is(":checked")) {
+        osmMap.setVisible(true);
+    } else {
+        osmMap.setVisible(false);
+    }
+});
