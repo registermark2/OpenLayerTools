@@ -592,19 +592,9 @@ map.on('click', function (evt) {
         return feature;
     });
     if (feature) {
-        if (feature.get('cataId') == 'O_B0075_001') {
-            // document.getElementById("chartJs").style.display = "none";
-            var pieChartContent = document.getElementById('chartJs');
-            pieChartContent.innerHTML = '&nbsp;';
-            $('#chartJs').append('<canvas id="myChart"></canvas>');
-
-            // console.log(feature);
-            // console.log(feature.get('data'));
-            lineChart(feature.get('stationName'), feature.get('data'), feature.get('time'));
-            document.getElementById("chartJs").style.display = "block";
-        }
-    } else {
-        document.getElementById("chartJs").style.display = "none";
+        console.log(feature);
+    }else{
+        
     }
 });
 
